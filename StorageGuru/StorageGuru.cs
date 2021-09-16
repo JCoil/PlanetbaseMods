@@ -7,10 +7,8 @@ using UnityEngine;
 
 namespace StorageGuru
 {
-    public class StorageGuru : IMod
+    public class StorageGuruMod : IMod
     { 
-        private static StorageGuru _instance;
-        public static StorageGuru GetInstance() { return _instance; }
         public static string STORAGE_MANIFEST_PATH = @"Mods\Settings\storage_manifest.txt";
 
         public static StorageController Controller { get; private set; }
@@ -26,14 +24,12 @@ namespace StorageGuru
         bool initialising = true;
         private bool enableAll = true;
 
-        public StorageGuru()
+        public StorageGuruMod()
         {
         }
 
         public void Init()
         {
-            _instance = this;
-
             STORAGE_MANIFEST_PATH = Path.Combine(Util.getFilesFolder(), STORAGE_MANIFEST_PATH);
             ContentManager.LoadContent();
 
@@ -134,7 +130,7 @@ namespace StorageGuru
                         {
                             throw new NotImplementedException();
                         }
-                        Controller.ToggleDefinitions(ActiveModule, resource.GetType());s
+                        Controller.ToggleDefinitions(ActiveModule, resource.GetType());
                         SetupEditMenu();
                     }, resource, GuiMenuItem.FlagMenuSwitch));
                 }

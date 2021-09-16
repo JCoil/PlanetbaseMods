@@ -45,7 +45,7 @@ namespace StorageGuru
                 // Should only be one module
                 foreach (var module in newModules)
                 {
-                    AddDefinitions(module, StorageGuru.ResourceDefinitions.Select(x => x.GetType()).ToArray());
+                    AddDefinitions(module, StorageGuruMod.ResourceDefinitions.Select(x => x.GetType()).ToArray());
                 }
             }
             else if (allStorage.Count < storeManifest.Count)
@@ -193,8 +193,8 @@ namespace StorageGuru
         {
             if(module != null)
             {
-                StorageGuru.RefreshStorage(module, GetDefinitions(module));
-                SaveManifest(StorageGuru.STORAGE_MANIFEST_PATH);
+                StorageGuruMod.RefreshStorage(module, GetDefinitions(module));
+                SaveManifest(StorageGuruMod.STORAGE_MANIFEST_PATH);
             }
         }
 

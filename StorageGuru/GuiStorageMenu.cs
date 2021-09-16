@@ -15,7 +15,7 @@ namespace StorageGuru
             StorageMenuItem = new GuiStorageMenuItem(callback);
 
             // Add menuItems for each resource
-            foreach (var resourceType in StorageGuru.ResourceDefinitions)
+            foreach (var resourceType in StorageGuruMod.ResourceDefinitions)
             {
                 var icon = resourceType.getIcon();
                 var tooltip = $"{resourceType.getName()} - OFF";
