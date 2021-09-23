@@ -3,40 +3,139 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace StorageGuru
 {
+    public static class MenuController
+    {
+        public static GuiMenuSystem MenuSystem;
+
+        private static GuiStorageMenu StorageMenu;
+        private static GuiStorageMenuItem StorageMenuItem;
+
+        public static void Init(GuiMenuSystem menuSystem)
+        {
+            MenuSystem = menuSystem;
+            StorageMenu = new GuiStorageMenu();
+            StorageMenuItem = new GuiStorageMenuItem(StorageMenu);
+        }
+
+        public static void Update(GuiMenuSystem menuSystem)
+        {
+            if (MenuSystem.mCurrentMenu == StorageMenu)
+            {
+                StorageMenu.Update();
+            }
+
+            // If we're viewing an action menu
+            if (MenuSystem.mMenuAction is GuiMenu actionMenu)
+            {
+                // That is for a built storage module
+                if (Selection.getSelected() is Module module && module.getModuleType() is ModuleTypeStorage && module.isBuilt())
+                {
+                    // That doesn't already contain our storage button
+                    if (!actionMenu.mItems.Exists(x => x is GuiStorageMenuItem))
+                    {
+                        // Add our storage button
+                        MenuSystem.mMenuAction.mItems.Insert(1, StorageMenuItem);
+                    }
+                }
+            }            
+        } 
+
+        public static void OnStorageMenuItemPressed(object parameter)
+        {
+            StorageGuruMod.Game.mActiveModule = (Selection.getSelected() as Module);
+
+            if (StorageGuruMod.Game.mActiveModule is Module module)
+            {
+                StorageMenu.ActiveStorageModule = module;
+                StorageMenu.NeedsRefresh = true;
+
+                StorageGuruMod.Game.mMode = GameStateGame.Mode.CloseCamera;
+                Construction selectedConstruction = Selection.getSelectedConstruction();
+                CameraManager.getInstance().focusOnPosition(selectedConstruction.getPosition(), selectedConstruction.getRadius() + 10f);
+                selectedConstruction.setRenderTop(false);
+
+                MenuSystem.mCurrentMenu = StorageMenu;
+            }
+        }
+    }
+
     public class GuiStorageMenu : GuiMenu
     {
         public GuiStorageMenuItem StorageMenuItem { get; private set; }
+        public bool EnableAll { get; private set; }
 
-        public GuiStorageMenu(GuiDefinitions.Callback callback) : base("Storage")
+        public Module ActiveStorageModule { get; set; }
+
+        public bool NeedsRefresh;
+
+        /// <summary>
+        /// Creates a new instance of a generic storage menu without any filters set
+        /// </summary>
+        public GuiStorageMenu() : base("Storage")
         {
-            StorageMenuItem = new GuiStorageMenuItem(callback);
 
-            // Add menuItems for each resource
-            foreach (var resourceType in StorageGuruMod.ResourceDefinitions)
+        }
+
+        public void Update()
+        {
+            if (NeedsRefresh)
             {
-                var icon = resourceType.getIcon();
-                var tooltip = $"{resourceType.getName()} - OFF";
+                StorageGuruMod.StorageController.ConsolidateManifest();
+                var entry = StorageGuruMod.StorageController.GetManifestEntry(ActiveStorageModule);
 
-                addItem(new GuiMenuItem(icon, tooltip, OnResourceToggled, resourceType, GuiMenuItem.FlagMenuSwitch));
+                EnableAll = entry.Count != StorageGuruMod.MasterResourceDefinitions.Count && (entry.Count == 0 || EnableAll);
+
+                clear();
+
+                foreach (var resourceType in StorageGuruMod.MasterResourceDefinitions)
+                {
+                    var resourceEnabled = entry.ContainsResource(resourceType);
+
+                    var icon = resourceEnabled ? resourceType.getIcon() : ContentManager.GreyscaleTextures[resourceType.getName()];
+                    var tooltip = resourceType.getName() + (resourceEnabled ? " - ON" : " - OFF");
+
+                    tooltip += resourceEnabled ? " - ON" : " - OFF";
+                    addItem(new GuiMenuItem(icon, tooltip, OnResourceToggled, resourceType, GuiMenuItem.FlagMenuSwitch));
+                }
+
+                if (EnableAll)
+                {
+                    addItem(new GuiMenuItem(ContentManager.EnableAllIcon, "Enable All", OnEnableAllToggled));
+                }
+                else
+                {
+                    addItem(new GuiMenuItem(ContentManager.DisableAllIcon, "Disable All", OnDisableAllToggled));
+                }
+
+                addBackItem(new GuiDefinitions.Callback(StorageGuruMod.Game.onButtonCancelEdit));
+
+                NeedsRefresh = false;
             }
-                        
-            addItem(new GuiMenuItem(ContentManager.StorageEnableIcon, "Enable All", OnEnableAllToggled));
         }
 
         private void OnResourceToggled(object parameter)
         {
             if(parameter is ResourceType resourceType)
             {
-
+                StorageGuruMod.StorageController.ToggleDefinitions(ActiveStorageModule, resourceType);
+                NeedsRefresh = true;
             }
         }
 
         private void OnEnableAllToggled(object parameter)
         {
-            throw new NotImplementedException();
+            StorageGuruMod.StorageController.AddAllDefinitionsToManifestEntry(ActiveStorageModule);
+            NeedsRefresh = true;
+        }
+
+        private void OnDisableAllToggled(object parameter)
+        {
+            StorageGuruMod.StorageController.RemoveAllDefinitionsFromManifestEntry(ActiveStorageModule);
+            NeedsRefresh = true;
         }
     }
 
@@ -45,9 +144,12 @@ namespace StorageGuru
     /// </summary>
     public class GuiStorageMenuItem : GuiMenuItem
     {
-        public GuiStorageMenuItem(GuiDefinitions.Callback callback)
-            : base(ContentManager.StorageEnableIcon, StringList.get("tooltip_edit"), callback)
-        {
+        public GuiStorageMenuItem(GuiStorageMenu menu) : base(
+                  TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeStorage>().getIcon(),
+                  StringList.get("tooltip_manage_storage"),
+                  MenuController.OnStorageMenuItemPressed,
+                  menu, FlagMenuSwitch)
+        { 
 
         }
     }

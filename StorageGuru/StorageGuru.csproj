@@ -24,7 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\..\Documents\Planetbase\Mods\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -34,15 +34,22 @@
   <ItemGroup>
     <Compile Include="ContentManager.cs" />
     <Compile Include="GuiStorageMenu.cs" />
+    <Compile Include="ManifestEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceTypeComparer.cs" />
     <Compile Include="SerializeHelper.cs" />
-    <Compile Include="StorageController.cs" />
     <Compile Include="StorageGuru.cs" />
+    <Compile Include="StorageManifestController.cs" />
+    <Compile Include="StorageModuleRedirect.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Redirector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ref\Redirector.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\UnityEngine.dll</HintPath>
