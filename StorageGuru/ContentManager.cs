@@ -10,20 +10,29 @@ namespace StorageGuru
 {
     internal static class ContentManager
     {
-        private static string STORAGE_ENABLE_ICON_PATH = @"Mods\Textures\StorageEnable.png";
-        private static string STORAGE_DISABLE_ICON_PATH = @"Mods\Textures\StorageDisable.png";
-        public static Texture2D StorageEnableIcon { get; private set; }
-        public static Texture2D StorageDisableIcon { get; private set; }
+        static string EnableIconFilePath = @"Mods\StorageGuru\Textures\StorageEnable.png";
+        static string DisableIconFilePath = @"Mods\StorageGuru\Textures\StorageDisable.png";
+        public static Texture2D EnableAllIcon { get; private set; }
+        public static Texture2D DisableAllIcon { get; private set; }
 
         private const float greyscaleBrightness = 180f / 255f;
 
+        public static Dictionary<string, Texture2D> GreyscaleTextures; 
+
+        public static void Init()
+        {
+            StringList.mStrings.Add("tooltip_manage_storage", "Manage Storage");
+            GreyscaleTextures = new Dictionary<string, Texture2D>(); 
+            LoadContent();
+        }
+
         internal static void LoadContent()
         {
-            STORAGE_ENABLE_ICON_PATH = Path.Combine(Util.getFilesFolder(), STORAGE_ENABLE_ICON_PATH);
-            STORAGE_DISABLE_ICON_PATH = Path.Combine(Util.getFilesFolder(), STORAGE_DISABLE_ICON_PATH);
+            EnableIconFilePath = Path.Combine(Util.getFilesFolder(), EnableIconFilePath);
+            DisableIconFilePath = Path.Combine(Util.getFilesFolder(), DisableIconFilePath);
 
-            StorageEnableIcon = LoadTexture(STORAGE_ENABLE_ICON_PATH);
-            StorageDisableIcon = LoadTexture(STORAGE_DISABLE_ICON_PATH);
+            EnableAllIcon = LoadTexture(EnableIconFilePath);
+            DisableAllIcon = LoadTexture(DisableIconFilePath);
         }
 
         private static Texture2D LoadTexture(string filepath)
@@ -39,12 +48,22 @@ namespace StorageGuru
             return new Texture2D(1, 1);
         }
 
-        public static Texture2D ApplyGreyscaleColorFix(Texture2D texture)
+        public static void CreateAlternativeIcons(List<ResourceType> resourceTypes)
+        {
+            GreyscaleTextures = new Dictionary<string, Texture2D>(); 
+
+            foreach (var resourceType in resourceTypes)
+            {
+                GreyscaleTextures.Add(resourceType.getName(), ApplyGreyscaleColorFix(resourceType.getIcon())); 
+            }
+        }
+
+        private static Texture2D ApplyGreyscaleColorFix(Texture2D texture)
         {
             var pixels = texture.GetPixels();
             var greyscalePixels = pixels.Select(p => new Color(greyscaleBrightness, greyscaleBrightness, greyscaleBrightness, p.a)).ToArray();
             texture.SetPixels(greyscalePixels);
-            return Util.applyColor(texture);
+            return Util.applyColor(texture); // Apply standard Gui color
         }
     }
 }
