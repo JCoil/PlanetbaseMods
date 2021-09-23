@@ -91,6 +91,7 @@ namespace StorageGuru
 
                 clear();
 
+                // Add toggle for each reasource + style based on whether enabled
                 foreach (var resourceType in StorageGuruMod.MasterResourceDefinitions)
                 {
                     var resourceEnabled = entry.ContainsResource(resourceType);
@@ -98,7 +99,6 @@ namespace StorageGuru
                     var icon = resourceEnabled ? resourceType.getIcon() : ContentManager.GreyscaleTextures[resourceType.getName()];
                     var tooltip = resourceType.getName() + (resourceEnabled ? " - ON" : " - OFF");
 
-                    tooltip += resourceEnabled ? " - ON" : " - OFF";
                     addItem(new GuiMenuItem(icon, tooltip, OnResourceToggled, resourceType, GuiMenuItem.FlagMenuSwitch));
                 }
 
