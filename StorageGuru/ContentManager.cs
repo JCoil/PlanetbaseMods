@@ -10,8 +10,8 @@ namespace StorageGuru
 {
     internal static class ContentManager
     {
-        static string EnableIconFilePath = @"Mods\StorageGuru\Textures\StorageEnable.png";
-        static string DisableIconFilePath = @"Mods\StorageGuru\Textures\StorageDisable.png";
+        static string EnableIconFilePath = @"Mods\StorageGuruData\Textures\StorageEnable.png";
+        static string DisableIconFilePath = @"Mods\StorageGuruData\Textures\StorageDisable.png";
         public static Texture2D EnableAllIcon { get; private set; }
         public static Texture2D DisableAllIcon { get; private set; }
 
