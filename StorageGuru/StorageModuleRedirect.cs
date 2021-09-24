@@ -23,7 +23,7 @@ namespace StorageGuru
             {
                 list = StorageGuruMod.StorageController.ListValidModules(resource.getResourceType());
             }
-
+            
             if (list != null)
             {
                 int count = list.Count;
@@ -32,11 +32,19 @@ namespace StorageGuru
                     Module module = list[i];
                     if (module.isOperational() && module.isSurvivable(character) && module.getEmptyStorageSlotCount() > module.getPotentialUserCount(character))
                     {
-                        float sqrMagnitude = (module.getPosition() - position).sqrMagnitude;
-                        if (sqrMagnitude < num)
+                        try
                         {
-                            result = module;
-                            num = sqrMagnitude;
+                            float sqrMagnitude = (module.getPosition() - position).sqrMagnitude;
+                            if (sqrMagnitude < num)
+                            {
+                                result = module;
+                                num = sqrMagnitude;
+                            }
+                        }
+                        catch(NullReferenceException)
+                        {
+                            // Looks like a module's been deleted
+                            StorageGuruMod.StorageController.ConsolidateManifest();
                         }
                     }
                 }
