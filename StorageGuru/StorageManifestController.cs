@@ -118,7 +118,7 @@ namespace StorageGuru
                 }
                 catch(Exception)
                 {
-
+                    Debug.Log($"[StorageGuru] Failed to deserialize manifest {path}");
                 }
             }
 
