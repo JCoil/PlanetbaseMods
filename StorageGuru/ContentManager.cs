@@ -33,6 +33,11 @@ namespace StorageGuru
 
             EnableAllIcon = LoadTexture(EnableIconFilePath);
             DisableAllIcon = LoadTexture(DisableIconFilePath);
+
+            if(EnableAllIcon == null || DisableAllIcon == null)
+            {
+                Debug.Log("[StorageGuru] Failed to load icons");
+            }
         }
 
         private static Texture2D LoadTexture(string filepath)

@@ -25,7 +25,7 @@ namespace StorageGuru
         {
             foreach (var resource in resources)
             {
-                if (!ContainsResource(resource))
+                if (resource != null && !ContainsResource(resource))
                 {
                     AllowedResources.Add(resource);
                 }

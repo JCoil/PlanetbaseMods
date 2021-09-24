@@ -49,6 +49,11 @@ namespace StorageGuru
                 .Where(x => !(x is Coins)).ToList();  // Clear out non-storeable resources (coins)
         }
 
+        public static void Log(string message)
+        {
+            Debug.Log($"[Mod] Storage Guru: {message}");
+        }
+
         #region Character Targeting
 
         private Dictionary<Character, Resource> carriedResources;
