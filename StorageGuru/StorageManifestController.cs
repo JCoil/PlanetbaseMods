@@ -214,10 +214,12 @@ namespace StorageGuru
                         {
                             if (entry.ContainsResource(resource.getResourceType()))
                             {
+                                // If the resource is now allowed to be stored here after manifest change
                                 resource.setState(Resource.State.Stored);
                             }
                             else
                             {
+                                // If the resource should be marked to be picked up
                                 resource.setState(Resource.State.Idle);
                             }
                         }
