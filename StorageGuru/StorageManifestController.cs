@@ -10,7 +10,7 @@ namespace StorageGuru
     public class StorageManifestController
     {
         readonly string LegacyManifestFilePath = @"Mods\Settings\storage_manifest.txt";
-        readonly string ManifestDirectoryPath = @"Mods\StorageGuru\Manifests\";
+        readonly string ManifestDirectoryPath = @"Mods\StorageGuruData\Manifests\";
         readonly string ManifestAutoFileName = @"autosave.txt";
         private string ManifestFileName;
 
