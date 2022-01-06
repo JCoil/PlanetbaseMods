@@ -85,35 +85,37 @@ namespace StorageGuru
             if (NeedsRefresh)
             {
                 StorageGuruMod.StorageController.ConsolidateManifest();
-                var entry = StorageGuruMod.StorageController.GetManifestEntry(ActiveStorageModule);
 
-                EnableAll = entry.Count != StorageGuruMod.MasterResourceDefinitions.Count && (entry.Count == 0 || EnableAll);
-
-                clear();
-
-                // Add toggle for each reasource + style based on whether enabled
-                foreach (var resourceType in StorageGuruMod.MasterResourceDefinitions)
+                if (StorageGuruMod.StorageController.GetManifestEntry(ActiveStorageModule) is ManifestEntry entry)
                 {
-                    var resourceEnabled = entry.ContainsResource(resourceType);
+                    EnableAll = entry.Count != StorageGuruMod.MasterResourceDefinitions.Count && (entry.Count == 0 || EnableAll);
 
-                    var icon = resourceEnabled ? resourceType.getIcon() : ContentManager.GreyscaleTextures[resourceType.getName()];
-                    var tooltip = resourceType.getName() + (resourceEnabled ? " - ON" : " - OFF");
+                    clear();
 
-                    addItem(new GuiMenuItem(icon, tooltip, OnResourceToggled, resourceType, GuiMenuItem.FlagMenuSwitch));
+                    // Add toggle for each reasource + style based on whether enabled
+                    foreach (var resourceType in StorageGuruMod.MasterResourceDefinitions)
+                    {
+                        var resourceEnabled = entry.ContainsResource(resourceType);
+
+                        var icon = resourceEnabled ? resourceType.getIcon() : ContentManager.GreyscaleTextures[resourceType.getName()];
+                        var tooltip = resourceType.getName() + (resourceEnabled ? " - ON" : " - OFF");
+
+                        addItem(new GuiMenuItem(icon, tooltip, OnResourceToggled, resourceType, GuiMenuItem.FlagMenuSwitch));
+                    }
+
+                    if (EnableAll)
+                    {
+                        addItem(new GuiMenuItem(ContentManager.EnableAllIcon, "Enable All", OnEnableAllToggled));
+                    }
+                    else
+                    {
+                        addItem(new GuiMenuItem(ContentManager.DisableAllIcon, "Disable All", OnDisableAllToggled));
+                    }
+
+                    addBackItem(new GuiDefinitions.Callback(StorageGuruMod.Game.onButtonCancelEdit));
+
+                    NeedsRefresh = false;
                 }
-
-                if (EnableAll)
-                {
-                    addItem(new GuiMenuItem(ContentManager.EnableAllIcon, "Enable All", OnEnableAllToggled));
-                }
-                else
-                {
-                    addItem(new GuiMenuItem(ContentManager.DisableAllIcon, "Disable All", OnDisableAllToggled));
-                }
-
-                addBackItem(new GuiDefinitions.Callback(StorageGuruMod.Game.onButtonCancelEdit));
-
-                NeedsRefresh = false;
             }
         }
 
