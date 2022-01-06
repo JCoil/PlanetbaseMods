@@ -50,7 +50,7 @@ namespace StorageGuru
         /// </summary>
         public void ConsolidateManifest()
         {
-            var allActualStorage = GetAllActualStorageModules();
+            var allActualStorage = GetAllActualStorageModules() ?? new List<Module>();
             var allManifestStorage = GetAllManifestModules();
 
             if(allActualStorage.Count > allManifestStorage.Count)
@@ -258,7 +258,7 @@ namespace StorageGuru
 
         public static List<Module> GetAllActualStorageModules()
         {
-            return Module.getCategoryModules(Module.Category.Storage).Where(x => x != null).ToList();
+            return Module.getCategoryModules(Module.Category.Storage)?.Where(x => x != null).ToList();
         }
 
         public List<Module> ListValidModules(ResourceType resourceType)
@@ -272,9 +272,7 @@ namespace StorageGuru
 
         public Module GetModuleById(int id)
         {
-            var storage = GetAllActualStorageModules();
-
-            return storage == null ? null : storage.FirstOrDefault(x => x.getId() == id);
+            return GetAllActualStorageModules()?.FirstOrDefault(x => x.getId() == id);
         }
 
         public ResourceType GetResourceTypeByName(string name)
