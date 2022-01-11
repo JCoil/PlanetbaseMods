@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImprovedComponents", "Impro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheatTools", "CheatTools\CheatTools.csproj", "{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColonistReports", "ColonistReport\ColonistReports.csproj", "{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
