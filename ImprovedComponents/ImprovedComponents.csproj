@@ -46,11 +46,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImprovedComponents.cs" />
-    <Compile Include="ImprovedBioplasticProcessor.cs" />
-    <Compile Include="ImprovedMetalProcessor.cs" />
+    <Compile Include="GmMedicinalPad.cs" />
+    <Compile Include="GmRicePad.cs" />
+    <Compile Include="GmWheatPad.cs" />
+    <Compile Include="ImprovedComponentsMod.cs" />
+    <Compile Include="EnhancedBioplasticProcessor.cs" />
+    <Compile Include="EnhancedMetalProcessor.cs" />
     <Compile Include="NamingUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TechGmRice.cs" />
+    <Compile Include="TechGmWheat.cs" />
+    <Compile Include="TechGmMedicinalPlants.cs" />
     <Compile Include="TechImprovedProcessing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

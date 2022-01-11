@@ -8,12 +8,12 @@ using UnityEngine;
 
 namespace ImprovedComponents
 {
-    public class ImprovedMetalProcessor : ComponentType
+    public class EnhancedMetalProcessor : ComponentType
 	{
         public const string Name = "Enhanced Metal Processor";
         public const string Description = "Efficiently creates Metal from Ore.";
 
-        public ImprovedMetalProcessor()
+        public EnhancedMetalProcessor()
         {
             this.mConstructionCosts = new ResourceAmounts();
             this.mConstructionCosts.add(TypeList<ResourceType, ResourceTypeList>.find<Metal>(), 1);
@@ -35,11 +35,6 @@ namespace ImprovedComponents
             this.mPrefabName = "PrefabMetalProcessor";
         }
 
-        public new Texture2D loadIcon(Color color)
-        {
-            return ResourceUtil.loadIconColor("Components/icon_" + NamingUtils.MetalProcessorTypeName, color);
-        }
-
         public new Texture2D loadIcon()
         {
             return ResourceUtil.loadIconColor("Components/icon_" + NamingUtils.MetalProcessorTypeName);
@@ -47,8 +42,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringList.mStrings.Add("component_improved_metal_processor", Name);
-            StringList.mStrings.Add("tooltip_improved_metal_processor", Description);
+            StringList.mStrings.Add("component_enhanced_metal_processor", Name);
+            StringList.mStrings.Add("tooltip_enhanced_metal_processor", Description);
         }
     }
 }
