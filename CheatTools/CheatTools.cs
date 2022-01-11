@@ -12,21 +12,14 @@ namespace CheatTools
     public class CheatTools : IMod
     {
         GameStateGame Game;
-        GuiMenuSystem MenuSystem;
-        GameGui GameGui;
-
-        public GuiCheatMenuItem CheatMenuItem { get; private set; }
 
         public void Init()
         {
             StringList.mStrings.Add("cheat_menu", "Cheat Tools");
             StringList.mStrings.Add("tooltip_cheat_menu", "Cheat Tools");
-            StringList.mStrings.Add("force_build", "Force Build");
 
-            foreach(var entry in StringList.mStrings)
-            {
-                Debug.Log($"{entry.Key}:{entry.Value}");
-            }
+            StringList.mStrings.Add("force_build", "Force Build");
+            StringList.mStrings.Add("unlock_tech", "Unlock all Tech");
 
             Debug.Log("[MOD] Cheat Tools activated");
         }
@@ -34,42 +27,15 @@ namespace CheatTools
         public void Update()
         {
             Game = GameManager.getInstance().getGameState() as GameStateGame;
-            MenuSystem = Game.mMenuSystem as GuiMenuSystem;
-            GameGui = Game.mGameGui as GameGui;
 
-            if (MenuSystem != null && GameGui != null)
+            if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.F11))
             {
-                if (MenuSystem.mMenuMain != null && !MenuSystem.mMenuMain.mItems.Contains(CheatMenuItem))
+                if (!(Game.mGameGui.getWindow() is GuiCheatMenu))
                 {
-                    CheatMenuItem = new GuiCheatMenuItem(new GuiMenu(StringList.get("cheat_menu")), new GuiDefinitions.Callback(OnCheatMenuOpen));
-
-                    MenuSystem.mMenuMain.addItem(CheatMenuItem);
+                    GuiCheatMenu guiCheatMenu = new GuiCheatMenu();
+                    Game.mGameGui.setWindow(guiCheatMenu);
                 }
             }
-        }
-
-        private void OnCheatMenuOpen(object parameter)
-        {
-            if (GameGui.getWindow() is GuiCheatMenu)
-            {
-                GameGui.setWindow(null);
-            }
-            else
-            {
-                GuiCheatMenu guiCheatMenu = new GuiCheatMenu();
-                GameGui.setWindow(guiCheatMenu);
-            }
-        }
-    }
-
-    public class GuiCheatMenuItem : GuiMenuItem
-    {
-        public GuiCheatMenuItem(GuiMenu menu, GuiDefinitions.Callback callback) : base(
-             TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeStorage>().getIcon(),
-             StringList.get("tooltip_cheat_menu"),
-             callback, menu, FlagMenuSwitch)
-        {
-
         }
     }
 
@@ -78,6 +44,7 @@ namespace CheatTools
         public GuiCheatMenu() : base(new GuiLabelItem(StringList.get("cheat_menu"), null, null, 0, FontSize.Normal), null, null)
         {
             AddButton("force_build", new GuiDefinitions.Callback(OnForceBuild), true);
+            AddButton("unlock_tech", new GuiDefinitions.Callback(OnUnlockTech), true);
         }
 
         public void AddButton(string key, GuiDefinitions.Callback callback, bool enabled)
@@ -106,6 +73,20 @@ namespace CheatTools
             catch (ReflectionTypeLoadException)
             {
 
+            }
+        }
+
+        private void OnUnlockTech(object parameter)
+        {
+            if(TechManager.getInstance() is TechManager manager && TypeList<Tech, TechList>.getInstance().mTypeList is List<Tech> techList)
+            {
+                foreach(var tech in techList)
+                {
+                    if(!manager.isAcquired(tech))
+                    {
+                        manager.acquire(tech);
+                    }
+                }
             }
         }
     }
