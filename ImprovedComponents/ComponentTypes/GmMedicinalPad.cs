@@ -38,7 +38,7 @@ namespace ImprovedComponents
 			this.initStrings();
 
 			this.mRequiredTech = TypeList<Tech, TechList>.find<TechGmMedicinalPlants>();
-			this.mPrefabName = "PrefabMedicinalPad";
+			this.mPrefabName = "PrefabPadMedicinal";
 		}
 
 		public new Texture2D loadIcon()
