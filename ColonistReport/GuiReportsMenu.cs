@@ -34,8 +34,8 @@ namespace ColonistReport
 		{
 			GuiSectionItem sectionWorkload = new GuiSectionItem(StringList.get("reports_workload"));
 
-			this.mRootItem.clear();
-			this.mRootItem.addChild(sectionWorkload);
+			mRootItem.clear();
+			mRootItem.addChild(sectionWorkload);
 
 			foreach (var element in WorkloadIndicators)
 			{
@@ -46,7 +46,7 @@ namespace ColonistReport
 				if (workload.TotalCharacters > 0)
 				{
 					guiIndicator.setVisible(true);
-					indicator.setValue(workload.Workload);
+					indicator.setValue(workload.DisplayWorkload);
 					indicator.setName(workload.Name);
 					sectionWorkload.addChild(guiIndicator);
 				}
@@ -65,11 +65,6 @@ namespace ColonistReport
 		public override float getWidth()
 		{
 			return (float)Screen.height * 0.7f;
-		}
-
-		private string FormatPercentString(float percent, string label)
-		{
-			return string.Format("{0}: {1:P0}", label, percent);
 		}
 	}
 

@@ -7,25 +7,46 @@ using System.Threading.Tasks;
 
 namespace ColonistReport
 {
-    public static class WorkloadManager
+    public class WorkloadManager : Singleton<WorkloadManager>
     {
-        public static List<ColonistsWorkload> AllWorkloads { get; private set; }
+        public static List<ColonistsWorkload> AllWorkloads { get; private set; } 
 
-        public static void Init()
+        private float mTime;
+        private float mRefreshPeriod = -1f;
+
+        public WorkloadManager()
         {
             AllWorkloads = new List<ColonistsWorkload>();
 
             foreach (var specialization in TypeList<Specialization, SpecializationList>.get())
             {
-                AllWorkloads.Add(new ColonistsWorkload(specialization));
+                if (!(specialization is Visitor || specialization is Intruder))
+                {
+                    AllWorkloads.Add(new ColonistsWorkload(specialization));
+                }
             }
         }
 
-        public static void Update()
+        public void Update(float timeStep)
         {
-            foreach(var workload in AllWorkloads)
+            if(mRefreshPeriod < 0)
             {
-                workload.Calculate();
+                mRefreshPeriod = StatsCollector.getInstance().mRefreshPeriod / StatsCollector.RefreshesPerDay;
+            }
+
+            foreach (var workload in AllWorkloads)
+            {
+                workload.Update();
+            }
+
+            mTime += timeStep;
+            if (mTime > mRefreshPeriod)
+            {
+                foreach (var workload in AllWorkloads)
+                {
+                    workload.Refresh();
+                }
+                mTime = 0f;
             }
         }
     }

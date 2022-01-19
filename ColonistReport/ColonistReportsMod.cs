@@ -18,7 +18,7 @@ namespace ColonistReport
         {
             RegisterStrings();
 
-            WorkloadManager.Init();
+            WorkloadManager.mInstance = new WorkloadManager();
 
             ReportsMenuItem = new GuiReportsMenuItem(new GuiDefinitions.Callback(OnReportsMenuOpen));
             ReportsMenu = new GuiReportsMenu();
@@ -37,10 +37,11 @@ namespace ColonistReport
         public void Update()
         {
             Game = GameManager.getInstance().getGameState() as GameStateGame;
+            var timeStep = Time.unscaledDeltaTime;
 
             TryInitializeReportsMenu();
 
-            WorkloadManager.Update();
+            WorkloadManager.getInstance().Update(timeStep);
             TryUpdateMenu();
         }
 

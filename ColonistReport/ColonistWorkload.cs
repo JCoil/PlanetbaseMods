@@ -13,63 +13,70 @@ namespace ColonistReport
 
         public int TotalCharacters { get; private set; }
 
-        public float Workload { get; private set; }
+        public float DisplayWorkload { get; private set; }
+        private float Workload { get; set; }
 
         public string Name => Specialization.getName();
         public Texture2D Icon => Specialization.getIcon();
 
-        float timeIdle;
-        float timeNeeds; // Time required to fulfil needs - sleeping, eating etc.
-        float timeMoving; // Time required for moving between activities - varies per base
-        float timeAvailable; // Time available for working
+        private float counter = 1f;
 
-        private float currentSmoothing = 1f; // We will do the first calculation without any smoothing
-        const float DefaultSmoothing = 256f;
+        const float timeNeeds = 0.08f; // Time spent on basic needs
 
         public ColonistsWorkload(Specialization s)
         {
             Specialization = s;
-            SetTimeConfig();
         }
 
-        public void Calculate()
+        public void Update()
+        {
+            Workload += CalculateInstantaneousWorkload();
+
+            counter++;
+        }
+
+        public void Refresh()
+        {
+            DisplayWorkload = Utils.Clamp(Workload / counter, 0, 1);
+
+            Workload = 0f;
+            counter = 1f;
+        }
+
+        /// <summary>
+        /// Calculates the current fraction of available colonists(that aren't sleeping, eating etc.) that are not Idle
+        /// </summary>
+        public float CalculateInstantaneousWorkload()
         {
             if (Character.getSpecializationCharacters(Specialization) is List<Character> specializationCharacters
                 && specializationCharacters.Count > 0)
             {
-                var total = specializationCharacters.Count;
-                var idle = 0f;
+                TotalCharacters = specializationCharacters.Count;
 
-                foreach(var character in specializationCharacters)
+                float timeTotal = TotalCharacters;
+                float countIdle = 0f;
+                float countEssentials = 0f;
+
+                foreach (var character in specializationCharacters)
                 {
-                    idle += character.getState() == Character.State.Idle ? 1f : 0f;
+                    if (character.getState() == Character.State.Idle)
+                    {
+                        countIdle++;
+                    }
+                    else if (character.isBeingRestored())
+                    {
+                        countEssentials++;
+                    }
                 }
 
-                TotalCharacters = total;
-                timeIdle += (idle / total - timeIdle) / currentSmoothing;
+                var timeAvailable = 1 - timeNeeds - (countEssentials / timeTotal); // Time available to work
 
-                Workload = CalculateWorkload();
+                var timeWorking = timeAvailable - (countIdle / timeTotal); // Fraction of available time spent working
 
-                currentSmoothing = DefaultSmoothing; // Set smoothing to default after first pass
+                return timeWorking / timeAvailable;
             }
-        }
 
-        /// <summary>
-        /// Workload is the percent of Available Time that is Working Time
-        /// Working Time is Available Time minus Idle Time
-        /// Available Time is Total Time minus Needs Time minus Moving Time
-        /// </summary>
-        private float CalculateWorkload()
-        {
-            var workload = (timeAvailable - timeIdle) / timeAvailable;
-            return workload > 0 ? (workload < 1 ? workload : 1) : 0;
-        }
-
-        private void SetTimeConfig()
-        {
-            timeNeeds = 0.2f;
-            timeMoving = 0.3f;
-            timeAvailable = 1f - (timeNeeds + timeMoving);
+            return 0;
         }
     }
 }
