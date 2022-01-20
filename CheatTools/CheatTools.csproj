@@ -46,6 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ModWrapper\ModBase.cs">
+      <Link>ModBase.cs</Link>
+    </Compile>
     <Compile Include="CheatTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

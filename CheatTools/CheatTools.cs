@@ -1,4 +1,5 @@
-﻿using Planetbase;
+﻿using ModWrapper;
+using Planetbase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +10,27 @@ using UnityEngine;
 
 namespace CheatTools
 {
-    public class CheatTools : IMod
+    public class CheatTools : ModBase
     {
-        GameStateGame Game;
-
-        public void Init()
+        public override void Init()
         {
             StringList.mStrings.Add("cheat_menu", "Cheat Tools");
             StringList.mStrings.Add("tooltip_cheat_menu", "Cheat Tools");
 
-            StringList.mStrings.Add("force_build", "Force Build");
+            StringList.mStrings.Add("force_structures", "Force Structures");
+            StringList.mStrings.Add("force_components", "Force Components");
             StringList.mStrings.Add("unlock_tech", "Unlock all Tech");
 
             Debug.Log("[MOD] Cheat Tools activated");
         }
 
-        public void Update()
+        public override void OnGameStart()
         {
-            Game = GameManager.getInstance().getGameState() as GameStateGame;
+            // Nothing required here
+        }
 
+        public override void Update(float timeStep)
+        {
             if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.F11))
             {
                 if (!(Game.mGameGui.getWindow() is GuiCheatMenu))
@@ -43,7 +46,8 @@ namespace CheatTools
     {
         public GuiCheatMenu() : base(new GuiLabelItem(StringList.get("cheat_menu"), null, null, 0, FontSize.Normal), null, null)
         {
-            AddButton("force_build", new GuiDefinitions.Callback(OnForceBuild), true);
+            AddButton("force_structures", new GuiDefinitions.Callback(OnForceStructures), true);
+            AddButton("force_components", new GuiDefinitions.Callback(OnForceComponents), true);
             AddButton("unlock_tech", new GuiDefinitions.Callback(OnUnlockTech), true);
         }
 
@@ -54,7 +58,7 @@ namespace CheatTools
             mRootItem.addChild(guiButtonItem);
         }
 
-        private void OnForceBuild(object parameter)
+        private void OnForceStructures(object parameter)
         {
             try
             {
@@ -76,13 +80,36 @@ namespace CheatTools
             }
         }
 
+        private void OnForceComponents(object parameter)
+        {
+            try
+            {
+                if (ConstructionComponent.mComponents is List<ConstructionComponent> components)
+                {
+                    foreach (var construction in components)
+                    {
+                        if (!construction.isBuilt())
+                        {
+                            Debug.Log("Forcing build on " + construction.getId());
+                            construction.onBuilt();
+                        }
+                    }
+                }
+            }
+            catch (ReflectionTypeLoadException)
+            {
+
+            }
+
+        }
+
         private void OnUnlockTech(object parameter)
         {
-            if(TechManager.getInstance() is TechManager manager && TypeList<Tech, TechList>.getInstance().mTypeList is List<Tech> techList)
+            if (TechManager.getInstance() is TechManager manager && TypeList<Tech, TechList>.getInstance().mTypeList is List<Tech> techList)
             {
-                foreach(var tech in techList)
+                foreach (var tech in techList)
                 {
-                    if(!manager.isAcquired(tech))
+                    if (!manager.isAcquired(tech))
                     {
                         manager.acquire(tech);
                     }
