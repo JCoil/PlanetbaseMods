@@ -41,8 +41,11 @@ namespace ImprovedComponents
 
 			this.initStrings();
 
+			// Need to borrow tooltip and prefab from WheatPad because they are not generated correctly by initStrings
+			this.mTooltip = TypeList<ComponentType, ComponentTypeList>.find<WheatPad>().getTooltip();
+			this.mPrefabName = TypeList<ComponentType, ComponentTypeList>.find<WheatPad>().mPrefabName;
+
 			this.mRequiredTech = TypeList<Tech, TechList>.find<TechGmWheat>();
-			this.mPrefabName = "PrefabPadStarchyWheat";
 		}
 
 		public new Texture2D loadIcon()

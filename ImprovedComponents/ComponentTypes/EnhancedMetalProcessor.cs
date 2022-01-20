@@ -10,7 +10,7 @@ namespace ImprovedComponents
 {
     public class EnhancedMetalProcessor : ComponentType
 	{
-        public const string Name = "Enhanced Metal Processor";
+        public const string Name = "Electrolytic Reduction Processor";
         public const string Description = "Efficiently creates Metal from Ore.";
 
         public EnhancedMetalProcessor()

@@ -1,4 +1,5 @@
-﻿using Planetbase;
+﻿using ModWrapper;
+using Planetbase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ using UnityEngine;
 
 namespace ImprovedComponents
 {
-    public class ImprovedComponentsMod : IMod
+    public class ImprovedComponentsMod : ModBase
     {
-        public void Init()
+        public override void Init()
         {
             RegisterStrings();
             RegisterNewTechs();
@@ -73,7 +74,12 @@ namespace ImprovedComponents
             TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeBioDome>().mComponentTypes = bioDomeComponents.ToArray();
         }
 
-        public void Update()
+        public override void OnGameStart()
+        {
+            // Nothing required here
+        }
+
+        public override void Update(float timeStep)
         {
             // Nothing required here
         }

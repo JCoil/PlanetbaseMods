@@ -42,8 +42,11 @@ namespace ImprovedComponents
 
 			this.initStrings();
 
+			// Need to borrow tooltip and prefab from RicePad because they are not generated correctly by initStrings
+			this.mTooltip = TypeList<ComponentType, ComponentTypeList>.find<RicePad>().getTooltip();
+			this.mPrefabName = TypeList<ComponentType, ComponentTypeList>.find<RicePad>().mPrefabName;
+
 			this.mRequiredTech = TypeList<Tech, TechList>.find<TechGmRice>();
-			this.mPrefabName = "PrefabPadStarchyRice";
 		}
 
 		public new Texture2D loadIcon()

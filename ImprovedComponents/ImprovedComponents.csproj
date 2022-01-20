@@ -35,17 +35,15 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Redirector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Documents\Planetbase\Mods\Redirector.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ModWrapper\ModBase.cs">
+      <Link>ModBase.cs</Link>
+    </Compile>
     <Compile Include="ComponentTypes\GmMedicinalPad.cs" />
     <Compile Include="ComponentTypes\GmRicePad.cs" />
     <Compile Include="ComponentTypes\GmWheatPad.cs" />

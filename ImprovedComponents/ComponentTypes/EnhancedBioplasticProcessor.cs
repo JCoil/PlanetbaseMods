@@ -10,7 +10,7 @@ namespace ImprovedComponents
 {
     public class EnhancedBioplasticProcessor : ComponentType
 	{
-		public const string Name = "Enhanced Bioplastic Processor";
+		public const string Name = "High-Temperature Bulk Polymerizer";
 		public const string Description = "Efficiently creates Bioplastic from Starch.";
 
 		public EnhancedBioplasticProcessor()
