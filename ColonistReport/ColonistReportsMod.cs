@@ -8,13 +8,12 @@ using UnityEngine;
 
 namespace ColonistReport
 {
-    public class ColonistReportsMod : IMod
+    public class ColonistReportsMod : ModWrapper.ModBase
     {
-        GameStateGame Game { get; set; } 
         GuiReportsMenuItem ReportsMenuItem { get; set; } 
         GuiReportsMenu ReportsMenu { get; set; }
 
-        public void Init()
+        public override void Init()
         {
             RegisterStrings();
 
@@ -34,28 +33,19 @@ namespace ColonistReport
             StringList.mStrings.Add("reports_worker_workload", "Worker Workload");
         }
 
-        public void Update()
+        public override void Update(float timeStep)
         {
-            Game = GameManager.getInstance().getGameState() as GameStateGame;
-            var timeStep = Time.unscaledDeltaTime;
-
-            TryInitializeReportsMenu();
-
             WorkloadManager.getInstance().Update(timeStep);
-            TryUpdateMenu();
-        }
 
-        private void TryUpdateMenu()
-        {
             if (Game.mGameGui.getWindow() is GuiReportsMenu menu)
             {
                 menu.updateUi();
             }
         }
 
-        private void TryInitializeReportsMenu()
+        public override void OnGameStart()
         {
-            if (Game.mMenuSystem != null && Game.mMenuSystem.mMenuBaseManagement is GuiMenu menuBaseManagement)
+            if (MenuSystem.mMenuBaseManagement is GuiMenu menuBaseManagement)
             {
                 if (!menuBaseManagement.mItems.Contains(ReportsMenuItem))
                 {

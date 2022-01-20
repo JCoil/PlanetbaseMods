@@ -46,6 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ModWrapper\ModBase.cs">
+      <Link>ModBase.cs</Link>
+    </Compile>
     <Compile Include="ColonistReportsMod.cs" />
     <Compile Include="ColonistWorkload.cs" />
     <Compile Include="GuiReportsMenu.cs" />
