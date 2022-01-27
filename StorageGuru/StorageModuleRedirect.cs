@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using UnityEngine;
 
 namespace StorageGuru
@@ -23,7 +24,7 @@ namespace StorageGuru
             {
                 list = StorageGuruMod.StorageController.ListValidModules(resource.getResourceType());
             }
-            
+
             if (list != null)
             {
                 int count = list.Count;
@@ -41,7 +42,7 @@ namespace StorageGuru
                                 num = sqrMagnitude;
                             }
                         }
-                        catch(NullReferenceException)
+                        catch (NullReferenceException)
                         {
                             // Looks like a module's been deleted
                             StorageGuruMod.StorageController.ConsolidateManifest();

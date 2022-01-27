@@ -66,34 +66,37 @@ namespace StorageGuru
 
         public const char SerializeResourceSeparator = '|';
 
+        [Obsolete("No longer required - saving handled by Game's xml serialization")]
         public string Serialize()
         {
             // Example 1234:[Metal|Food|Ore]
-            return ModuleId + ":[" 
-                + string.Join( SerializeResourceSeparator.ToString(), AllowedResources.Select(x => SerializeResource(x)).ToArray()) + "]";
+            return ModuleId + ":["
+                + string.Join(SerializeResourceSeparator.ToString(), AllowedResources.Select(x => SerializeResource(x)).ToArray()) + "]";
         }
 
+        [Obsolete("No longer required - saving handled by Game's xml serialization")]
         private string SerializeResource(ResourceType resourceType)
         {
             return resourceType.getName();
         }
 
-        public class ManifestEntryBlueprint
+        public class Blueprint
         {
             public int ModuleId;
             public List<string> Resources;
 
-            public ManifestEntryBlueprint(int id, List<string> resources)
+            public Blueprint(int id, List<string> resources)
             {
                 ModuleId = id;
                 Resources = resources;
             }
 
-            public static ManifestEntryBlueprint Deserialize(string contents)
+            [Obsolete("No longer required - saving handled by Game's xml serialization")]
+            public static Blueprint Deserialize(string contents)
             {
                 if (contents.Split(':') is string[] s && s.Length == 2 && int.TryParse(s[0], out int id))
                 {
-                    return new ManifestEntryBlueprint(id, s[1].Replace("[", "").Replace("]", "").Split(SerializeResourceSeparator).ToList());
+                    return new Blueprint(id, s[1].Replace("[", "").Replace("]", "").Split(SerializeResourceSeparator).ToList());
                 }
 
                 return null;
