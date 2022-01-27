@@ -4,25 +4,27 @@ using Planetbase;
 using UnityEngine;
 using System.IO;
 using System;
+using System.Xml;
 
 namespace StorageGuru
 {
     public class StorageManifestController
     {
-        readonly string LegacyManifestFilePath = @"Mods\Settings\storage_manifest.txt";
+        // Legacy storage - to be removed
         readonly string ManifestDirectoryPath = @"Mods\StorageGuruData\Manifests\";
         readonly string ManifestAutoFileName = @"autosave.txt";
         private string ManifestFileName;
 
-        private List<ManifestEntry> StoreManifest = new List<ManifestEntry>(); 
-
         private bool Loading;
+
+        private List<ManifestEntry> StoreManifest;
+        private List<ManifestEntry.Blueprint> Blueprints;
 
         public StorageManifestController()
         {
+            StoreManifest = new List<ManifestEntry>();
             Loading = true;
 
-            LegacyManifestFilePath = Path.Combine(Util.getFilesFolder(), LegacyManifestFilePath);
             ManifestDirectoryPath = Path.Combine(Util.getFilesFolder(), ManifestDirectoryPath);
             ManifestFileName = $"manifest_{Path.GetFileNameWithoutExtension(SaveData.getSavePath())}.txt";
 
@@ -30,19 +32,21 @@ namespace StorageGuru
             {
                 Debug.Log("Loaded from manifest");
             }
-            else if(LoadManifest(ManifestDirectoryPath + ManifestAutoFileName))
+            else if (LoadManifest(ManifestDirectoryPath + ManifestAutoFileName))
             {
                 Debug.Log("Loaded from autosave manifest");
-            }
-            else if (LoadManifestLegacy(LegacyManifestFilePath))
-            {
-                Debug.Log("Loaded from legacy manifest");
-                File.Delete(LegacyManifestFilePath);
             }
 
             ConsolidateManifest();
             Loading = false;
-            SaveManifest();
+        }
+
+        public void Update()
+        {
+            if ((GetAllActualStorageModules() ?? new List<Module>()).Count != StoreManifest.Count)
+            {
+                ConsolidateManifest();
+            }
         }
 
         /// <summary>
@@ -50,6 +54,16 @@ namespace StorageGuru
         /// </summary>
         public void ConsolidateManifest()
         {
+            if (Blueprints != null)
+            {
+                foreach (var blueprint in Blueprints)
+                {
+                    LoadEntryFromBlueprint(blueprint);
+                }
+
+                Blueprints = null;
+            }
+
             var allActualStorage = GetAllActualStorageModules() ?? new List<Module>();
             var allManifestStorage = GetAllManifestModules();
 
@@ -81,23 +95,7 @@ namespace StorageGuru
 
         const char SerializeModuleSeperator = ',';
 
-        private void SaveManifest()
-        {
-            ManifestFileName = $"manifest_{Path.GetFileNameWithoutExtension(SaveData.getSavePath())}.txt";
-
-            if (!Loading)
-            {
-                var contents = string.Join(
-                    SerializeModuleSeperator + Environment.NewLine,
-                    StoreManifest.Select(x => x.Serialize()).ToArray());
-
-                Directory.CreateDirectory(ManifestDirectoryPath);
-
-                File.WriteAllText(ManifestDirectoryPath + ManifestFileName, contents);
-                File.WriteAllText(ManifestDirectoryPath + ManifestAutoFileName, contents);
-            }
-        }
-
+        [Obsolete("No longer required - saving handled by Game's xml serialization")]
         private bool LoadManifest(string path)
         {
             if (File.Exists(path))
@@ -110,13 +108,13 @@ namespace StorageGuru
                     {
                         foreach (var s in splitEntries)
                         {
-                            LoadEntryFromBlueprint(ManifestEntry.ManifestEntryBlueprint.Deserialize(s));
+                            LoadEntryFromBlueprint(ManifestEntry.Blueprint.Deserialize(s));
                         }
                     }
 
                     return true;
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     Debug.Log($"[StorageGuru] Failed to deserialize manifest {path}");
                 }
@@ -125,72 +123,54 @@ namespace StorageGuru
             return false;
         }
 
-        private void LoadEntryFromBlueprint(ManifestEntry.ManifestEntryBlueprint blueprint)
+        public void Serialize(XmlNode parent, string name)
+        {
+            XmlNode parent2 = Serialization.createNode(parent, name, null);
+
+            foreach (var entry in StoreManifest)
+            {
+                XmlNode parent3 = Serialization.createNode(parent2, "storage-module");
+
+                Serialization.serializeInt(parent3, "module-id", entry.ModuleId);
+                Serialization.serializeList(parent3, "resource-types", entry.AllowedResources.Select(x => x.GetType().Name).ToList());
+            }
+        }
+
+        public void Deserialize(XmlNode parent)
+        {
+            Blueprints = new List<ManifestEntry.Blueprint>();
+
+            foreach (var obj in parent.ChildNodes)
+            {
+                if (obj is XmlNode xmlNode && xmlNode.Name == "storage-module")
+                {
+                    var moduleId = Serialization.deserializeInt(xmlNode["module-id"]);
+                    var resources = Serialization.deserializeList<string>(xmlNode["resource-types"]);
+
+                    Blueprints.Add(new ManifestEntry.Blueprint(moduleId, resources));
+                }
+            }
+        }
+
+        private void LoadEntryFromBlueprint(ManifestEntry.Blueprint blueprint)
         {
             if (GetModuleById(blueprint.ModuleId) is Module module)
             {
                 var resourceTypes = new List<ResourceType>();
-                var primaryResourceTypes = new List<ResourceType>();
 
                 if (blueprint.Resources != null)
                 {
                     foreach (string resourceName in blueprint.Resources)
                     {
-                        var isPrimary = resourceName.Contains("!");
-
-                        if (GetResourceTypeByName(resourceName.Replace("!", string.Empty)) is ResourceType resourceType)
+                        if (TypeList<ResourceType, ResourceTypeList>.find(resourceName) is ResourceType resourceType)
                         {
                             resourceTypes.Add(resourceType);
-
-                            if(isPrimary)
-                            {
-                                primaryResourceTypes.Add(resourceType);
-                            }
                         }
                     }
                 }
 
                 AddManifestEntry(module, resourceTypes);
             }
-        }
-
-        public bool LoadManifestLegacy(string filePath)
-        {
-            var serializer = new SerializeHelper();
-            Dictionary<int, List<string>> loadedDefinitions = new Dictionary<int, List<string>>();
-
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    string[] contents = File.ReadAllLines(filePath);
-                    loadedDefinitions = serializer.DeserializeManifest(contents); 
-
-                    foreach (var definition in loadedDefinitions)
-                    {
-                        Module module = GetModuleById(definition.Key);
-
-                        if (module != null)
-                        {
-                            AddManifestEntry(module, null);
-                            var entry = GetManifestEntry(module);
-
-                            if (entry != null && definition.Value != null && definition.Value.Count > 0)
-                            {
-                                entry.AddResourceDefinitions(definition.Value.Select(x => GetResourceTypeByName(x)).ToArray());
-                            }
-                        }
-                    }
-
-                    return true;
-                }
-                catch (Exception)
-                {
-                    Debug.Log("Failed to load legacy manifest");
-                }
-            }
-
-            return false;
         }
 
         #endregion
@@ -248,7 +228,7 @@ namespace StorageGuru
         private void DefinitionChanged(Module module)
         {
             RefreshStorageModule(module);
-            SaveManifest();
+            //SaveManifest();
         }
 
         public List<Module> GetAllManifestModules()
