@@ -1,0 +1,27 @@
+Worker={ Idle=11219.23  Bunk=2898.384  Small Table=1081.137  Radio Console=541.1757  Enhanced Metal Processor=648.4631  Bar Table=180.1653  Drinking Fountain=363.2361  Enhanced Bioplastic Processor=728.8943  Bed=283.2995  Walking=8014.897  Carrying=314.9803  Airlock=1.039217  Decorative Plant=3.27452  Video Screen=12.37244  Bench=6.735269  Exercise Bar=3.186284  Table=255.0754 }
+ 
+
+Biologist={ Idle=6398.485  Small Table=1116.734  GM Tomato Pad=3784.442  Table=248.7488  GM Onion Pad=620.5397  GM Medicinal Pad=188.0672  Walking=8888.208  Medicinal Pad=386.2688  Carrying=225.3616  Onion Pad=184.1039  Mushroom Pad=330.4253  Drinking Fountain=353.5446  GM Rice Pad=248.7845  Video Screen=41.19582  Pea Pad=232.2171  Bed=267.2086  Bunk=2880.336  Bar Table=13.98226 }
+ 
+
+Engineer={ Semiconductor Foundry=1878.892  Idle=3126.805  Bot Workshop=2413.859  Small Table=622.6969  Bunk=3056.52  Telescope Console=3086.021  Carrying=235.7724  Table=661.5977  Walking=8780.641  Drinking Fountain=330.1262  Spares Workshop=1333.218  Bar Table=151.0037  Bed=157.0401 }
+ 
+
+Medic={ Idle=10339.46  Small Table=1163.378  Bed=336.4659  Ivan Pele=5.600008  Drinking Fountain=350.1197  Bar Table=202.8985  Walking=7854.893  Carrying=343.1785  Table=145.7696  Dr. R.U. Oneill=4.942861  Decorative Plant=3.199999  H.A. Terrell=3.114285  Video Screen=17.77141  Workbench=2436.582  M.M. Grant=3.371428  Bunk=2770.7  Michel Weiss=3.028571  Donnell Galloway=2.085716  C.L. Clay=2.828572  Brady Rubter=1.657144  Tarra J. Casey=3.285713  Hallie Gillespie=3.714284  Tiberius Franco=3.085714  Clayton M. Matthies=4.485715  Burton Delgado=3.314285  Eliseo Jimenez=3.714284  Eugenio Krause=3.599998  O.C. Behar=2.257144  Un Archer=3.342856  Scott Gray=2.314287  Yun Mason=2.085716  K.X. Hanks=2.600001  Quincy Welch=4.314285  Jenny Fiston=3.257142  Vanda Rodriguez=2.685715  Jefferey Lawrence=2.914286  Sebastian Whitney=4.685716  Аlexander Torres=3.857141  Laura Ellison=1.742859  Dexter Delgado=4.628573  Cherie Mckay=2.8  Mari J. Chafeldt=3.514284  S.S. Barrett=5.11429  Jermaine K. Haynes=2.028573  Lex Montgomery=2.37143  Ashely Verbic=2.657143  Micah Hodges=2.057145  Alice T. Weiss=2.542858  Marie H. Kaiser=2.37143  Oswaldo Ellison=2.857143  Avalon Bean=2.257144  Maxwell P. Covich=4.857146  Rebecca Hoffman=3.085714  Jonas Wells=2.285716 }
+ 
+
+ 
+
+Visitor={ Bunk=683.9282  Idle=224.3551  Walking=1490.879  Carrying=20.27018  Bar Table=565.1411  Oak Tree=49.78604  Pine Tree=31.07135  Treadmill=91.81253  Exercise Bar=154.9844  Video Screen=154.5599  Decorative Plant=63.01138  Bench=318.428  Airlock=111.6908  Small Table=33.22225 }
+ 
+
+ 
+
+Carrier Bot={ Idle=5816.489  Carrying=6507.938  Walking=13463.64  Airlock=48.90038  Bot Auto Repair=644.0706  Ko=9.435318  Dead=19.13391 }
+ 
+
+Constructor Bot={ Idle=10762.1  Walking=11493.25  Carrying=1885.797  Airlock=360.6083  Wind Turbine=331.8665  Bot Auto Repair=282.0653  Solar Panel=283.7803  Ko=11.83717  Dead=24.17854 }
+ 
+
+Driller Bot={ Idle=7837.005  Mine=5475.472  Bot Auto Repair=769.7707  Walking=9133.461  Airlock=873.5532  Ko=14.17272  Dead=27.77284 }
+ 
