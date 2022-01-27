@@ -1,4 +1,5 @@
-﻿using Planetbase;
+﻿using ModWrapper;
+using Planetbase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace ColonistReport
 {
-    public class ColonistReportsMod : ModWrapper.ModBase
+    public class ColonistReportsMod : ModBase, IMod
     {
         GuiReportsMenuItem ReportsMenuItem { get; set; } 
         GuiReportsMenu ReportsMenu { get; set; }

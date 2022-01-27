@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace ImprovedComponents
 {
-    public class ImprovedComponentsMod : ModBase
+    public class ImprovedComponentsMod : ModBase, IMod
     {
         public override void Init()
         {

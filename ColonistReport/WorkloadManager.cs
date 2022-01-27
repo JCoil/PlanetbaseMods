@@ -9,6 +9,7 @@ namespace ColonistReport
 {
     public class WorkloadManager : Singleton<WorkloadManager>
     {
+        const float RefreshesPerDay = 2f;
         public static List<ColonistsWorkload> AllWorkloads { get; private set; } 
 
         private float mTime;
@@ -31,7 +32,7 @@ namespace ColonistReport
         {
             if(mRefreshPeriod < 0)
             {
-                mRefreshPeriod = StatsCollector.getInstance().mRefreshPeriod / StatsCollector.RefreshesPerDay;
+                mRefreshPeriod = StatsCollector.getInstance().mRefreshPeriod / RefreshesPerDay;
             }
 
             foreach (var workload in AllWorkloads)

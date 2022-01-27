@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheatTools", "CheatTools\Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColonistReports", "ColonistReport\ColonistReports.csproj", "{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreManufacturingLimits", "MoreManufacturingLimits\MoreManufacturingLimits.csproj", "{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImprovedManufacturingLimits", "MoreManufacturingLimits\ImprovedManufacturingLimits.csproj", "{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,10 +22,10 @@ Global
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F207875B-9308-4B84-861C-18AEDE338F29}.Release|Any CPU.Build.0 = Release|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.ActiveCfg = Release|Any CPU

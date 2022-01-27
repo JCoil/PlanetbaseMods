@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ModWrapper
 {
-    public abstract class ModBase : IMod
+    public abstract class ModBase
     {
         public GameStateGame Game { get; set; }
         public GuiMenuSystem MenuSystem { get; set; }
