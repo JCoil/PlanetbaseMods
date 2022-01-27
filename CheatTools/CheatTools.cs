@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace CheatTools
 {
-    public class CheatTools : ModBase
+    public class CheatTools : ModBase, IMod
     {
         public override void Init()
         {
