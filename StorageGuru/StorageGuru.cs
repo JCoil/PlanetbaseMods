@@ -5,17 +5,18 @@ using System.Linq;
 using System;
 using UnityEngine;
 using Redirection;
+using ModWrapper;
 
 namespace StorageGuru
 {
-    public class StorageGuruMod : IMod
+    public class StorageGuruMod : ModBase, IMod
     { 
-        public static StorageManifestController StorageController { get; private set; }
+        public static StorageManifestController StorageController { get; set; }
 
-        public static GameStateGame Game { get; private set; }
+        public static GameStateGame GameAccess { get; private set; }
         public static List<ResourceType> MasterResourceDefinitions { get; private set; }
 
-        public void Init()
+        public override void Init()
         {
             ContentManager.Init();
             Redirector.PerformRedirections();
@@ -23,24 +24,26 @@ namespace StorageGuru
             Debug.Log("[MOD] Storage Guru activated");
         }
 
-        /// <summary>
-        /// Called by patcher while in GameStateGame
-        /// </summary>
-        public void Update()
+        public override void Update(float timeStep)
         {
             //Debug.Log("[MOD] Storage Guru updating");
-            Game = GameManager.getInstance().getGameState() as GameStateGame;
-
-            if (MenuController.MenuSystem != Game.mMenuSystem)
-            {
-                // Looks like we've come from Title, so we'll re-initialise
-                MenuController.Init(Game.mMenuSystem);
-                RefreshResourceDefinitions();
-                StorageController = new StorageManifestController();
-                ContentManager.CreateAlternativeIcons(MasterResourceDefinitions);
-            }
+            StorageGuruMod.GameAccess = Game;
 
             MenuController.Update(Game.mMenuSystem);
+        }
+
+        public override void OnGameStart()
+        {
+            MenuController.Init(Game.mMenuSystem);
+            RefreshResourceDefinitions();
+
+            if (StorageController == null)
+            {
+                StorageController = new StorageManifestController();
+            }
+
+            StorageController.ConsolidateManifest();
+            ContentManager.CreateAlternativeIcons(MasterResourceDefinitions);
         }
 
         private void RefreshResourceDefinitions()
