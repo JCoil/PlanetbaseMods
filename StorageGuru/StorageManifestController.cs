@@ -14,9 +14,9 @@ namespace StorageGuru
         readonly string ManifestAutoFileName = @"autosave.txt";
         private string ManifestFileName;
 
-        private List<ManifestEntry> StoreManifest = new List<ManifestEntry>(); 
+        private readonly List<ManifestEntry> StoreManifest = new List<ManifestEntry>(); 
 
-        private bool Loading;
+        private readonly bool Loading;
 
         public StorageManifestController()
         {

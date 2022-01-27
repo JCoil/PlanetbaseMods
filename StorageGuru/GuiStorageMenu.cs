@@ -23,6 +23,12 @@ namespace StorageGuru
 
         public static void Update(GuiMenuSystem menuSystem)
         {
+            //this is mostly to remove the "remove unused parameter if its not part of a shipped public API" message
+            if (menuSystem is null)
+            {
+                throw new ArgumentNullException(nameof(menuSystem));
+            }
+
             if (MenuSystem.mCurrentMenu == StorageMenu)
             {
                 StorageMenu.Update();
@@ -46,6 +52,12 @@ namespace StorageGuru
 
         public static void OnStorageMenuItemPressed(object parameter)
         {
+            //this is mostly to remove the "remove unused parameter if its not part of a shipped public API" message
+            if (parameter is null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
+
             StorageGuruMod.Game.mActiveModule = (Selection.getSelected() as Module);
 
             if (StorageGuruMod.Game.mActiveModule is Module module)

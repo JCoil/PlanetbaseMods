@@ -1,5 +1,4 @@
 ﻿using Planetbase;
-using Redirection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +9,7 @@ namespace StorageGuru
 {
     public abstract class RedirectModule : Module
     {
-        [RedirectFrom(typeof(Module))]
-        public static new Module findStorage(Character character)
+        public static Module FindStorage(Character character)
         {
             float num = float.MaxValue;
             Module result = null;

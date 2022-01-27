@@ -10,7 +10,9 @@ namespace StorageGuru
     public class SerializeHelper
     {
         private const string moduleSeperator = ":";
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         private const string resourceWrapperL = "{";
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         private const string resourceWrapperR = "}";
         private const char resourceDelim = ',';
         private const string targetNamespace = "Planetbase.";
@@ -18,6 +20,12 @@ namespace StorageGuru
 
         public string SerializeManifest(TextWriter writer, Dictionary<Module, List<Type>> manifest)
         {
+            //this is mostly to remove the "remove unused parameter if its not part of a shipped public API" message
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
             StringBuilder sb = new StringBuilder();
 
             foreach(var entry in manifest)

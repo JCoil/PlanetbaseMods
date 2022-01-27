@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine;
-using Redirection;
 
 namespace StorageGuru
 {
-    public class StorageGuruMod : IMod
+    public class StorageGuruMod
     { 
         public static StorageManifestController StorageController { get; private set; }
 
         public static GameStateGame Game { get; private set; }
         public static List<ResourceType> MasterResourceDefinitions { get; private set; }
 
-        public void Init()
+        public static void Init()
         {
             ContentManager.Init();
-            Redirector.PerformRedirections();
 
             Debug.Log("[MOD] Storage Guru activated");
         }
@@ -63,7 +61,9 @@ namespace StorageGuru
         private Dictionary<Character, Module> characterTargets = new Dictionary<Character, Module>();
 
         [Obsolete("Storage targeting now handled by a redirect to StorageModuleRedirect from Module.findStorage")]
+#pragma warning disable IDE0051 // Remove unused private members
         private void RedirectCharacters()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             carriedResources = Character.mCharacters.Where(x => x.getLoadedResource() != null)
                 .ToDictionary(y => y, x => x.getLoadedResource()); // Get all carried resources across all characters
