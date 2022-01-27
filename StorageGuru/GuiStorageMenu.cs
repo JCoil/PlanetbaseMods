@@ -60,12 +60,12 @@ namespace StorageGuru
 
             StorageGuruMod.Game.mActiveModule = (Selection.getSelected() as Module);
 
-            if (StorageGuruMod.Game.mActiveModule is Module module)
+            if (StorageGuruMod.GameAccess.mActiveModule is Module module)
             {
                 StorageMenu.ActiveStorageModule = module;
                 StorageMenu.NeedsRefresh = true;
 
-                StorageGuruMod.Game.mMode = GameStateGame.Mode.CloseCamera;
+                StorageGuruMod.GameAccess.mMode = GameStateGame.Mode.CloseCamera;
                 Construction selectedConstruction = Selection.getSelectedConstruction();
                 CameraManager.getInstance().focusOnPosition(selectedConstruction.getPosition(), selectedConstruction.getRadius() + 10f);
                 selectedConstruction.setRenderTop(false);
@@ -124,7 +124,7 @@ namespace StorageGuru
                         addItem(new GuiMenuItem(ContentManager.DisableAllIcon, "Disable All", OnDisableAllToggled));
                     }
 
-                    addBackItem(new GuiDefinitions.Callback(StorageGuruMod.Game.onButtonCancelEdit));
+                    addBackItem(new GuiDefinitions.Callback(StorageGuruMod.GameAccess.onButtonCancelEdit));
 
                     NeedsRefresh = false;
                 }
