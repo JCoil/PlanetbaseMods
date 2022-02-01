@@ -27,8 +27,9 @@ namespace ImprovedComponents
             base.addResourceProduction<Metal>(ResourceSubtype.None);
 
             this.mEmbeddedResourceCount = 3;
-            this.mResourceProductionPeriod = 240f;
-            this.mPowerGeneration = -3000;
+            this.mResourceProductionPeriod = 180f;
+            this.mPowerGeneration = -2000;
+            this.mWaterGeneration = -500;
 
             this.mFlags = 1572904;
             this.mOperatorSpecialization = TypeList<Specialization, SpecializationList>.find<Worker>();

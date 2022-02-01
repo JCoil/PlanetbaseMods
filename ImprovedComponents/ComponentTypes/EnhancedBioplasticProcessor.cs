@@ -27,7 +27,7 @@ namespace ImprovedComponents
 			base.addResourceProduction<Bioplastic>(ResourceSubtype.None);
 
 			this.mEmbeddedResourceCount = 3;
-			this.mResourceProductionPeriod = 200f;
+			this.mResourceProductionPeriod = 150f;
 			this.mPowerGeneration = -3000;
 
 			this.mFlags = 1572904;
