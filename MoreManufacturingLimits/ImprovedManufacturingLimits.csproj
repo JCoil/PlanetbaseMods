@@ -45,11 +45,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
-      <Path>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\System.Xml.dll</Path>
-      <Private>False</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -67,9 +62,6 @@
     <Compile Include="ImprovedManufacturingLimitsMod.cs" />
     <Compile Include="Redirects\ModuleRedirect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ImprovedManufacturingLimitsData\config.txt" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
