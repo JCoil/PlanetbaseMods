@@ -10,9 +10,9 @@ namespace ImprovedManufacturingLimits
 {
     public class ImprovedManufacturingLimitsMod : ModBase, IMod
     {
-        public static int RawMaxValue = 9999;
-        public static int ManufacturedMaxValue = 999;
-        public static int BotsMaxValue = 99;
+        public static int RawMaxValue = 10000;
+        public static int ManufacturedMaxValue = 1000;
+        public static int BotsMaxValue = 100;
 
         public const int FlagRawResource = 256;
         private List<ResourceType> NewResourceLimits;
