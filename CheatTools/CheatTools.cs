@@ -20,6 +20,7 @@ namespace CheatTools
             StringList.mStrings.Add("force_structures", "Force Structures");
             StringList.mStrings.Add("force_components", "Force Components");
             StringList.mStrings.Add("unlock_tech", "Unlock all Tech");
+            StringList.mStrings.Add("clear_components", "Clear Components");
 
             Debug.Log("[MOD] Cheat Tools activated");
         }
@@ -44,16 +45,24 @@ namespace CheatTools
 
     public class GuiCheatMenu : GuiWindow
     {
+        Construction SelectedConstruction { get; set; }
+
         public GuiCheatMenu() : base(new GuiLabelItem(StringList.get("cheat_menu"), null, null, 0, FontSize.Normal), null, null)
         {
+            if(Selection.getSelectedConstruction() is Construction construction && construction.getComponentCount() > 0)
+            {
+                SelectedConstruction = construction;
+            }
+
             AddButton("force_structures", new GuiDefinitions.Callback(OnForceStructures), true);
             AddButton("force_components", new GuiDefinitions.Callback(OnForceComponents), true);
             AddButton("unlock_tech", new GuiDefinitions.Callback(OnUnlockTech), true);
+            AddButton("clear_components", new GuiDefinitions.Callback(OnClearComponents), SelectedConstruction != null);
         }
 
         public void AddButton(string key, GuiDefinitions.Callback callback, bool enabled)
         {
-            GuiButtonItem guiButtonItem = new GuiButtonItem(StringList.get(key), callback, FontType.Title);
+            GuiButtonItem guiButtonItem = new GuiButtonItem(StringList.get(key), callback, FontType.Normal);
             guiButtonItem.setEnabled(enabled);
             mRootItem.addChild(guiButtonItem);
         }
@@ -113,6 +122,20 @@ namespace CheatTools
                     {
                         manager.acquire(tech);
                     }
+                }
+            }
+        }
+
+        private void OnClearComponents(object parameter)
+        {
+            if (SelectedConstruction != null)
+            {
+                var constructions = new ConstructionComponent[SelectedConstruction.getComponentCount()];
+                SelectedConstruction.getComponents().CopyTo(constructions);
+
+                foreach(var component in constructions)
+                {
+                    component.destroy();
                 }
             }
         }
