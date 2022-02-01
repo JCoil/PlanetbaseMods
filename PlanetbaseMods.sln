@@ -35,6 +35,7 @@ Global
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
