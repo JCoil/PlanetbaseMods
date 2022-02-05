@@ -1,6 +1,0 @@
-﻿<config version="12">
-  <!--Values above 9999 may render incorrectly-->
-  <rawmaxvalue value="9999" />
-  <manufacturedmaxvalue value="999" />
-  <botsmaxvalue value="99" />
-</config>
