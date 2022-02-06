@@ -34,10 +34,14 @@
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\PlanetbaseModUtilities\ref\0Harmony.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="PlanetbaseModUtilities">
+      <HintPath>..\PlanetbaseModUtilities\output\PlanetbaseModUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Redirector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,6 +54,7 @@
     </Reference>
     <Reference Include="UnityModManager">
       <HintPath>..\PlanetbaseModUtilities\ref\UnityModManager.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -61,13 +66,6 @@
     <None Include="Info.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PlanetbaseModUtilities\PlanetbaseModUtilities.csproj">
-      <Project>{4e53c23d-ca1d-4c14-b155-16111b611284}</Project>
-      <Name>PlanetbaseModUtilities</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,9 +1,5 @@
 ﻿using Planetbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlanetbaseModUtilities;
 using UnityEngine;
 
 namespace ImprovedComponents
@@ -26,8 +22,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringList.mStrings.Add("tech_gm_medicinal_plants", "GM Medicinal Plants DNA");
-            StringList.mStrings.Add("tech_gm_medicinal_plants_description", "Allows you to plant fast-growing GM Medicinal Plants");
+            StringUtils.GetGlobalStrings().Add("tech_gm_medicinal_plants", "GM Medicinal Plants DNA");
+            StringUtils.GetGlobalStrings().Add("tech_gm_medicinal_plants_description", "Allows you to plant fast-growing GM Medicinal Plants");
         }
     }
 }

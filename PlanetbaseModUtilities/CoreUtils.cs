@@ -12,6 +12,17 @@ namespace PlanetbaseModUtilities
     public static class CoreUtils
     {
         /// <summary>
+        ///  Get value of a Member on Containing Type via reflection
+        /// </summary>
+        /// <typeparam name="U">Containing Type</typeparam>
+        /// <typeparam name="V">Member Type</typeparam>
+        public static void SetMember<U, V>(string memberName, U containingInstance, V value, BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+        {
+            typeof(U).GetField(memberName, flags).SetValue(containingInstance, value);
+        }
+
+
+        /// <summary>
         /// Get value of a static Member on Containing Type via reflection
         /// </summary>
         /// <typeparam name="U">Containing Type</typeparam>
@@ -24,25 +35,17 @@ namespace PlanetbaseModUtilities
         /// <summary>
         ///  Get value of a Member on Containing Type via reflection
         /// </summary>
-        /// <typeparam name="U"></typeparam>
-        /// <typeparam name="V"></typeparam>
-        public static V GetMember<U,V>(string memberName, U containingObject, BindingFlags flags = BindingFlags.NonPublic|BindingFlags.Instance)
+        /// <typeparam name="U">Containing Type</typeparam>
+        /// <typeparam name="V">Member Type</typeparam>
+        public static V GetMember<U,V>(string memberName, U containingInstance, BindingFlags flags = BindingFlags.NonPublic|BindingFlags.Instance)
         {
-            var type = typeof(U);
-            Debug.Log("Got Type");
-            var field = type.GetField(memberName, flags);
-            Debug.Log("Got Field");
-            var value = field.GetValue(containingObject);
-            Debug.Log("Got Value");
-
-            return (V)value;
+            return (V)typeof(U).GetField(memberName, flags).GetValue(containingInstance);
         }
-
 
         /// <summary>
         ///  Get value of a Member on static Containing Type via reflection
         /// </summary>
-        /// <typeparam name="U"></typeparam>
+        /// <typeparam name="V">Member Type</typeparam>
         public static V GetMember<V>(string memberName, Type containingType, BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Static)
         {
             return (V)containingType.GetField(memberName, flags).GetValue(null);

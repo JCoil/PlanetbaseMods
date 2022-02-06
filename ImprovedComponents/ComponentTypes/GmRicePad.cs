@@ -1,14 +1,10 @@
 ﻿using Planetbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlanetbaseModUtilities;
 using UnityEngine;
 
 namespace ImprovedComponents
-{   
-	public class GmRicePad : ComponentType
+{
+    public class GmRicePad : ComponentType
 	{
 		public const string Name = "GM Rice Pad";
 		public const string Description = "A hydroponic vegetable pad";
@@ -44,7 +40,7 @@ namespace ImprovedComponents
 
 			// Need to borrow tooltip and prefab from RicePad because they are not generated correctly by initStrings
 			this.mTooltip = TypeList<ComponentType, ComponentTypeList>.find<RicePad>().getTooltip();
-			this.mPrefabName = TypeList<ComponentType, ComponentTypeList>.find<RicePad>().mPrefabName;
+			this.mPrefabName = "PrefabPadStarchyRice";
 
 			this.mRequiredTech = TypeList<Tech, TechList>.find<TechGmRice>();
 		}
@@ -57,8 +53,8 @@ namespace ImprovedComponents
 
 		public static void RegisterStrings()
 		{
-			StringList.mStrings.Add("component_gm_rice_pad", Name);
-			StringList.mStrings.Add("tooltip_gm_rice_pad", Description);
+			StringUtils.GetGlobalStrings().Add("component_gm_rice_pad", Name);
+			StringUtils.GetGlobalStrings().Add("tooltip_gm_rice_pad", Description);
 		}
 	}
 }

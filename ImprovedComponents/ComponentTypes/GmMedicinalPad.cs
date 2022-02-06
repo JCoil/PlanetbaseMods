@@ -1,14 +1,10 @@
 ﻿using Planetbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlanetbaseModUtilities;
 using UnityEngine;
 
 namespace ImprovedComponents
 {
-	public class GmMedicinalPad : ComponentType
+    public class GmMedicinalPad : ComponentType
 	{
 		public const string Name = "GM Medicinal Pad";
 		public const string Description = "A vegetable pad for fast-growing Medicinal Plants.";
@@ -48,8 +44,8 @@ namespace ImprovedComponents
 
 		public static void RegisterStrings()
 		{
-			StringList.mStrings.Add("component_gm_medicinal_pad", Name);
-			StringList.mStrings.Add("tooltip_gm_medicinal_pad", Description);
+			StringUtils.GetGlobalStrings().Add("component_gm_medicinal_pad", Name);
+			StringUtils.GetGlobalStrings().Add("tooltip_gm_medicinal_pad", Description);
 		}
 	}
 }

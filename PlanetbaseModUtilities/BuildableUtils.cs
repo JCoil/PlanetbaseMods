@@ -17,7 +17,14 @@ namespace PlanetbaseModUtilities
         public static List<ConstructionComponent> GetComponents() => 
             CoreUtils.GetMember<ConstructionComponent, List<ConstructionComponent>>("mComponents");
 
-        public static List<ComponentType> GetComponentTypes<U>(U moduleType) where U : ModuleType =>
-            CoreUtils.GetMember<ModuleType, ComponentType[]>("mComponentTypes", moduleType).ToList();
+        public static List<ComponentType> GetComponentTypes(ModuleType moduleType)
+        {
+            return CoreUtils.GetMember<ModuleType, ComponentType[]>("mComponentTypes", moduleType).ToList();
+        }
+
+        public static void SetComponentTypes(ModuleType moduleType, List<ComponentType> componentTypes)
+        {
+            CoreUtils.SetMember<ModuleType, ComponentType[]>("mComponentTypes", moduleType, componentTypes.ToArray());
+        }
     }
 }

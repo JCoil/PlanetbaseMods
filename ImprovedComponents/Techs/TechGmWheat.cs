@@ -1,9 +1,5 @@
 ﻿using Planetbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlanetbaseModUtilities;
 using UnityEngine;
 
 namespace ImprovedComponents
@@ -26,8 +22,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringList.mStrings.Add("tech_gm_wheat", "GM Wheat DNA");
-            StringList.mStrings.Add("tech_gm_wheat_description", "Allows you to grow high-yield GM Wheat");
+            StringUtils.GetGlobalStrings().Add("tech_gm_wheat", "GM Wheat DNA");
+            StringUtils.GetGlobalStrings().Add("tech_gm_wheat_description", "Allows you to grow high-yield GM Wheat");
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using Planetbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlanetbaseModUtilities;
 
 namespace ImprovedComponents
 {
@@ -25,5 +21,11 @@ namespace ImprovedComponents
 
         public static string RicePadTypeName =>
             Util.camelCaseToLowercase(TypeList<ComponentType, ComponentTypeList>.find<RicePad>().GetType().Name);
+
+        public static string GetPrefabName<T>() where T : ComponentType =>
+            GetPrefabName(TypeList<ComponentType, ComponentTypeList>.find<T>());
+
+        public static string GetPrefabName(ComponentType componentType) =>
+            CoreUtils.GetMember<ComponentType, string>("mComponentTypes", componentType);
     }
 }

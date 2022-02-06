@@ -66,7 +66,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\ImprovedComponents"
+    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "$(ProjectDir)output"
+
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

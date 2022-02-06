@@ -1,9 +1,6 @@
 ﻿using Planetbase;
-using System;
+using PlanetbaseModUtilities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ImprovedComponents
@@ -46,8 +43,8 @@ namespace ImprovedComponents
 
 		public static void RegisterStrings()
 		{
-			StringList.mStrings.Add("component_enhanced_bioplastic_processor", Name);
-			StringList.mStrings.Add("tooltip_enhanced_bioplastic_processor", Description);
+			StringUtils.GetGlobalStrings().Add("component_enhanced_bioplastic_processor", Name);
+			StringUtils.GetGlobalStrings().Add("tooltip_enhanced_bioplastic_processor", Description);
 		}
 	}
 }

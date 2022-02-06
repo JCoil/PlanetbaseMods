@@ -3,12 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Planetbase;
 using static UnityModManagerNet.UnityModManager;
+using UnityEngine;
 
 namespace PlanetbaseModUtilities
 {
     public abstract class ModBase
     {
+        public GameStateGame Game { get; private set; }
+        public GuiMenuSystem MenuSystem { get; private set; }
+
         #region Class Contract
 
         /// <summary>
@@ -24,7 +29,18 @@ namespace PlanetbaseModUtilities
         /// <summary>
         /// Called when we enter GameStateGame
         /// </summary>
-        //public abstract void OnGameStart();
+        public abstract void OnGameStart();
+
+        private void Update(ModEntry modEntry, float timeStep)
+        {
+            if (GameManager.getInstance().getGameState() is GameStateGame game)
+            {
+                Game = game;
+                OnGameStart();
+            }
+
+            OnUpdate(modEntry, timeStep);
+        }
 
         #endregion
 

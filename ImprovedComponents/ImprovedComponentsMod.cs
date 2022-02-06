@@ -1,18 +1,16 @@
-﻿using ModWrapper;
-using Planetbase;
-using System;
-using System.Collections.Generic;
+﻿using Planetbase;
+using PlanetbaseModUtilities;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using static UnityModManagerNet.UnityModManager;
 
 namespace ImprovedComponents
 {
-    public class ImprovedComponentsMod : ModBase, IMod
+    public class ImprovedComponentsMod : ModBase
     {
-        public override void Init()
+        public static void Init(ModEntry modEntry) => InitializeMod(new ImprovedComponentsMod(), modEntry, "ImprovedComponents");
+
+        public override void OnInitialized()
         {
             RegisterStrings();
             RegisterNewTechs();
@@ -21,7 +19,7 @@ namespace ImprovedComponents
             Debug.Log("[MOD] ImprovedComponents activated");
         }
 
-        private static void RegisterStrings()
+        private void RegisterStrings()
         {
             TechImprovedProcessing.RegisterStrings();
             TechGmRice.RegisterStrings();
@@ -35,52 +33,53 @@ namespace ImprovedComponents
             GmMedicinalPad.RegisterStrings();
         }
 
-        private static void RegisterNewTechs()
+        private void RegisterNewTechs()
         {
-            var techList = TypeList<Tech, TechList>.getInstance();
+            var techList = TechList.get();
 
-            techList.add(new TechImprovedProcessing());
-            techList.add(new TechGmRice());
-            techList.add(new TechGmWheat());
-            techList.add(new TechGmMedicinalPlants());
+            techList.Add(new TechImprovedProcessing());
+            techList.Add(new TechGmRice());
+            techList.Add(new TechGmWheat());
+            techList.Add(new TechGmMedicinalPlants());
         }
 
-        private static void RegisterNewComponents()
+        private void RegisterNewComponents()
         {
             // Register new components to global lists
-            var componentTypeList = TypeList<ComponentType, ComponentTypeList>.getInstance();
+            var componentTypeList = TypeList<ComponentType, ComponentTypeList>.get();
 
-            componentTypeList.add(new EnhancedMetalProcessor());
-            componentTypeList.add(new EnhancedBioplasticProcessor());
-            componentTypeList.add(new GmRicePad());
-            componentTypeList.add(new GmWheatPad());
-            componentTypeList.add(new GmMedicinalPad());
+            componentTypeList.Add(new EnhancedMetalProcessor());
+            componentTypeList.Add(new EnhancedBioplasticProcessor());
+            componentTypeList.Add(new GmRicePad());
+            componentTypeList.Add(new GmWheatPad());
+            componentTypeList.Add(new GmMedicinalPad());
 
             // Add new components to processing plants
-            var processingPlantComponents = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeProcessingPlant>().mComponentTypes.ToList();
+            var processingPlantType = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeProcessingPlant>();
+            var processingPlantComponents = BuildableUtils.GetComponentTypes(processingPlantType);
 
             processingPlantComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<EnhancedBioplasticProcessor>());
             processingPlantComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<EnhancedMetalProcessor>());
 
-            TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeProcessingPlant>().mComponentTypes = processingPlantComponents.ToArray();
+            BuildableUtils.SetComponentTypes(processingPlantType, processingPlantComponents);
 
+            return;
             // Add new components to bio domes
-            var bioDomeComponents = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeBioDome>().mComponentTypes.ToList();
+            var bioDomType = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeBioDome>();
+            var bioDomeComponents = bioDomType.getComponentTypes(bioDomType.getDefaultSize()).ToList();
 
             bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<GmRicePad>());
             bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<GmWheatPad>());
             bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<GmMedicinalPad>());
-
-            TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeBioDome>().mComponentTypes = bioDomeComponents.ToArray();
         }
 
         public override void OnGameStart()
         {
-            // Nothing required here
+
         }
 
-        public override void Update(float timeStep)
-        {
+        public override void OnUpdate(ModEntry modEntry, float timeStep)
+        {        
             // Nothing required here
         }
     }

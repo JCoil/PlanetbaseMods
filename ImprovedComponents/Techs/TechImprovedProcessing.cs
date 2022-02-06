@@ -1,9 +1,5 @@
 ﻿using Planetbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlanetbaseModUtilities;
 using UnityEngine;
 
 namespace ImprovedComponents
@@ -26,8 +22,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringList.mStrings.Add("tech_improved_processing", "Improved Processing");
-            StringList.mStrings.Add("tech_improved_processing_description", 
+            StringUtils.GetGlobalStrings().Add("tech_improved_processing", "Improved Processing");
+            StringUtils.GetGlobalStrings().Add("tech_improved_processing_description", 
                 "Allows you to construct enhanced processors, which refine raw materials more efficiently at the cost of much higher power usage");
         }
     }
