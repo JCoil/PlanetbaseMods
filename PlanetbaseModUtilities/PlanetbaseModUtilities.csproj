@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}</ProjectGuid>
+    <ProjectGuid>{4E53C23D-CA1D-4C14-B155-16111B611284}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CheatTools</RootNamespace>
-    <AssemblyName>CheatTools</AssemblyName>
+    <RootNamespace>PlanetbaseModUtilities</RootNamespace>
+    <AssemblyName>PlanetbaseModUtilities</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,9 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\0Harmony.dll</HintPath>
+      <HintPath>ref\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
@@ -50,30 +53,20 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityModManager">
-      <HintPath>..\UnityModManager.dll</HintPath>
+      <HintPath>ref\UnityModManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheatTools.cs" />
-    <Compile Include="CheatToolsStrings.cs" />
+    <Compile Include="BuildableUtils.cs" />
+    <Compile Include="CoreUtils.cs" />
+    <Compile Include="ModBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Info.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PlanetbaseModUtilities\PlanetbaseModUtilities.csproj">
-      <Project>{4e53c23d-ca1d-4c14-b155-16111b611284}</Project>
-      <Name>PlanetbaseModUtilities</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <Compile Include="StringUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\CheatTools"
-powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'</PostBuildEvent>
+    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\ImprovedComponents"
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
