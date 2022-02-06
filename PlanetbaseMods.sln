@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColonistReports", "Colonist
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImprovedManufacturingLimits", "MoreManufacturingLimits\ImprovedManufacturingLimits.csproj", "{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetbaseModUtilities", "PlanetbaseModUtilities\PlanetbaseModUtilities.csproj", "{4E53C23D-CA1D-4C14-B155-16111B611284}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,7 +27,6 @@ Global
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,6 +37,10 @@ Global
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E53C23D-CA1D-4C14-B155-16111B611284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E53C23D-CA1D-4C14-B155-16111B611284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E53C23D-CA1D-4C14-B155-16111B611284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E53C23D-CA1D-4C14-B155-16111B611284}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
