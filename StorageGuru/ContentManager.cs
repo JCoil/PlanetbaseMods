@@ -1,10 +1,13 @@
-﻿using Planetbase;
+﻿using HarmonyLib;
+using Planetbase;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using static UnityModManagerNet.UnityModManager;
+using System.Reflection;
+using PlanetbaseModUtilities;
 using System.IO;
 using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace StorageGuru
 {
@@ -19,9 +22,12 @@ namespace StorageGuru
 
         public static Dictionary<string, Texture2D> GreyscaleTextures; 
 
+        
         public static void Init()
         {
-            StringList.mStrings.Add("tooltip_manage_storage", "Manage Storage");
+            //var strings = typeof(StringList).GetField("mStrings", BindingFlags.NonPublic | BindingFlags.Instance);
+            //StringList.strings.Add("tooltip_manage_storage", "Manage Storage");
+            StringUtils.GetGlobalStrings().Add("tooltip_manage_storage", "Manage Storage");
             GreyscaleTextures = new Dictionary<string, Texture2D>(); 
             LoadContent();
         }

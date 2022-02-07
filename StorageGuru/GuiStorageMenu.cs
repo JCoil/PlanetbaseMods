@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -29,19 +30,25 @@ namespace StorageGuru
                 throw new ArgumentNullException(nameof(menuSystem));
             }
 
-            if (MenuSystem.mCurrentMenu == StorageMenu)
+            FieldInfo currentMenuGet = typeof(GuiMenuSystem).GetField("mCurrentMenu", BindingFlags.NonPublic | BindingFlags.Instance);
+            var currentMenuSet = currentMenuGet.GetValue(currentMenuGet) as GuiMenu;
+            if (currentMenuSet == StorageMenu)
             {
                 StorageMenu.Update();
             }
 
             // If we're viewing an action menu
-            if (MenuSystem.mMenuAction is GuiMenu actionMenu)
+            FieldInfo menuActionGet = typeof(GuiMenuSystem).GetField("mMenuAction", BindingFlags.NonPublic | BindingFlags.Instance);
+            var menuActionSet = menuActionGet.GetValue(menuActionGet) as GuiMenu;
+            if (menuActionSet is GuiMenu actionMenu)
             {
                 // That is for a built storage module
-                if (Selection.getSelected() is Module module && module.getModuleType() is ModuleTypeStorage && module.isBuilt())
+                if (Selection.getSelected() is Planetbase.Module module && module.getModuleType() is ModuleTypeStorage && module.isBuilt())
                 {
                     // That doesn't already contain our storage button
-                    if (!actionMenu.mItems.Exists(x => x is GuiStorageMenuItem))
+                    FieldInfo itemsGet = typeof(GuiMenu).GetField("mItems", BindingFlags.NonPublic | BindingFlags.Instance);
+                    var itemsSet = itemsGet.GetValue(itemsGet) as List<GuiMenuItem>;
+                    if (itemsSet.Exists(x => x is GuiStorageMenuItem))
                     {
                         // Add our storage button
                         MenuSystem.mMenuAction.mItems.Insert(1, StorageMenuItem);
@@ -58,9 +65,9 @@ namespace StorageGuru
                 throw new ArgumentNullException(nameof(parameter));
             }
 
-            StorageGuruMod.Game.mActiveModule = (Selection.getSelected() as Module);
+            StorageGuruMod.Game.mActiveModule = (Selection.getSelected() as Planetbase.Module);
 
-            if (StorageGuruMod.GameAccess.mActiveModule is Module module)
+            if (StorageGuruMod.GameAccess.mActiveModule is Planetbase.Module module)
             {
                 StorageMenu.ActiveStorageModule = module;
                 StorageMenu.NeedsRefresh = true;
@@ -80,7 +87,7 @@ namespace StorageGuru
         public GuiStorageMenuItem StorageMenuItem { get; private set; }
         public bool EnableAll { get; private set; }
 
-        public Module ActiveStorageModule { get; set; }
+        public Planetbase.Module ActiveStorageModule { get; set; }
 
         public bool NeedsRefresh;
 

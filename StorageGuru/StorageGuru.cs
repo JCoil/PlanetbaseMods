@@ -1,35 +1,41 @@
-﻿using Planetbase;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
+﻿using HarmonyLib;
+using Planetbase;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityModManagerNet.UnityModManager;
+using System.Reflection;
+using PlanetbaseModUtilities;
+using System.IO;
+using System.Linq;
 
 namespace StorageGuru
 {
-    public class StorageGuruMod : ModBase, IMod
+    public class StorageGuruMod : ModBase
     { 
         public static StorageManifestController StorageController { get; set; }
 
         public static GameStateGame GameAccess { get; private set; }
+        FieldInfo gameAccess = typeof(GameStateGame).GetField("Mode", BindingFlags.NonPublic | BindingFlags.Static);
         public static List<ResourceType> MasterResourceDefinitions { get; private set; }
 
-        public static void Init()
+        public static void Init(ModEntry modEntry)
         {
+            InitializeMod(new StorageGuruMod(), modEntry, "StorageGuru");
             ContentManager.Init();
 
             Debug.Log("[MOD] Storage Guru activated");
         }
 
-        public override void Update(float timeStep)
+        public void Update(float timeStep)
         {
             //Debug.Log("[MOD] Storage Guru updating");
-            StorageGuruMod.GameAccess = Game;
+            gameAccess = Game;
 
             MenuController.Update(Game.mMenuSystem);
         }
 
-        public override void OnGameStart()
+        public void OnGameStart()
         {
             MenuController.Init(Game.mMenuSystem);
             RefreshResourceDefinitions();
@@ -58,16 +64,18 @@ namespace StorageGuru
 
         private Dictionary<Character, Resource> carriedResources;
         private Dictionary<Character, Resource> newCarriedResources;
-        private Dictionary<Character, Module> newCharacterTargets;
+        private Dictionary<Character, Planetbase.Module> newCharacterTargets;
 
-        private Dictionary<Character, Module> characterTargets = new Dictionary<Character, Module>();
+        private Dictionary<Character, Planetbase.Module> characterTargets = new Dictionary<Character, Planetbase.Module>();
 
         [Obsolete("Storage targeting now handled by a redirect to StorageModuleRedirect from Module.findStorage")]
 #pragma warning disable IDE0051 // Remove unused private members
         private void RedirectCharacters()
 #pragma warning restore IDE0051 // Remove unused private members
         {
-            carriedResources = Character.mCharacters.Where(x => x.getLoadedResource() != null)
+            FieldInfo characters = typeof(Character).GetField("mCharacters", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.IgnoreReturn);
+            var value = characters.GetValue(characters) as List<Character>;
+            carriedResources = value.Where(x => x.getLoadedResource() != null)
                 .ToDictionary(y => y, x => x.getLoadedResource()); // Get all carried resources across all characters
 
             newCarriedResources = carriedResources.Where(x => !characterTargets.ContainsKey(x.Key))
@@ -75,11 +83,13 @@ namespace StorageGuru
 
             if (newCarriedResources.Count == 0) { return; }
 
+            MethodInfo cat = typeof(Planetbase.Module).GetMethod("getCategory()", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.IgnoreReturn);
+            var value2 = cat.GetMethodBody();
             newCarriedResources = newCarriedResources.Where(x => // That are bound for a storage module
             x.Key.getTarget() is Target target
-            && target.getSelectable() is Module module
+            && target.getSelectable() is Planetbase.Module module
             && module.isBuilt()
-            && module.getCategory() == Module.Category.Storage)
+            && value2 == Planetbase.Module.Category.Storage)
                 .ToDictionary(x => x.Key, y => y.Value);
 
             // Index resources and list valid target modules for each
@@ -93,14 +103,16 @@ namespace StorageGuru
             {
                 if (kvp.Value != null)
                 {
-                    kvp.Key.setTarget(new Target(kvp.Value, kvp.Value.getRadius() / 1.8f));
+                    MethodInfo target = typeof(Character).GetMethod("setTarget()", BindingFlags.NonPublic | BindingFlags.Instance);
+                    var value3 = target.GetMethodBody();
+                    value3(new Target(kvp.Value, kvp.Value.getRadius() / 1.8f));
                 }
 
                 characterTargets.Add(kvp.Key, kvp.Value);
             }
         }
 
-        public Module FindNearestModule(Vector3 position, List<Module> modules)
+        public Planetbase.Module FindNearestModule(Vector3 position, List<Planetbase.Module> modules)
         {
             try
             {
@@ -121,6 +133,16 @@ namespace StorageGuru
             return null;
         }
 
-        #endregion
-    }
+		public override void OnInitialized()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void OnUpdate(ModEntry modEntry, float timeStep)
+		{
+			throw new NotImplementedException();
+		}
+
+		#endregion
+	}
 }

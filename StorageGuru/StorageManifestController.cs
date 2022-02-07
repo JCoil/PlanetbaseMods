@@ -4,11 +4,10 @@ using Planetbase;
 using UnityEngine;
 using System.IO;
 using System;
-using System.Xml;
 
 namespace StorageGuru
 {
-    public class StorageManifestController
+	public class StorageManifestController
     {
         // Legacy storage - to be removed
         readonly string ManifestDirectoryPath = @"Mods\StorageGuruData\Manifests\";
@@ -19,10 +18,11 @@ namespace StorageGuru
 
         private readonly bool Loading;
 
-        private List<ManifestEntry> StoreManifest;
+        //private List<ManifestEntry> StoreManifest;
         private List<ManifestEntry.Blueprint> Blueprints;
 
-        public StorageManifestController()
+		[Obsolete]
+		public StorageManifestController()
         {
             StoreManifest = new List<ManifestEntry>();
             Loading = true;
