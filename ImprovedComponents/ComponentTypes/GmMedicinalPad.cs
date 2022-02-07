@@ -22,10 +22,10 @@ namespace ImprovedComponents
 
 			base.addResourceProduction<MedicinalPlants>(ResourceSubtype.None);
 
-			this.mResourceProductionPeriod = 405f;
+			this.mResourceProductionPeriod = 360f;
 			this.mConditionDecayTime = 720f;
 			this.mPowerGeneration = -500;
-			this.mWaterGeneration = -250;
+			this.mWaterGeneration = -500;
 
 			this.mRadius = 0.875f;
 			this.mHeight = 1f;

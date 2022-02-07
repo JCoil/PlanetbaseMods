@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using Planetbase;
 using System;
 using System.Collections.Generic;
@@ -13,16 +13,7 @@ namespace CheatTools
     {
         public static void Init(ModEntry modEntry) => InitializeMod(new CheatTools(), modEntry, "CheatTools");
 
-<<<<<<< Updated upstream
-            StringList.mStrings.Add("force_structures", "Force Structures");
-            StringList.mStrings.Add("force_components", "Force Components");
-            StringList.mStrings.Add("unlock_tech", "Unlock all Tech");
-
-            Debug.Log("[MOD] Cheat Tools activated");
-        }
-=======
         static bool KeysDown = false;
->>>>>>> Stashed changes
 
         public override void OnInitialized()
         {
@@ -51,13 +42,6 @@ namespace CheatTools
 
     public class GuiCheatMenu : GuiWindow
     {
-<<<<<<< Updated upstream
-        public GuiCheatMenu() : base(new GuiLabelItem(StringList.get("cheat_menu"), null, null, 0, FontSize.Normal), null, null)
-        {
-            AddButton("force_structures", new GuiDefinitions.Callback(OnForceStructures), true);
-            AddButton("force_components", new GuiDefinitions.Callback(OnForceComponents), true);
-            AddButton("unlock_tech", new GuiDefinitions.Callback(OnUnlockTech), true);
-=======
         Construction SelectedConstruction { get; set; }
 
         public GuiCheatMenu() : base(new GuiLabelItem(StringList.get("cheat_menu"), null, CheatToolsStrings.cheat_menu_tooltip, 0, FontSize.Normal), null, null)
@@ -71,16 +55,11 @@ namespace CheatTools
             AddButton(CheatToolsStrings.force_components, new GuiDefinitions.Callback(OnForceComponents), true);
             AddButton(CheatToolsStrings.unlock_tech, new GuiDefinitions.Callback(OnUnlockTech), true);
             AddButton(CheatToolsStrings.clear_components, new GuiDefinitions.Callback(OnClearComponents), SelectedConstruction != null);
->>>>>>> Stashed changes
         }
 
         public void AddButton(string name, GuiDefinitions.Callback callback, bool enabled)
         {
-<<<<<<< Updated upstream
-            GuiButtonItem guiButtonItem = new GuiButtonItem(StringList.get(key), callback, FontType.Title);
-=======
             GuiButtonItem guiButtonItem = new GuiButtonItem(name, callback, FontType.Normal);
->>>>>>> Stashed changes
             guiButtonItem.setEnabled(enabled);
             mRootItem.addChild(guiButtonItem);
         }
@@ -131,6 +110,20 @@ namespace CheatTools
                     {
                         manager.acquire(tech);
                     }
+                }
+            }
+        }
+
+        private void OnClearComponents(object parameter)
+        {
+            if (SelectedConstruction != null)
+            {
+                var constructions = new ConstructionComponent[SelectedConstruction.getComponentCount()];
+                SelectedConstruction.getComponents().CopyTo(constructions);
+
+                foreach(var component in constructions)
+                {
+                    component.destroy();
                 }
             }
         }

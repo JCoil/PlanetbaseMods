@@ -5,24 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-//using System.Xml;
 
 namespace ImprovedManufacturingLimits
 {
     public class ImprovedManufacturingLimitsMod : ModBase, IMod
     {
-        readonly string ConfigFilePath = "/Mods/ImprovedManufacturingLimitsData/config.txt";
-
-        public static int RawMaxValue = 9999;
-        public static int ManufacturedMaxValue = 999;
-        public static int BotsMaxValue = 99;
+        public static int RawMaxValue = 10000;
+        public static int ManufacturedMaxValue = 1000;
+        public static int BotsMaxValue = 100;
 
         public const int FlagRawResource = 256;
         private List<ResourceType> NewResourceLimits;
 
         public override void Init()
         {
-            LoadConfig();
             RegisterStrings();
 
             AddFlagsToNewResources();
@@ -31,26 +27,6 @@ namespace ImprovedManufacturingLimits
 
 
             Debug.Log("[MOD] MoreManufacturingLimits activated");
-        }
-
-        private void LoadConfig()
-        {
-            //try
-            //{
-            //    // Initial config file generation
-            //    //var xmlNode = Serialization.beginSave(Util.getFilesFolder() + ConfigFilePath, "config");
-            //    //Serialization.serializeInt(xmlNode, "limitmaxvalue", 999);
-            //    //Serialization.endSave();
-
-            //    var rootNode = Serialization.beginLoad(Util.getFilesFolder() + ConfigFilePath);
-            //    RawMaxValue = Serialization.deserializeInt(rootNode["rawmaxvalue"]);
-            //    ManufacturedMaxValue = Serialization.deserializeInt(rootNode["manufacturedmaxvalue"]);
-            //    BotsMaxValue = Serialization.deserializeInt(rootNode["botsmaxvalue"]);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.Log("Failed to deserialize ImprovedManufacturingLimits config: " + ex.Message);
-            //}
         }
 
         private void AddFlagsToNewResources()

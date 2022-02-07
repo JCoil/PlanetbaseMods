@@ -18,14 +18,19 @@ namespace ImprovedComponents
             this.mConstructionCosts = new ResourceAmounts();
             this.mConstructionCosts.add(TypeList<ResourceType, ResourceTypeList>.find<Metal>(), 1);
             this.mConstructionCosts.add(TypeList<ResourceType, ResourceTypeList>.find<Semiconductors>(), 1);
+
             this.mIcon = loadIcon();
+
             this.mResourceConsumption = new List<ResourceType>();
             this.mResourceConsumption.Add(TypeList<ResourceType, ResourceTypeList>.find<Ore>());
             base.addResourceProduction<Metal>(ResourceSubtype.None);
             base.addResourceProduction<Metal>(ResourceSubtype.None);
+
             this.mEmbeddedResourceCount = 3;
-            this.mResourceProductionPeriod = 240f;
-            this.mPowerGeneration = -3000;
+            this.mResourceProductionPeriod = 180f;
+            this.mPowerGeneration = -2000;
+            this.mWaterGeneration = -500;
+
             this.mFlags = 1572904;
             this.mOperatorSpecialization = TypeList<Specialization, SpecializationList>.find<Worker>();
             base.addUsageAnimation(CharacterAnimationType.WorkStanding, CharacterProp.Count, CharacterProp.Count);
