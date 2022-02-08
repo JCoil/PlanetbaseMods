@@ -1,4 +1,5 @@
 ﻿using Planetbase;
+using PlanetbaseModUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,10 @@ namespace ImprovedManufacturingLimits
 {
 	public static class ManufactureLimitsHelper
 	{
-		public static Dictionary<ResourceType, RefInt> ResourceLimits => Singleton<ManufactureLimits>.getInstance().mResourceLimits;
-		public static Dictionary<Specialization, RefInt> BotLimits => Singleton<ManufactureLimits>.getInstance().mBotLimits;
+		public static Dictionary<ResourceType, RefInt> ResourceLimits =>
+			CoreUtils.GetMember<ManufactureLimits, Dictionary<ResourceType, RefInt>>("mResourceLimits", Singleton<ManufactureLimits>.getInstance());
+		public static Dictionary<Specialization, RefInt> BotLimits => 
+			CoreUtils.GetMember<ManufactureLimits, Dictionary<Specialization, RefInt>>("mBotLimits", Singleton<ManufactureLimits>.getInstance());
 
 		public static bool isUnderLimit(ConstructionComponent component)
 		{

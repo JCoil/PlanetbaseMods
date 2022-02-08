@@ -22,8 +22,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringUtils.GetGlobalStrings().Add("tech_gm_wheat", "GM Wheat DNA");
-            StringUtils.GetGlobalStrings().Add("tech_gm_wheat_description", "Allows you to grow high-yield GM Wheat");
+            StringUtils.GlobalStrings.Add("tech_gm_wheat", "GM Wheat DNA");
+            StringUtils.GlobalStrings.Add("tech_gm_wheat_description", "Allows you to grow high-yield GM Wheat");
         }
     }
 }

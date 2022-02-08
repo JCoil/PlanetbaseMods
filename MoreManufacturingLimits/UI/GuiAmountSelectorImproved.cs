@@ -1,4 +1,5 @@
 ﻿using Planetbase;
+using PlanetbaseModUtilities;
 using Redirection;
 using System;
 using System.Collections.Generic; 
@@ -22,69 +23,83 @@ namespace ImprovedManufacturingLimits
 	{ 
 		public static void OnPlusImproved(GuiAmountSelector selector)
 		{
-			if (selector.mCurrent.get() < selector.mMax)
+			var current = CoreUtils.GetMember<GuiAmountSelector, RefInt>("mCurrent", selector);
+			var changeCallback = CoreUtils.GetMember<GuiAmountSelector, GuiDefinitions.Callback>("mChangeCallback", selector);
+
+			var max = CoreUtils.GetMember<GuiAmountSelector, int>("mMax", selector);
+			var min = CoreUtils.GetMember<GuiAmountSelector, int>("mMin", selector);
+			var step = CoreUtils.GetMember<GuiAmountSelector, int>("mStep", selector);
+
+			if (current.get() < max)
 			{
 				var keyMultiplier = (Event.current.control ? 100 : 1) * (Event.current.shift ? 10 : 1);
-				var change = Math.Max(selector.mStep, keyMultiplier);
+				var change = Math.Max(step, keyMultiplier);
 
-				selector.mCurrent.set(selector.mCurrent.get() + change);
+				current.set(current.get() + change);
 
 				// Check we're still below max
 
-				if (selector.mCurrent.get() > selector.mMax)
+				if (current.get() > max)
                 {
-					selector.mCurrent.set(selector.mMax);
+					current.set(max);
                 }
 
-				if (selector.mChangeCallback != null)
+				if (changeCallback != null)
 				{
-					selector.mChangeCallback(selector);
+					changeCallback(selector);
 				}
 			}			
-			else if (selector.mCurrent.get() == 2147483647 && selector.hasFlag(GuiAmountSelector.FlagLoop))  
+			else if (current.get() == 2147483647 && selector.hasFlag(GuiAmountSelector.FlagLoop))  
 			{
-				selector.mCurrent.set(selector.mMin);
+				current.set(min);
 			}
 			else if (selector.hasFlag(GuiAmountSelector.FlagHasInfinity))
 			{
-				selector.mCurrent.set(int.MaxValue);
-				if (selector.mChangeCallback != null)
+				current.set(int.MaxValue);
+				if (changeCallback != null)
 				{
-					selector.mChangeCallback(selector);
+					changeCallback(selector);
 				}
 			}
 		}
 
 		public static void OnMinusImproved(GuiAmountSelector selector)
 		{
-			if (selector.mCurrent.get() == 2147483647)
+			var current = CoreUtils.GetMember<GuiAmountSelector, RefInt>("mCurrent", selector);
+			var changeCallback = CoreUtils.GetMember<GuiAmountSelector, GuiDefinitions.Callback>("mChangeCallback", selector);
+
+			var max = CoreUtils.GetMember<GuiAmountSelector, int>("mMax", selector);
+			var min = CoreUtils.GetMember<GuiAmountSelector, int>("mMin", selector);
+			var step = CoreUtils.GetMember<GuiAmountSelector, int>("mStep", selector);
+
+			if (current.get() == 2147483647)
 			{
-				selector.mCurrent.set(selector.mMax);
-				if (selector.mChangeCallback != null)
+				current.set(max);
+				if (changeCallback != null)
 				{
-					selector.mChangeCallback(selector);
+					changeCallback(selector);
 				}
 			}			
-			else if (selector.mCurrent.get() > selector.mMin)
+			else if (current.get() > min)
 			{
 				var keyMultiplier = (Event.current.control ? 100 : 1) * (Event.current.shift ? 10 : 1);
-				var change = Math.Max(selector.mStep, keyMultiplier);
+				var change = Math.Max(step, keyMultiplier);
 
-				selector.mCurrent.set(selector.mCurrent.get() - change);
+				current.set(current.get() - change);
 
-				if (selector.mCurrent.get() < selector.mMin)
+				if (current.get() < min)
 				{
-					selector.mCurrent.set(selector.mMin);
+					current.set(min);
 				}
 
-				if (selector.mChangeCallback != null)
+				if (changeCallback != null)
 				{
-					selector.mChangeCallback(selector);
+					changeCallback(selector);
 				}
 			}			
-			else if (selector.mCurrent.get() == selector.mMin && selector.hasFlag(GuiAmountSelector.FlagLoop))
+			else if (current.get() == min && selector.hasFlag(GuiAmountSelector.FlagLoop))
 			{
-				selector.mCurrent.set(int.MaxValue);
+				current.set(int.MaxValue);
 			}
 		}
 	}

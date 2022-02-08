@@ -1,4 +1,5 @@
 ﻿using Planetbase;
+using PlanetbaseModUtilities;
 using Redirection;
 using System;
 using System.Collections.Generic; 
@@ -37,25 +38,28 @@ namespace ImprovedManufacturingLimits
 		{
 			float num = float.MaxValue;
 			ConstructionComponent result = null;
-			int count = ConstructionComponent.mComponents.Count;
-			for (int i = 0; i < count; i++)
+			var mComponents = BuildableUtils.GetAllComponents();
+
+			for (int i = 0; i < mComponents.Count; i++)
 			{
-				ConstructionComponent constructionComponent = ConstructionComponent.mComponents[i];
+				ConstructionComponent constructionComponent = mComponents[i];
 				if (constructionComponent.isDamaged(specialization) 
 					&& constructionComponent.isBuilt() 
 					&& constructionComponent.getPotentialUserCount(character) == 0
 					&& ManufactureLimitsHelper.isUnderLimit(constructionComponent))
 				{
 					float num2 = (constructionComponent.getPosition() - character.getPosition()).magnitude;
+					var indicator = CoreUtils.GetMember<ConstructionComponent, Indicator>("mConditionIndicator", constructionComponent);
+
 					if (constructionComponent.isHighPriority())
 					{
 						num2 -= 100f;
 					}
-					if (constructionComponent.mConditionIndicator.isVeryLow())
+					if (indicator.isVeryLow())
 					{
 						num2 -= 10f;
 					}
-					else if (constructionComponent.mConditionIndicator.isExtremelyLow())
+					else if (indicator.isExtremelyLow())
 					{
 						num2 -= 20f;
 					}

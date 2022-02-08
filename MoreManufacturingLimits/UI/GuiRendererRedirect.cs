@@ -1,4 +1,5 @@
 ﻿using Planetbase;
+using PlanetbaseModUtilities;
 using Redirection;
 using System;
 using System.Collections.Generic; 
@@ -21,7 +22,8 @@ namespace ImprovedManufacturingLimits
 
 			var tooltip = Environment.NewLine + "Shift for 10" + Environment.NewLine + "Ctrl for 100";
 
-			float labelExtraWidth = Math.Max(1,selector.mMax.ToString().Length - 2) * num; // Pretty hacky way to get the ui spaced nicely
+
+			float labelExtraWidth = Math.Max(1, CoreUtils.GetMember<GuiAmountSelector, int>("mMax", selector).ToString().Length - 2) * num; // Pretty hacky way to get the ui spaced nicely
 
 			if (selector is GuiAmountSelectorImproved selectorImproved && selectorImproved.mIcon != null)
 			{

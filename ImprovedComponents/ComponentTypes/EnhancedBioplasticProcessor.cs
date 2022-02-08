@@ -43,8 +43,8 @@ namespace ImprovedComponents
 
 		public static void RegisterStrings()
 		{
-			StringUtils.GetGlobalStrings().Add("component_enhanced_bioplastic_processor", Name);
-			StringUtils.GetGlobalStrings().Add("tooltip_enhanced_bioplastic_processor", Description);
+			StringUtils.GlobalStrings.Add("component_enhanced_bioplastic_processor", Name);
+			StringUtils.GlobalStrings.Add("tooltip_enhanced_bioplastic_processor", Description);
 		}
 	}
 }

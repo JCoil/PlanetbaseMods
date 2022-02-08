@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Planetbase;
+using PlanetbaseModUtilities;
 
 namespace ImprovedManufacturingLimits
 {
@@ -19,7 +20,7 @@ namespace ImprovedManufacturingLimits
 			GuiRowItem prevRawRow = null;
 			GuiRowItem prevManufactureRow = null;
 
-			foreach (var element in Singleton<ManufactureLimits>.getInstance().mResourceLimits)
+			foreach (var element in ManufactureLimitsHelper.ResourceLimits)
 			{
 				var resourceType = element.Key;
 				var limit = element.Value;
@@ -32,7 +33,7 @@ namespace ImprovedManufacturingLimits
 				// Alternate between adding to first column in new row and adding to second column in previous row
 				if (resourceType.hasFlag(ImprovedManufacturingLimitsMod.FlagRawResource))
 				{
-					guiAmountSelector.mMax = ImprovedManufacturingLimitsMod.RawMaxValue;
+					CoreUtils.SetMember("mMax", guiAmountSelector, ImprovedManufacturingLimitsMod.RawMaxValue);
 
 					if(prevRawRow == null)
 					{
@@ -50,7 +51,7 @@ namespace ImprovedManufacturingLimits
 				}
 				else if(resourceType.hasFlag(ResourceType.FlagManufactured))
 				{
-					guiAmountSelector.mMax = ImprovedManufacturingLimitsMod.ManufacturedMaxValue;
+					CoreUtils.SetMember("mMax", guiAmountSelector, ImprovedManufacturingLimitsMod.ManufacturedMaxValue);
 
 					if (prevManufactureRow == null)
 					{

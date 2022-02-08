@@ -22,8 +22,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringUtils.GetGlobalStrings().Add("tech_gm_medicinal_plants", "GM Medicinal Plants DNA");
-            StringUtils.GetGlobalStrings().Add("tech_gm_medicinal_plants_description", "Allows you to plant fast-growing GM Medicinal Plants");
+            StringUtils.GlobalStrings.Add("tech_gm_medicinal_plants", "GM Medicinal Plants DNA");
+            StringUtils.GlobalStrings.Add("tech_gm_medicinal_plants_description", "Allows you to plant fast-growing GM Medicinal Plants");
         }
     }
 }

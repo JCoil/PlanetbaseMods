@@ -8,6 +8,11 @@ namespace PlanetbaseModUtilities
 {
     public static class StringUtils
     {
-        public static Dictionary<string, string> GetGlobalStrings() => CoreUtils.GetMember<Dictionary<string, string>>("mStrings", typeof(StringList));
+        public static Dictionary<string, string> GlobalStrings => CoreUtils.GetMember<Dictionary<string, string>>("mStrings", typeof(StringList));
+
+        public static void SetHelpText(this HelpItem helpItem, string text) 
+        {
+            CoreUtils.SetMember("mText", helpItem, text);
+        }
     }
 }

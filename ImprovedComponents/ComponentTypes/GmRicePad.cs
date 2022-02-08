@@ -53,8 +53,8 @@ namespace ImprovedComponents
 
 		public static void RegisterStrings()
 		{
-			StringUtils.GetGlobalStrings().Add("component_gm_rice_pad", Name);
-			StringUtils.GetGlobalStrings().Add("tooltip_gm_rice_pad", Description);
+			StringUtils.GlobalStrings.Add("component_gm_rice_pad", Name);
+			StringUtils.GlobalStrings.Add("tooltip_gm_rice_pad", Description);
 		}
 	}
 }

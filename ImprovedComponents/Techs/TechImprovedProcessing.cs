@@ -22,8 +22,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringUtils.GetGlobalStrings().Add("tech_improved_processing", "Improved Processing");
-            StringUtils.GetGlobalStrings().Add("tech_improved_processing_description", 
+            StringUtils.GlobalStrings.Add("tech_improved_processing", "Improved Processing");
+            StringUtils.GlobalStrings.Add("tech_improved_processing_description", 
                 "Allows you to construct enhanced processors, which refine raw materials more efficiently at the cost of much higher power usage");
         }
     }

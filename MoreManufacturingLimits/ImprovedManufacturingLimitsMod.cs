@@ -1,15 +1,17 @@
-﻿using ModWrapper;
-using Planetbase;
-using Redirection;
+﻿using Planetbase;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using PlanetbaseModUtilities;
+using static UnityModManagerNet.UnityModManager;
 
 namespace ImprovedManufacturingLimits
 {
-    public class ImprovedManufacturingLimitsMod : ModBase, IMod
+    public class ImprovedManufacturingLimitsMod : ModBase
     {
+        public static new void Init(ModEntry modEntry) => InitializeMod(new ImprovedManufacturingLimitsMod(), modEntry, "ImprovedManufacturingLimits");
+
         public static int RawMaxValue = 10000;
         public static int ManufacturedMaxValue = 1000;
         public static int BotsMaxValue = 100;
@@ -17,14 +19,11 @@ namespace ImprovedManufacturingLimits
         public const int FlagRawResource = 256;
         private List<ResourceType> NewResourceLimits;
 
-        public override void Init()
-        {
+        public override void OnInitialized()
+        { 
             RegisterStrings();
 
             AddFlagsToNewResources();
-
-            Redirector.PerformRedirections();
-
 
             Debug.Log("[MOD] MoreManufacturingLimits activated");
         }
@@ -44,35 +43,38 @@ namespace ImprovedManufacturingLimits
 
             foreach (var resourceType in NewResourceLimits)
             {
-                resourceType.mFlags |= ResourceType.FlagManufactured; // Add manufactured flag so the resource is picked up by ManufactureLimits
-                resourceType.mFlags |= FlagRawResource; // Add custom flag to differentiate between raw and manufactured
+                var resourceTypeFlags = CoreUtils.GetMember<ResourceType, int>("mFlags", resourceType);
+                resourceTypeFlags |= ResourceType.FlagManufactured; // Add manufactured flag so the resource is picked up by ManufactureLimits
+                resourceTypeFlags |= FlagRawResource; // Add custom flag to differentiate between raw and manufactured
+
+                CoreUtils.SetMember("mFlags", resourceType, resourceTypeFlags);
             }
         }
 
         private static void RegisterStrings()
         {
-            Singleton<HelpManager>.getInstance().findItem("manufacture_limits").mText = HelpText;
+            CoreUtils.SetMember("mText", Singleton<HelpManager>.getInstance().findItem("manufacture_limits"), HelpText);
 
-            StringList.mStrings.Add("manufacture_limits_raw", "Resources");
-            StringList.mStrings.Add("manufacture_limits_manufactured", "Manufactured");
-            StringList.mStrings.Add("manufacture_limits_bots", "Bots");
+            StringUtils.GlobalStrings.Add("manufacture_limits_raw", "Resources");
+            StringUtils.GlobalStrings.Add("manufacture_limits_manufactured", "Manufactured");
+            StringUtils.GlobalStrings.Add("manufacture_limits_bots", "Bots");
         }
 
-        public override void Update(float timeStep)
+        public override void OnUpdate(ModEntry modEntry, float timeStep)
         {
-
+            // Nothing required here
         }
 
-        public override void OnGameStart()
+        public override void OnGameStart(ModEntry modEntry)
         {
             // Replace default limits window with our improved one
-            if (MenuSystem != null && MenuSystem.mMenuBaseManagement is GuiMenu menuBaseManagement)
+            if (MenuSystem != null && MenuSystem.GetMenu("mMenuBaseManagement") is GuiMenu menuBaseManagement)
             {
-                foreach (var menuItem in menuBaseManagement.mItems)
+                foreach (var menuItem in menuBaseManagement.getItems())
                 {
                     if (menuItem.getRequiredModuleType() == TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>())
                     {
-                        menuItem.mCallback = new GuiDefinitions.Callback(Game.toggleWindow<GuiManufactureLimitsWindowImproved>);
+                        menuItem.SetCallback(new GuiDefinitions.Callback(Game.toggleWindow<GuiManufactureLimitsWindowImproved>));
                     }
                 }
             }

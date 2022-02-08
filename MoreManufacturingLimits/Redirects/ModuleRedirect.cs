@@ -19,7 +19,7 @@ namespace ImprovedManufacturingLimits
 			float num = float.MaxValue;
 			Module result = null;
 			Vector3 position = character.getPosition();
-			List<Module> list = Module.mModuleCategories[1];
+			List<Module> list = Module.getCategoryModules(Category.Mine);
 			if (list != null && ManufactureLimitsHelper.isUnderLimit(TypeList<ResourceType, ResourceTypeList>.find<Ore>()))
 			{
 				int count = list.Count;
@@ -43,7 +43,7 @@ namespace ImprovedManufacturingLimits
 		private static bool IsUnderLimit(ResourceType resourceType)
 		{
 			RefInt refInt;
-			if (resourceType != null && Singleton<ManufactureLimits>.getInstance().mResourceLimits.TryGetValue(resourceType, out refInt))
+			if (resourceType != null &&  ManufactureLimitsHelper.ResourceLimits.TryGetValue(resourceType, out refInt))
 			{
 				return Resource.getTotalAmounts().getAmount(resourceType) < refInt.get();
 			}

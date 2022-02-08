@@ -35,6 +35,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\PlanetbaseModUtilities\ref\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -44,16 +48,16 @@
       <HintPath>..\..\..\..\Documents\Planetbase\Mods\Redirector.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityModManager">
+      <HintPath>..\PlanetbaseModUtilities\ref\UnityModManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ModWrapper\ModBase.cs">
-      <Link>ModBase.cs</Link>
-    </Compile>
     <Compile Include="ManufactureLimitsImproved.cs" />
     <Compile Include="Redirects\AiRuleRedirect.cs" />
     <Compile Include="UI\GuiManufactureLimitsWindowImproved.cs" />
@@ -64,11 +68,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <ProjectReference Include="..\PlanetbaseModUtilities\PlanetbaseModUtilities.csproj">
+      <Project>{4e53c23d-ca1d-4c14-b155-16111b611284}</Project>
+      <Name>PlanetbaseModUtilities</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Users\Jack\Documents\Planetbase\Mods\"
+    <PostBuildEvent>xcopy /E /Y "D:\Users\Jack\Source\Visual Studio Projects\StorageGuru\PlanetbaseModUtilities\bin\Release\PlanetbaseModUtilities.dll" "$(TargetDir)"
+xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\ImprovedManufacturingLimits"
+
 powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'</PostBuildEvent>
   </PropertyGroup>
 </Project>
