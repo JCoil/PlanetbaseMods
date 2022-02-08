@@ -46,13 +46,15 @@ namespace StorageGuru
                 if (Selection.getSelected() is Planetbase.Module module && module.getModuleType() is ModuleTypeStorage && module.isBuilt())
                 {
                     // That doesn't already contain our storage button
-                    FieldInfo itemsGet = typeof(GuiMenu).GetField("mItems", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var itemsSet = itemsGet.GetValue(itemsGet) as List<GuiMenuItem>;
+                    /*FieldInfo itemsGet = typeof(GuiMenu).GetField("mItems", BindingFlags.NonPublic | BindingFlags.Instance);
+                    var itemsSet = itemsGet.GetValue(itemsGet) as GuiMenu;
                     if (itemsSet.Exists(x => x is GuiStorageMenuItem))
                     {
                         // Add our storage button
-                        MenuSystem.mMenuAction.mItems.Insert(1, StorageMenuItem);
+                        GuiMenuSystem.mMenuAction.mItems.Insert(1, StorageMenuItem);
                     }
+                    */
+                    GuiMenuSystem.mMenuAction.mItems.Insert(1, StorageMenuItem);
                 }
             }            
         } 
@@ -65,19 +67,24 @@ namespace StorageGuru
                 throw new ArgumentNullException(nameof(parameter));
             }
 
-            StorageGuruMod.Game.mActiveModule = (Selection.getSelected() as Planetbase.Module);
+            FieldInfo activeModuleGet = typeof(GameStateGame).GetField("mActiveModule", BindingFlags.NonPublic | BindingFlags.Instance);
+            var activeModuleSet = activeModuleGet.GetValue(activeModuleGet) as Planetbase.Module;
+            activeModuleSet = (Selection.getSelected() as Planetbase.Module);
 
-            if (StorageGuruMod.GameAccess.mActiveModule is Planetbase.Module module)
+            
+            if (activeModuleSet is Planetbase.Module module)
             {
                 StorageMenu.ActiveStorageModule = module;
                 StorageMenu.NeedsRefresh = true;
-
-                StorageGuruMod.GameAccess.mMode = GameStateGame.Mode.CloseCamera;
+                FieldInfo modeGet = typeof(GameStateGame).GetField("mMode", BindingFlags.NonPublic| BindingFlags.Instance);
+                var modeSet = modeGet.GetValue(modeGet) as GameStateGame;
+                modeSet = GameStateGame.Mode.CloseCamera;
                 Construction selectedConstruction = Selection.getSelectedConstruction();
                 CameraManager.getInstance().focusOnPosition(selectedConstruction.getPosition(), selectedConstruction.getRadius() + 10f);
                 selectedConstruction.setRenderTop(false);
-
-                MenuSystem.mCurrentMenu = StorageMenu;
+                FieldInfo currentMenuGet = typeof(GuiMenuSystem).GetField("mCurrentMenu", BindingFlags.NonPublic | BindingFlags.Instance);
+                var currentMenuSet = currentMenuGet.GetValue(currentMenuGet) as GuiMenu;
+                currentMenuSet = StorageMenu;
             }
         }
     }

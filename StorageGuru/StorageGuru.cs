@@ -16,7 +16,6 @@ namespace StorageGuru
         public static StorageManifestController StorageController { get; set; }
 
         public static GameStateGame GameAccess { get; private set; }
-        FieldInfo gameAccess = typeof(GameStateGame).GetField("Mode", BindingFlags.NonPublic | BindingFlags.Static);
         public static List<ResourceType> MasterResourceDefinitions { get; private set; }
 
         public static void Init(ModEntry modEntry)
@@ -27,17 +26,21 @@ namespace StorageGuru
             Debug.Log("[MOD] Storage Guru activated");
         }
 
-        public void Update(float timeStep)
+        public void Update()
         {
             //Debug.Log("[MOD] Storage Guru updating");
-            gameAccess = Game;
-
-            MenuController.Update(Game.mMenuSystem);
+            //StorageGuruMod.GameAccess = Game;
+            FieldInfo menuSystem = typeof(GameStateGame).GetField("mMenuSystem", BindingFlags.NonPublic | BindingFlags.Instance);
+            var menu = menuSystem.GetValue(menuSystem) as GuiMenuSystem;
+            MenuController.Update(menu);
         }
 
-        public void OnGameStart()
+		[Obsolete]
+		public void OnGameStart()
         {
-            MenuController.Init(Game.mMenuSystem);
+            FieldInfo menuSystem = typeof(GameStateGame).GetField("mMenuSystem", BindingFlags.NonPublic | BindingFlags.Instance);
+            var menu = menuSystem.GetValue(menuSystem) as GuiMenuSystem;
+            MenuController.Init(menu);
             RefreshResourceDefinitions();
 
             if (StorageController == null)
@@ -51,6 +54,8 @@ namespace StorageGuru
 
         private void RefreshResourceDefinitions()
         {
+            FieldInfo typeList = typeof(TypeListManager).GetField("mTypeList", BindingFlags.NonPublic);
+            var typeListGet = typeList.GetValue(typeList) as List<string>;
             MasterResourceDefinitions = TypeList<ResourceType, ResourceTypeList>.getInstance().mTypeList
                 .Where(x => !(x is Coins)).ToList();  // Clear out non-storeable resources (coins)
         }
@@ -69,9 +74,7 @@ namespace StorageGuru
         private Dictionary<Character, Planetbase.Module> characterTargets = new Dictionary<Character, Planetbase.Module>();
 
         [Obsolete("Storage targeting now handled by a redirect to StorageModuleRedirect from Module.findStorage")]
-#pragma warning disable IDE0051 // Remove unused private members
         private void RedirectCharacters()
-#pragma warning restore IDE0051 // Remove unused private members
         {
             FieldInfo characters = typeof(Character).GetField("mCharacters", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.IgnoreReturn);
             var value = characters.GetValue(characters) as List<Character>;
@@ -83,13 +86,11 @@ namespace StorageGuru
 
             if (newCarriedResources.Count == 0) { return; }
 
-            MethodInfo cat = typeof(Planetbase.Module).GetMethod("getCategory()", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.IgnoreReturn);
-            var value2 = cat.GetMethodBody();
             newCarriedResources = newCarriedResources.Where(x => // That are bound for a storage module
             x.Key.getTarget() is Target target
             && target.getSelectable() is Planetbase.Module module
             && module.isBuilt()
-            && value2 == Planetbase.Module.Category.Storage)
+            && Planetbase.Module.getCategory() == Planetbase.Module.Category.Storage)
                 .ToDictionary(x => x.Key, y => y.Value);
 
             // Index resources and list valid target modules for each
@@ -103,9 +104,7 @@ namespace StorageGuru
             {
                 if (kvp.Value != null)
                 {
-                    MethodInfo target = typeof(Character).GetMethod("setTarget()", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var value3 = target.GetMethodBody();
-                    value3(new Target(kvp.Value, kvp.Value.getRadius() / 1.8f));
+                    Character.setTarget(new Target(kvp.Value, kvp.Value.getRadius() / 1.8f));
                 }
 
                 characterTargets.Add(kvp.Key, kvp.Value);
