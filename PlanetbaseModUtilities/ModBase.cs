@@ -24,19 +24,13 @@ namespace PlanetbaseModUtilities
         /// <summary>
         /// Called every timestep while game is running
         /// </summary>
-        public abstract void OnUpdate(ModEntry modEntry, float timeStep);
-
-        /// <summary>
-        /// Called when we enter GameStateGame
-        /// </summary>
-        public abstract void OnGameStart();
+        public abstract void OnUpdate(ModEntry modEntry, float timeStep); 
 
         private void Update(ModEntry modEntry, float timeStep)
         {
             if (GameManager.getInstance().getGameState() is GameStateGame game)
             {
                 Game = game;
-                OnGameStart();
             }
 
             OnUpdate(modEntry, timeStep);
@@ -45,6 +39,8 @@ namespace PlanetbaseModUtilities
         #endregion
 
         #region Init Factory
+
+        public static void Init(ModEntry entry) { }
 
         public static ModBase Instance { get; private set; } 
 

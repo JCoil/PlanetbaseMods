@@ -11,20 +11,29 @@ namespace PlanetbaseModUtilities
     /// </summary>
     public static class BuildableUtils
     {
-        public static List<Construction> GetConstructions() => 
-            CoreUtils.GetMember<Construction, List<Construction>>("mConstructions");
-
-        public static List<ConstructionComponent> GetComponents() => 
-            CoreUtils.GetMember<ConstructionComponent, List<ConstructionComponent>>("mComponents");
-
-        public static List<ComponentType> GetComponentTypes(ModuleType moduleType)
+        public static List<Construction> GetAllConstructions()
         {
-            return CoreUtils.GetMember<ModuleType, ComponentType[]>("mComponentTypes", moduleType).ToList();
+            return CoreUtils.GetMember<Construction, List<Construction>>("mConstructions");
         }
 
-        public static void SetComponentTypes(ModuleType moduleType, List<ComponentType> componentTypes)
+        public static List<ConstructionComponent> GetAllComponents()
         {
-            CoreUtils.SetMember<ModuleType, ComponentType[]>("mComponentTypes", moduleType, componentTypes.ToArray());
+            return CoreUtils.GetMember<ConstructionComponent, List<ConstructionComponent>>("mComponents");
+        }
+
+        public static T FindModuleType<T>() where T:ModuleType
+        {
+            return (T)TypeList<ModuleType, ModuleTypeList>.find<T>();
+        }
+
+        public static List<ComponentType> GetComponentTypes<T>(this T moduleType) where T : ModuleType
+        {
+            return CoreUtils.GetMember<T, ComponentType[]>("mComponentTypes", moduleType).ToList();
+        }
+
+        public static void SetComponentTypes<T>(this T moduleType, List<ComponentType> componentTypes) where T : ModuleType
+        {
+            CoreUtils.SetMember("mComponentTypes", moduleType, componentTypes.ToArray());
         }
     }
 }

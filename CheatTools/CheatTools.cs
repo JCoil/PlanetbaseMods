@@ -11,7 +11,7 @@ namespace CheatTools
 {
     public class CheatTools : ModBase
     {
-        public static void Init(ModEntry modEntry) => InitializeMod(new CheatTools(), modEntry, "CheatTools");
+        public static new void Init(ModEntry modEntry) => InitializeMod(new CheatTools(), modEntry, "CheatTools");
 
         static bool KeysDown = false;
 
@@ -66,7 +66,7 @@ namespace CheatTools
 
         private void OnForceStructures(object parameter)
         {
-            if (BuildableUtils.GetConstructions() is List<Construction> constructions)
+            if (BuildableUtils.GetAllConstructions() is List<Construction> constructions)
             {
                 foreach (var construction in constructions)
                 {
@@ -82,7 +82,7 @@ namespace CheatTools
         {
             try
             {
-                if (BuildableUtils.GetComponents() is List<ConstructionComponent> components)
+                if (BuildableUtils.GetAllComponents() is List<ConstructionComponent> components)
                 {
                     foreach (var construction in components)
                     {
