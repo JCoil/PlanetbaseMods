@@ -23,7 +23,7 @@ namespace ImprovedManufacturingLimits
         { 
             RegisterStrings();
 
-            AddFlagsToNewResources();
+            //AddFlagsToNewResources();
 
             Debug.Log("[MOD] MoreManufacturingLimits activated");
         }
@@ -67,6 +67,7 @@ namespace ImprovedManufacturingLimits
 
         public override void OnGameStart(ModEntry modEntry)
         {
+            return;
             // Replace default limits window with our improved one
             if (MenuSystem != null && MenuSystem.GetMenu("mMenuBaseManagement") is GuiMenu menuBaseManagement)
             {

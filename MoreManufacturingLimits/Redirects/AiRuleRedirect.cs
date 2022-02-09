@@ -1,6 +1,5 @@
 ﻿using Planetbase;
 using PlanetbaseModUtilities;
-using Redirection;
 using System;
 using System.Collections.Generic; 
 using System.Text; 
@@ -13,7 +12,6 @@ namespace ImprovedManufacturingLimits
 		/// <summary>
 		/// Vegetable pads are classed as buildable to repair, so we can stop colonists working them here if they are above the limit
 		/// </summary>
-        [RedirectFrom(typeof(AiRule))]
         public static new Buildable findBuildableToRepair(Character character)
         {
             Buildable buildable = null;

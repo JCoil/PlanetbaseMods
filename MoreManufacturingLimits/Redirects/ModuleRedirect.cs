@@ -1,5 +1,4 @@
 ﻿using Planetbase;
-using Redirection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,6 @@ namespace ImprovedManufacturingLimits
 		/// <summary>
 		/// Need to handle mines directly because they use their own Ai
 		/// </summary>
-		[RedirectFrom(typeof(Module))]
 		public static new Module findMine(Character character, bool highPriority, int maxTargeters)
 		{
 			float num = float.MaxValue;

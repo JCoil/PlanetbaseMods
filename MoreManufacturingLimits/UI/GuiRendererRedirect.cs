@@ -1,6 +1,5 @@
 ﻿using Planetbase;
 using PlanetbaseModUtilities;
-using Redirection;
 using System;
 using System.Collections.Generic; 
 using System.Text; 
@@ -13,7 +12,6 @@ namespace ImprovedManufacturingLimits
 		/// <summary>
 		/// New renderer to display iconon amaount selector if set
 		/// </summary>
-		[RedirectFrom(typeof(GuiRenderer))]
 		public new void renderAmountSelector(GuiWindow window, GuiAmountSelector selector, float x, float y)
 		{
 			GUI.enabled = selector.isEnabled();
