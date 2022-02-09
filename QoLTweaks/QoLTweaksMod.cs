@@ -21,6 +21,7 @@ namespace QoLTweaks
         public override void OnGameStart()
         {
             SetMedicalCabinetCapacity();
+            MedicalCabinetsInLabs();
         }
 
         private void SetMedicalCabinetCapacity()
@@ -34,6 +35,23 @@ namespace QoLTweaks
                 if (component.getComponentType() is MedicalCabinet cabinet)
                 {
                     component.mResourceContainer.setCapacity(NewMedicalCabinetCapacity);
+                }
+            }
+        }
+
+        private void MedicalCabinetsInLabs()
+        {
+            // Add cabinet component to ModuleTypeLab
+            var labComponents = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeLab>().mComponentTypes.ToList();
+            labComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<MedicalCabinet>());
+            TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeLab>().mComponentTypes = labComponents.ToArray();
+
+            // Update existing labs to be recognised as having storage components
+            foreach (var module in Module.mModules)
+            {
+                if (module.getModuleType() is ModuleTypeLab)
+                {
+                    Module.mModuleCategories[(int)Module.Category.StorageComponentContaner].Add(module);
                 }
             }
         }
