@@ -1,6 +1,0 @@
-﻿{
-  "Id": "PlanetbaseModUtilities",
-  "DisplayName": "PlanetbaseModUtilities",
-  "Version": "1.1.0",
-  "EntryMethod": "PlanetbaseModUtilities.ModBase.Init"
-}

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>d73f072c-0f36-4639-a5ce-cf1599e1318a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ModUtilities</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BuildableUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StringUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TypeListUtils.cs" />
+  </ItemGroup>
+</Project>

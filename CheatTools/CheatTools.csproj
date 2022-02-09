@@ -64,13 +64,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PlanetbaseModUtilities\PlanetbaseModUtilities.csproj">
-      <Project>{4e53c23d-ca1d-4c14-b155-16111b611284}</Project>
-      <Name>PlanetbaseModUtilities</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\PlanetbaseModUtilities\PlanetbaseModUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /E /Y "D:\Users\Jack\Source\Visual Studio Projects\StorageGuru\PlanetbaseModUtilities\bin\Release\PlanetbaseModUtilities.dll" "$(TargetDir)"
