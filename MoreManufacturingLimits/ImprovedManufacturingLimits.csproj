@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImprovedManufacturingLimits</RootNamespace>
     <AssemblyName>ImprovedManufacturingLimits</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile>
@@ -53,13 +53,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ManufactureLimitsImproved.cs" />
-    <Compile Include="Redirects\AiRuleRedirect.cs" />
+    <Compile Include="Patches\GuiMenuSystemPatch.cs" />
+    <Compile Include="Patches\ManufactureLimitsHelper.cs" />
+    <Compile Include="Patches\ConstructionComponentPatch.cs" />
     <Compile Include="UI\GuiManufactureLimitsWindowImproved.cs" />
     <Compile Include="UI\GuiAmountSelectorImproved.cs" />
-    <Compile Include="UI\GuiRendererRedirect.cs" />
+    <Compile Include="Patches\GuiRendererPatch.cs" />
     <Compile Include="ImprovedManufacturingLimitsMod.cs" />
-    <Compile Include="Redirects\ModuleRedirect.cs" />
+    <Compile Include="Patches\ModulePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

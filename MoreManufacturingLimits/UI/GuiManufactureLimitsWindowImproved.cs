@@ -2,14 +2,16 @@
 using UnityEngine;
 using Planetbase;
 using PlanetbaseModUtilities;
+using HarmonyLib;
 
 namespace ImprovedManufacturingLimits
 {
 	public class GuiManufactureLimitsWindowImproved : GuiWindow
 	{
-		public GuiManufactureLimitsWindowImproved() : base(new GuiLabelItem(StringList.get("manufacture_limits"), TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>().getIcon(), null, 0, FontSize.Normal), null, null)
+		public GuiManufactureLimitsWindowImproved() : 
+			base(new GuiLabelItem(StringList.get("manufacture_limits"), TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>().getIcon(), null, 0, FontSize.Normal), null, null)
 		{
-			this.mHelpId = "manufacture_limits";
+			CoreUtils.SetMember("mHelpId", this, "manufacture_limits");
 
 			var sectionRawResources = new GuiSectionItem(StringList.get("manufacture_limits_raw"));
 			var sectionManufacturedResources = new GuiSectionItem(StringList.get("manufacture_limits_manufactured"));
@@ -27,15 +29,12 @@ namespace ImprovedManufacturingLimits
 
 				var tooltip = StringList.get("tooltip_manufacture_limit", element.Key.getNamePlural());
 
-				var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.RawMaxValue, limit, null, 14, resourceType.getIcon());
-				guiAmountSelector.setTooltip(tooltip);
-
 				// Alternate between adding to first column in new row and adding to second column in previous row
 				if (resourceType.hasFlag(ImprovedManufacturingLimitsMod.FlagRawResource))
 				{
-					CoreUtils.SetMember("mMax", guiAmountSelector, ImprovedManufacturingLimitsMod.RawMaxValue);
+					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.RawMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
 
-					if(prevRawRow == null)
+					if (prevRawRow == null)
 					{
 						var newRowItem = new GuiRowItem(2);
 						newRowItem.addChild(guiAmountSelector);
@@ -49,27 +48,27 @@ namespace ImprovedManufacturingLimits
 						prevRawRow = null;
 					}
 				}
-				else if(resourceType.hasFlag(ResourceType.FlagManufactured))
+				else if (resourceType.hasFlag(ResourceType.FlagManufactured))
 				{
-					CoreUtils.SetMember("mMax", guiAmountSelector, ImprovedManufacturingLimitsMod.ManufacturedMaxValue);
+					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.ManufacturedMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
 
 					if (prevManufactureRow == null)
 					{
-						var newRowItem = new GuiRowItem(2); 
+						var newRowItem = new GuiRowItem(2);
 						newRowItem.addChild(guiAmountSelector);
 						sectionManufacturedResources.addChild(newRowItem);
 
 						prevManufactureRow = newRowItem;
 					}
 					else
-					{ 
+					{
 						prevManufactureRow.addChild(guiAmountSelector);
 						prevManufactureRow = null;
 					}
 				}
 			}
 
-			// Bots
+			// Bots 
 
 			foreach (Specialization specialization in SpecializationList.getBotSpecializations())
 			{
@@ -78,8 +77,7 @@ namespace ImprovedManufacturingLimits
 
 				var guiLabelItem = new GuiLabelItem(specialization.getNamePlural(), specialization.getIcon(), tooltip, 0, FontSize.Normal);
 
-				var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.BotsMaxValue, limit, null, 14, null);
-				guiAmountSelector.setTooltip(tooltip);
+				var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.BotsMaxValue, limit, null, 14, null, tooltip);
 
 				GuiRowItem guiRowItem = new GuiRowItem(2);
 				guiRowItem.addChild(guiLabelItem);
@@ -88,9 +86,12 @@ namespace ImprovedManufacturingLimits
 				sectionBots.addChild(guiRowItem);
 			}
 
-			mRootItem.addChild(sectionRawResources);
-			mRootItem.addChild(sectionManufacturedResources);
-			mRootItem.addChild(sectionBots);
+			var rootItem = getRootItem();
+
+			rootItem.addChild(sectionRawResources);
+			rootItem.addChild(sectionManufacturedResources);
+			rootItem.addChild(sectionBots);
+			Debug.Log("END");
 		}
 
 		public override float getWidth()
