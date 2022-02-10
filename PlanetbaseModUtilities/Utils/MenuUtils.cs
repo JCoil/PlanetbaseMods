@@ -13,6 +13,11 @@ namespace PlanetbaseModUtilities
             return CoreUtils.GetMember<GuiMenuSystem, GuiMenu>(menuName, menuSystem);
         }
 
+        public static void SetMenu(this GuiMenuSystem menuSystem, string menuName, GuiMenu menu)
+        {
+            CoreUtils.SetMember<GuiMenuSystem, GuiMenu>(menuName, menuSystem, menu);
+        }
+
         public static GuiDefinitions.Callback GetCallback(this GuiMenuItem menuItem)
         {
             return CoreUtils.GetMember<GuiMenuItem, GuiDefinitions.Callback>("mCallback", menuItem);

@@ -9,11 +9,16 @@
     <Import_RootNamespace>ModUtilities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)BuildableUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\BuildableUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreUtils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MenuUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\MenuUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)StringUtils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TypeListUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Patches\GameManagerPatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\StringUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\TypeListUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Patches\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
   </ItemGroup>
 </Project>

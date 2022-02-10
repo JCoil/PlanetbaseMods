@@ -11,15 +11,21 @@ namespace ImprovedManufacturingLimits
 	{
 		public static Dictionary<ResourceType, RefInt> ResourceLimits =>
 			CoreUtils.GetMember<ManufactureLimits, Dictionary<ResourceType, RefInt>>("mResourceLimits", Singleton<ManufactureLimits>.getInstance());
-		public static Dictionary<Specialization, RefInt> BotLimits => 
+
+		public static Dictionary<Specialization, RefInt> BotLimits =>
 			CoreUtils.GetMember<ManufactureLimits, Dictionary<Specialization, RefInt>>("mBotLimits", Singleton<ManufactureLimits>.getInstance());
 
-		public static bool isUnderLimit(ConstructionComponent component)
+		public static bool IsUnderLimit(ResourceType resourceType)
 		{
-			return isUnderLimit(component.getComponentType());
+			if (resourceType != null && ResourceLimits.TryGetValue(resourceType, out RefInt refInt))
+			{
+				return Resource.getTotalAmounts().getAmount(resourceType) < refInt.get();
+			}
+
+			return true;
 		}
 
-		public static bool isUnderLimit(ComponentType componentType)
+		public static bool IsUnderLimit(ComponentType componentType)
 		{
 			if (componentType.getProduction() != null && componentType.getProduction().Count > 0)
 			{
@@ -29,11 +35,11 @@ namespace ImprovedManufacturingLimits
 				{
 					if (productionItem.getResourceType() is ResourceType resourceType)
 					{
-						overLimit &= !isUnderLimit(resourceType);
+						overLimit &= !IsUnderLimit(resourceType);
 					}
 					else if (productionItem.getBotType() is Specialization botType)
 					{
-						overLimit &= !isUnderLimit(botType);
+						overLimit &= !IsUnderLimit(botType);
 					}
 				}
 
@@ -42,19 +48,10 @@ namespace ImprovedManufacturingLimits
 			return true;
 		}
 
-		public static bool isUnderLimit(Specialization botType)
-		{
-			return Character.getCountOfSpecialization(botType) < BotLimits[botType].get();
-		}
+		public static bool IsUnderLimit(ConstructionComponent component) => IsUnderLimit(component.getComponentType());		
 
-		public static bool isUnderLimit(ResourceType resourceType)
-		{
-			if (resourceType != null && ResourceLimits.TryGetValue(resourceType, out RefInt refInt))
-			{
-				return Resource.getTotalAmounts().getAmount(resourceType) < refInt.get();
-			}
+		public static bool IsUnderLimit(Specialization botType) => Character.getCountOfSpecialization(botType) < BotLimits[botType].get();
 
-			return true;
-        }
+		public static bool IsUnderLimit<T>() where T : ResourceType => IsUnderLimit(TypeList<ResourceType, ResourceTypeList>.find<T>());		
 	}
 }

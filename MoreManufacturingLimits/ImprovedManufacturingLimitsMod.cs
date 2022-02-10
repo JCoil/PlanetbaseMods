@@ -23,7 +23,7 @@ namespace ImprovedManufacturingLimits
         { 
             RegisterStrings();
 
-            //AddFlagsToNewResources();
+            AddFlagsToNewResources();
 
             Debug.Log("[MOD] MoreManufacturingLimits activated");
         }
@@ -65,20 +65,25 @@ namespace ImprovedManufacturingLimits
             // Nothing required here
         }
 
-        public override void OnGameStart(ModEntry modEntry)
+        public override void OnGameStart(GameStateGame gameStateGame)
         {
-            return;
             // Replace default limits window with our improved one
-            if (MenuSystem != null && MenuSystem.GetMenu("mMenuBaseManagement") is GuiMenu menuBaseManagement)
-            {
-                foreach (var menuItem in menuBaseManagement.getItems())
-                {
-                    if (menuItem.getRequiredModuleType() == TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>())
-                    {
-                        menuItem.SetCallback(new GuiDefinitions.Callback(Game.toggleWindow<GuiManufactureLimitsWindowImproved>));
-                    }
-                }
-            }
+            //if (CoreUtils.GetMember<GameStateGame, GuiMenuSystem>("mMenuSystem", gameStateGame) is GuiMenuSystem menuSystem)
+            //{
+            //    Debug.Log("MENU ITEMS: " + CoreUtils.GetMember<GuiMenuSystem, List<GuiMenu>>("mItems", menuSystem).Count);
+
+            //    if (menuSystem.GetMenu("mMenuBaseManagement") is GuiMenu menuBaseManagement)
+            //    {
+            //        Debug.Log("FOUND BASEMANG");
+            //        foreach (var menuItem in menuBaseManagement.getItems())
+            //        {
+            //            if (menuItem.getRequiredModuleType() == TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>())
+            //            {
+            //                menuItem.SetCallback(new GuiDefinitions.Callback(gameStateGame.toggleWindow<GuiManufactureLimitsWindowImproved>));
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         const string HelpText = @"The <b><color=""#44FF73"">Manufacturing Limits</color></b> panel allows you to specify the maximum number of units for the various raw resources, manufactured goods and bots. After you hit the limit, no more of that item will be produced.

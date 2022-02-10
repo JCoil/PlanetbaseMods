@@ -6,18 +6,16 @@ using System.Text;
 using Planetbase;
 using static UnityModManagerNet.UnityModManager;
 using UnityEngine;
+using PlanetbaseModUtilities;
 
 namespace PlanetbaseModUtilities
 {
     public abstract class ModBase
     {
-        public GameStateGame Game { get; private set; }
-        public GuiMenuSystem MenuSystem { get; private set; }
-
         #region Class Contract
 
         /// <summary>
-        /// Called once the initialization factory finishes
+        /// Called once mod is initialised + registered with UnityModManager
         /// </summary>
         public abstract void OnInitialized();
 
@@ -26,17 +24,17 @@ namespace PlanetbaseModUtilities
         /// </summary>
         public abstract void OnUpdate(ModEntry modEntry, float timeStep);
 
-        public virtual void OnGameStart(ModEntry modEntry) { }
+        /// <summary>
+        /// Called when GameManager.GameState changes to GameStateGame
+        /// </summary>
+        public virtual void OnGameStart(GameStateGame gameStateGame) { }
 
-        private void Update(ModEntry modEntry, float timeStep)
+        protected virtual void OnGameStateChanged(GameState gameState)
         {
-            if (GameManager.getInstance().getGameState() is GameStateGame game)
+            if (gameState is GameStateGame gameStateGame)
             {
-                Game = game;
-                OnGameStart(modEntry);
+                OnGameStart(gameStateGame);
             }
-
-            OnUpdate(modEntry, timeStep);
         }
 
         #endregion
@@ -47,25 +45,17 @@ namespace PlanetbaseModUtilities
 
         public static ModBase Instance { get; private set; } 
 
-        public static Harmony Harmony { get; private set; }
-
         public static void InitializeMod(ModBase mod, ModEntry modEntry, string modName)
         {
             Instance = mod;
 
             modEntry.OnUpdate = mod.OnUpdate;
-
-            Harmony = new Harmony(modName);
-            try
-            {
-                Harmony.PatchAll();
-            }
-            catch (HarmonyException e)
-            {
-                modEntry.Logger.Error(e.Message);
-            }
+            GameManagerPatch.OnGameStateChanged = mod.OnGameStateChanged;
 
             mod.OnInitialized();
+
+            var harmony = new Harmony(modName);
+            harmony.PatchAll();
         }
 
         #endregion
