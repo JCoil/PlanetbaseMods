@@ -17,7 +17,7 @@ namespace CheatTools
 
         public override void OnInitialized()
         {
-            StringUtils.GlobalStrings.Add("cheat_menu", "Cheat Tools");
+            StringUtils.RegisterString("cheat_menu", "Cheat Tools");
         }
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)
