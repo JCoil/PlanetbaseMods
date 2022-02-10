@@ -44,8 +44,8 @@ namespace ImprovedComponents
 
 		public static void RegisterStrings()
 		{
-			StringUtils.GlobalStrings.Add("component_gm_medicinal_pad", Name);
-			StringUtils.GlobalStrings.Add("tooltip_gm_medicinal_pad", Description);
+			StringUtils.RegisterString("component_gm_medicinal_pad", Name);
+			StringUtils.RegisterString("tooltip_gm_medicinal_pad", Description);
 		}
 	}
 }

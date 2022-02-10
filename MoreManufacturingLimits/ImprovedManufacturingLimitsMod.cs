@@ -55,9 +55,9 @@ namespace ImprovedManufacturingLimits
         {
             CoreUtils.SetMember("mText", Singleton<HelpManager>.getInstance().findItem("manufacture_limits"), HelpText);
 
-            StringUtils.GlobalStrings.Add("manufacture_limits_raw", "Resources");
-            StringUtils.GlobalStrings.Add("manufacture_limits_manufactured", "Manufactured");
-            StringUtils.GlobalStrings.Add("manufacture_limits_bots", "Bots");
+            StringUtils.RegisterString("manufacture_limits_raw", "Resources");
+            StringUtils.RegisterString("manufacture_limits_manufactured", "Manufactured");
+            StringUtils.RegisterString("manufacture_limits_bots", "Bots");
         }
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)

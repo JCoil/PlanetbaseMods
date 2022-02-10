@@ -19,7 +19,7 @@ namespace ImprovedComponents
             Debug.Log("[MOD] ImprovedComponents activated");
         }
 
-        private void RegisterStrings()
+        private static void RegisterStrings()
         {
             TechImprovedProcessing.RegisterStrings();
             TechGmRice.RegisterStrings();

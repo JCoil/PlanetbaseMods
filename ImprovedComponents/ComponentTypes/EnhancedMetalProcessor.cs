@@ -44,8 +44,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringUtils.GlobalStrings.Add("component_enhanced_metal_processor", Name);
-            StringUtils.GlobalStrings.Add("tooltip_enhanced_metal_processor", Description);
+            StringUtils.RegisterString("component_enhanced_metal_processor", Name);
+            StringUtils.RegisterString("tooltip_enhanced_metal_processor", Description);
         }
     }
 }

@@ -19,14 +19,10 @@ namespace ImprovedManufacturingLimits
 		{
 			if (__instance.GetMenu("mMenuBaseManagement") is GuiMenu menu)
             {
-				Debug.Log("BASE MANAGEMENT");
-				Debug.Log(menu.getItemCount());
-
 				// Unfortunately the menu items are all generic, so the best way to identify them is by matching required ModuleType
 				var moduleType = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>();
 				if (menu.getItems().FirstOrDefault(x=> x.getRequiredModuleType() == moduleType) is GuiMenuItem manufacturLimitsMenuItem)
 				{
-					Debug.Log("MAN LIMITS");
 					manufacturLimitsMenuItem.SetCallback(new GuiDefinitions.Callback(gameStateGame.toggleWindow<GuiManufactureLimitsWindowImproved>));
                 }
             }

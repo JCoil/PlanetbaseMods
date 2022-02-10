@@ -22,8 +22,8 @@ namespace ImprovedComponents
 
         public static void RegisterStrings()
         {
-            StringUtils.GlobalStrings.Add("tech_gm_rice", "GM Rice DNA");
-            StringUtils.GlobalStrings.Add("tech_gm_rice_description", "Allows you to grow high-yield GM Rice");
+            StringUtils.RegisterString("tech_gm_rice", "GM Rice DNA");
+            StringUtils.RegisterString("tech_gm_rice_description", "Allows you to grow high-yield GM Rice");
         }
     }
 }
