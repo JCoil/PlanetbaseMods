@@ -27,5 +27,10 @@ namespace PlanetbaseModUtilities
         {
             CoreUtils.SetMember<GuiMenuItem, GuiDefinitions.Callback>("mCallback", menuItem, callback);
         }
+
+        public static GuiMenuSystem GetMenuSystem(this GameStateGame game)
+        {
+            return CoreUtils.GetMember<GameStateGame, GuiMenuSystem>("mMenuSystem", game);
+        }
     }
 }

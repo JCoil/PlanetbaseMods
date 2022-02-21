@@ -12,6 +12,8 @@ namespace PlanetbaseModUtilities
 {
     public abstract class ModBase
     {
+        public static GameStateGame GetGameStateGame() => GameManager.getInstance().getGameState() as GameStateGame;
+
         #region Class Contract
 
         /// <summary>

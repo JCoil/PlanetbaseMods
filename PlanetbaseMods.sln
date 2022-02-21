@@ -21,6 +21,7 @@ Global
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{2a2596f6-59d3-4f92-a33b-6e9bb2372bee}*SharedItemsImports = 13
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{4d5e385e-bb80-40c4-bb2b-0647fcaa20ad}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{c9e326de-6b1d-4ab6-8034-dc599f3005c2}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{f207875b-9308-4b84-861c-18aede338f29}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,21 +31,19 @@ Global
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F207875B-9308-4B84-861C-18AEDE338F29}.Release|Any CPU.Build.0 = Release|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
