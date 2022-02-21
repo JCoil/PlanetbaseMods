@@ -5,40 +5,19 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Xml;
+using PlanetbaseModUtilities;
 
 namespace StorageGuru
 {
     public class StorageManifestController
-    {
-        // Legacy storage - to be removed
-        readonly string ManifestDirectoryPath = @"Mods\StorageGuruData\Manifests\";
-        readonly string ManifestAutoFileName = @"autosave.txt";
-        private string ManifestFileName;
-
-        private bool Loading;
-
+    { 
         private List<ManifestEntry> StoreManifest;
         private List<ManifestEntry.Blueprint> Blueprints;
 
         public StorageManifestController()
         {
             StoreManifest = new List<ManifestEntry>();
-            Loading = true;
-
-            ManifestDirectoryPath = Path.Combine(Util.getFilesFolder(), ManifestDirectoryPath);
-            ManifestFileName = $"manifest_{Path.GetFileNameWithoutExtension(SaveData.getSavePath())}.txt";
-
-            if (LoadManifest(ManifestDirectoryPath + ManifestFileName))
-            {
-                Debug.Log("Loaded from manifest");
-            }
-            else if (LoadManifest(ManifestDirectoryPath + ManifestAutoFileName))
-            {
-                Debug.Log("Loaded from autosave manifest");
-            }
-
-            ConsolidateManifest();
-            Loading = false;
+            Blueprints = new List<ManifestEntry.Blueprint>();
         }
 
         public void Update()
@@ -54,16 +33,6 @@ namespace StorageGuru
         /// </summary>
         public void ConsolidateManifest()
         {
-            if (Blueprints != null)
-            {
-                foreach (var blueprint in Blueprints)
-                {
-                    LoadEntryFromBlueprint(blueprint);
-                }
-
-                Blueprints = null;
-            }
-
             var allActualStorage = GetAllActualStorageModules() ?? new List<Module>();
             var allManifestStorage = GetAllManifestModules();
 
@@ -93,85 +62,13 @@ namespace StorageGuru
 
         #region File IO
 
-        const char SerializeModuleSeperator = ',';
-
-        [Obsolete("No longer required - saving handled by Game's xml serialization")]
-        private bool LoadManifest(string path)
+        public void AddBlueprint(ManifestEntry.Blueprint blueprint)
         {
-            if (File.Exists(path))
+            if (blueprint != null)
             {
-                try
-                {
-                    var contents = File.ReadAllText(path);
-
-                    if (contents.Split(SerializeModuleSeperator) is string[] splitEntries)
-                    {
-                        foreach (var s in splitEntries)
-                        {
-                            LoadEntryFromBlueprint(ManifestEntry.Blueprint.Deserialize(s));
-                        }
-                    }
-
-                    return true;
-                }
-                catch (Exception)
-                {
-                    Debug.Log($"[StorageGuru] Failed to deserialize manifest {path}");
-                }
+                Blueprints.Add(blueprint);
             }
-
-            return false;
-        }
-
-        public void Serialize(XmlNode parent, string name)
-        {
-            XmlNode parent2 = Serialization.createNode(parent, name, null);
-
-            foreach (var entry in StoreManifest)
-            {
-                XmlNode parent3 = Serialization.createNode(parent2, "storage-module");
-
-                Serialization.serializeInt(parent3, "module-id", entry.ModuleId);
-                Serialization.serializeList(parent3, "resource-types", entry.AllowedResources.Select(x => x.GetType().Name).ToList());
-            }
-        }
-
-        public void Deserialize(XmlNode parent)
-        {
-            Blueprints = new List<ManifestEntry.Blueprint>();
-
-            foreach (var obj in parent.ChildNodes)
-            {
-                if (obj is XmlNode xmlNode && xmlNode.Name == "storage-module")
-                {
-                    var moduleId = Serialization.deserializeInt(xmlNode["module-id"]);
-                    var resources = Serialization.deserializeList<string>(xmlNode["resource-types"]);
-
-                    Blueprints.Add(new ManifestEntry.Blueprint(moduleId, resources));
-                }
-            }
-        }
-
-        private void LoadEntryFromBlueprint(ManifestEntry.Blueprint blueprint)
-        {
-            if (GetModuleById(blueprint.ModuleId) is Module module)
-            {
-                var resourceTypes = new List<ResourceType>();
-
-                if (blueprint.Resources != null)
-                {
-                    foreach (string resourceName in blueprint.Resources)
-                    {
-                        if (TypeList<ResourceType, ResourceTypeList>.find(resourceName) is ResourceType resourceType)
-                        {
-                            resourceTypes.Add(resourceType);
-                        }
-                    }
-                }
-
-                AddManifestEntry(module, resourceTypes);
-            }
-        }
+        } 
 
         #endregion
 
@@ -179,18 +76,18 @@ namespace StorageGuru
 
         private void RefreshStorageModule(Module module)
         {
-            if (module == null || module.mResourceStorage == null || module.mResourceStorage.mSlots == null)
+            if (module == null || module.GetResourceStorageObject() == null || module.GetResourceStorageObject().GetSlots() == null)
             {
                 return;
             }
 
             if (GetManifestEntry(module) is ManifestEntry entry)
             {
-                foreach (var slot in module.mResourceStorage.mSlots)
+                foreach (var slot in module.GetResourceStorageObject().GetSlots())
                 {
-                    if (slot != null && slot.mResources != null)
+                    if (slot != null && slot.GetResources() != null)
                     {
-                        foreach (var resource in slot.mResources)
+                        foreach (var resource in slot.GetResources())
                         {
                             if (entry.ContainsResource(resource.getResourceType()))
                             {
@@ -271,7 +168,7 @@ namespace StorageGuru
 
         #region Manifest Entries
 
-        private void AddManifestEntry(Module module, List<ResourceType> resourceTypes)
+        public void AddManifestEntry(Module module, List<ResourceType> resourceTypes)
         {
             if (GetManifestEntry(module) == null)
             {
@@ -318,14 +215,19 @@ namespace StorageGuru
             DefinitionChanged(module);
         }
 
-        public bool HasDefinition(Module module, ResourceType resource)
+        public bool HasDefinition(Module module, ResourceType resourceType)
         {
             if (GetManifestEntry(module) is ManifestEntry entry)
             {
-                return entry.ContainsResource(resource);
+                return entry.ContainsResource(resourceType);
             }
 
             return false;
+        }
+
+        public bool HasDefinition(Module module, Resource resource)
+        {
+            return HasDefinition(module, resource.getResourceType());
         }
 
         #endregion

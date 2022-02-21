@@ -1,4 +1,5 @@
 ﻿using Planetbase;
+using PlanetbaseModUtilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +22,7 @@ namespace StorageGuru
 
         public static void Init()
         {
-            StringList.mStrings.Add("tooltip_manage_storage", "Manage Storage");
+            StringUtils.RegisterString("tooltip_manage_storage", "Manage Storage");
             GreyscaleTextures = new Dictionary<string, Texture2D>(); 
             LoadContent();
         }

@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\BuildableUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\CharacterUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MenuUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patches\GameManagerPatch.cs" />
@@ -19,6 +20,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Patches\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Planetbase;
+using PlanetbaseModUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,57 +10,35 @@ namespace StorageGuru
 {
     public static class MenuController
     {
-        public static GuiMenuSystem MenuSystem;
+        public static GuiStorageMenu StorageMenu;
 
-        private static GuiStorageMenu StorageMenu;
-        private static GuiStorageMenuItem StorageMenuItem;
-
-        public static void Init(GuiMenuSystem menuSystem)
+        public static void Update()
         {
-            MenuSystem = menuSystem;
-            StorageMenu = new GuiStorageMenu();
-            StorageMenuItem = new GuiStorageMenuItem(StorageMenu);
-        }
-
-        public static void Update(GuiMenuSystem menuSystem)
-        {
-            if (MenuSystem.mCurrentMenu == StorageMenu)
+            if (StorageMenu != null)
             {
                 StorageMenu.Update();
             }
-
-            // If we're viewing an action menu
-            if (MenuSystem.mMenuAction is GuiMenu actionMenu)
-            {
-                // That is for a built storage module
-                if (Selection.getSelected() is Module module && module.getModuleType() is ModuleTypeStorage && module.isBuilt())
-                {
-                    // That doesn't already contain our storage button
-                    if (!actionMenu.mItems.Exists(x => x is GuiStorageMenuItem))
-                    {
-                        // Add our storage button
-                        MenuSystem.mMenuAction.mItems.Insert(1, StorageMenuItem);
-                    }
-                }
-            }            
-        } 
+        }
 
         public static void OnStorageMenuItemPressed(object parameter)
         {
-            StorageGuruMod.GameAccess.mActiveModule = (Selection.getSelected() as Module);
-
-            if (StorageGuruMod.GameAccess.mActiveModule is Module module)
+            if (parameter is Module module)
             {
-                StorageMenu.ActiveStorageModule = module;
-                StorageMenu.NeedsRefresh = true;
+                CoreUtils.SetMember("mActiveModule", ModBase.GetGameStateGame(), module);
 
-                StorageGuruMod.GameAccess.mMode = GameStateGame.Mode.CloseCamera;
-                Construction selectedConstruction = Selection.getSelectedConstruction();
-                CameraManager.getInstance().focusOnPosition(selectedConstruction.getPosition(), selectedConstruction.getRadius() + 10f);
-                selectedConstruction.setRenderTop(false);
+                StorageMenu = new GuiStorageMenu(module);
 
-                MenuSystem.mCurrentMenu = StorageMenu;
+                CameraManager.getInstance().focusOnPosition(module.getPosition(), module.getRadius() + 10f);
+                module.setRenderTop(false);
+
+                ModBase.GetGameStateGame().GetMenuSystem().SetMenu("mCurrentMenu", StorageMenu);
             }
+        }
+
+        internal static void OnBackButtonPressed(object parameter)
+        {
+            StorageMenu = null;
+            ModBase.GetGameStateGame().onButtonCancelEdit(parameter);
         }
     }
 
@@ -70,14 +49,14 @@ namespace StorageGuru
 
         public Module ActiveStorageModule { get; set; }
 
-        public bool NeedsRefresh;
+        public bool NeedsRefresh = true;
 
         /// <summary>
         /// Creates a new instance of a generic storage menu without any filters set
         /// </summary>
-        public GuiStorageMenu() : base("Storage")
+        public GuiStorageMenu(Module module) : base("Storage")
         {
-
+            ActiveStorageModule = module;
         }
 
         public void Update()
@@ -112,7 +91,7 @@ namespace StorageGuru
                         addItem(new GuiMenuItem(ContentManager.DisableAllIcon, "Disable All", OnDisableAllToggled));
                     }
 
-                    addBackItem(new GuiDefinitions.Callback(StorageGuruMod.GameAccess.onButtonCancelEdit));
+                    addBackItem(new GuiDefinitions.Callback(MenuController.OnBackButtonPressed));
 
                     NeedsRefresh = false;
                 }
@@ -138,21 +117,6 @@ namespace StorageGuru
         {
             StorageGuruMod.StorageController.RemoveAllDefinitionsFromManifestEntry(ActiveStorageModule);
             NeedsRefresh = true;
-        }
-    }
-
-    /// <summary>
-    /// GuiMenuItem subclass so we can easily identify in a menu's items
-    /// </summary>
-    public class GuiStorageMenuItem : GuiMenuItem
-    {
-        public GuiStorageMenuItem(GuiStorageMenu menu) : base(
-                  TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeStorage>().getIcon(),
-                  StringList.get("tooltip_manage_storage"),
-                  MenuController.OnStorageMenuItemPressed,
-                  menu, FlagMenuSwitch)
-        { 
-
         }
     }
 }
