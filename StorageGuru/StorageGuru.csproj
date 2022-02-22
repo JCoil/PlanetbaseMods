@@ -92,7 +92,4 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Users\Jack\Documents\Planetbase\Mods\"</PostBuildEvent>
-  </PropertyGroup>
 </Project>
