@@ -24,21 +24,23 @@ namespace StorageGuru
         {
             if (parameter is Module module)
             {
-                CoreUtils.SetMember("mActiveModule", ModBase.GetGameStateGame(), module);
+                var gameStateGame = (GameStateGame)GameManager.getInstance().getGameState();
+
+                CoreUtils.SetMember("mActiveModule", gameStateGame, module);
 
                 StorageMenu = new GuiStorageMenu(module);
 
                 CameraManager.getInstance().focusOnPosition(module.getPosition(), module.getRadius() + 10f);
                 module.setRenderTop(false);
 
-                ModBase.GetGameStateGame().GetMenuSystem().SetMenu("mCurrentMenu", StorageMenu);
+                gameStateGame.GetMenuSystem().SetMenu("mCurrentMenu", StorageMenu);
             }
         }
 
         internal static void OnBackButtonPressed(object parameter)
         {
             StorageMenu = null;
-            ModBase.GetGameStateGame().onButtonCancelEdit(parameter);
+            ((GameStateGame)GameManager.getInstance().getGameState()).onButtonCancelEdit(parameter);
         }
     }
 
