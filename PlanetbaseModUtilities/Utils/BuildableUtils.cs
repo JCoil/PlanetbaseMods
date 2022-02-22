@@ -16,34 +16,44 @@ namespace PlanetbaseModUtilities
             return CoreUtils.GetMember<Construction, List<Construction>>("mConstructions");
         }
 
+        #region Modules
+
+        public static T FindModuleType<T>() where T : ModuleType
+        {
+            return (T)TypeList<ModuleType, ModuleTypeList>.find<T>();
+        }
+
+        public static Module.Category GetCategory(this Module module) 
+        {
+            return CoreUtils.InvokeMethod<Module, Module.Category>("getCategory", module);
+        }
+
+        #endregion
+
+        #region Components
+
         public static List<ConstructionComponent> GetAllComponents()
         {
             return CoreUtils.GetMember<ConstructionComponent, List<ConstructionComponent>>("mComponents");
         }
 
-        public static T FindModuleType<T>() where T:ModuleType
+        public static List<ComponentType> GetComponentTypes(this ModuleType moduleType)
         {
-            return (T)TypeList<ModuleType, ModuleTypeList>.find<T>();
+            return CoreUtils.GetMember<ModuleType, ComponentType[]>("mComponentTypes", moduleType).ToList();
         }
 
-        public static List<ComponentType> GetComponentTypes<T>(this T moduleType) where T : ModuleType
-        {
-            return CoreUtils.GetMember<T, ComponentType[]>("mComponentTypes", moduleType).ToList();
-        }
-
-        public static void SetComponentTypes<T>(this T moduleType, List<ComponentType> componentTypes) where T : ModuleType
+        public static void SetComponentTypes(this ModuleType moduleType, List<ComponentType> componentTypes)
         {
             CoreUtils.SetMember("mComponentTypes", moduleType, componentTypes.ToArray());
         }
 
-        public static Module.Category GetCategory<T>(this T module) where T : Module
-        {
-            return CoreUtils.InvokeMethod<T, Module.Category>("getCategory", module);
-        }
+        #endregion
 
-        public static ResourceStorage GetResourceStorageObject<T>(this T module) where T : Module
+        #region Storage
+
+        public static ResourceStorage GetResourceStorageObject(this Module module)
         {
-            return CoreUtils.GetMember<T, ResourceStorage>("mResourceStorage", module);
+            return CoreUtils.GetMember<Module, ResourceStorage>("mResourceStorage", module);
         }
 
         public static List<StorageSlot> GetSlots(this ResourceStorage storage)
@@ -55,5 +65,7 @@ namespace PlanetbaseModUtilities
         {
             return CoreUtils.GetMember<StorageSlot, List<Resource>>("mResources", slot);
         }
+
+        #endregion
     }
 }

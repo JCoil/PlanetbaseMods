@@ -46,7 +46,7 @@ namespace ImprovedComponents
         private void RegisterNewComponents()
         {
             // Register new components to global lists
-            var componentTypeList = TypeList<ComponentType, ComponentTypeList>.getInstance();
+            var componentTypeList = ComponentTypeList.getInstance();
 
             componentTypeList.AddType(new EnhancedMetalProcessor());
             componentTypeList.AddType(new EnhancedBioplasticProcessor());
@@ -55,21 +55,20 @@ namespace ImprovedComponents
             componentTypeList.AddType(new GmMedicinalPad());
 
             // Add new components to processing plants
-            var processingPlantType = BuildableUtils.FindModuleType<ModuleTypeProcessingPlant>();
-            var processingPlantComponents = processingPlantType.GetComponentTypes();
+            var processingPlantComponents = BuildableUtils.FindModuleType<ModuleTypeProcessingPlant>().GetComponentTypes();
 
-            processingPlantComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<EnhancedBioplasticProcessor>());
-            processingPlantComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<EnhancedMetalProcessor>());
+            processingPlantComponents.Add(ComponentTypeList.find<EnhancedBioplasticProcessor>());
+            processingPlantComponents.Add(ComponentTypeList.find<EnhancedMetalProcessor>());
 
-            processingPlantType.SetComponentTypes(processingPlantComponents);
+            BuildableUtils.FindModuleType<ModuleTypeProcessingPlant>().SetComponentTypes(processingPlantComponents);
 
             // Add new components to bio domes
             var bioDomeType = BuildableUtils.FindModuleType<ModuleTypeBioDome>();
             var bioDomeComponents = bioDomeType.GetComponentTypes();
 
-            bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<GmRicePad>());
-            bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<GmWheatPad>());
-            bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<GmMedicinalPad>());
+            bioDomeComponents.Add(ComponentTypeList.find<GmRicePad>());
+            bioDomeComponents.Add(ComponentTypeList.find<GmWheatPad>());
+            bioDomeComponents.Add(ComponentTypeList.find<GmMedicinalPad>());
 
             bioDomeType.SetComponentTypes(bioDomeComponents);
         }
