@@ -24,9 +24,10 @@ namespace StorageGuru
         {
             if (parameter is Module module)
             {
-                CoreUtils.SetMember("mActiveModule", ModBase.GetGameStateGame(), module);
-
                 StorageMenu = new GuiStorageMenu(module);
+
+                CoreUtils.SetMember("mActiveModule", ModBase.GetGameStateGame(), module);
+                CoreUtils.SetMember("mMode", ModBase.GetGameStateGame(), 4);
 
                 CameraManager.getInstance().focusOnPosition(module.getPosition(), module.getRadius() + 10f);
                 module.setRenderTop(false);
