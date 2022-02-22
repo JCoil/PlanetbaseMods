@@ -15,9 +15,9 @@ namespace PlanetbaseModUtilities.Utils
             return CoreUtils.GetMember<Character, List<Character>>("mCharacters");
         }
 
-        public static void SetTarget<T>(this T character, Target target) where T:Character
+        public static void SetTarget(this Character character, Target target)
         {
-            CoreUtils.InvokeMethod<Character>("setTarget", character, target);
+            CoreUtils.InvokeMethod("setTarget", character, target);
         }
     }
 }

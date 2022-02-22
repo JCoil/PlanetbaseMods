@@ -8,6 +8,9 @@ namespace PlanetbaseModUtilities
 {
     public static class StringUtils
     {
+        /// <summary>
+        /// Add a named string into the global dictionary. Accessible by StringList.get()
+        /// </summary>
         public static void RegisterString(string key, string value)
         {
             StringList.get("dummy"); // Dummy to ensure StringList.mStrings is initialised

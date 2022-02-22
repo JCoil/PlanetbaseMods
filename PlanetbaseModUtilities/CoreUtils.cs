@@ -86,5 +86,20 @@ namespace PlanetbaseModUtilities
         }
 
         #endregion
+
+        #region Type
+
+        /// <summary>
+        ///  Get underlying value of an enum 
+        /// </summary>
+        /// <typeparam name="U">Containing Type</typeparam>
+        /// <typeparam name="V">Member Type</typeparam>
+        public static int GetEnumValue<V>(string memberName, Type containingType, V enumType) where V:Type
+        {
+            var value = GetMember <V> (memberName, containingType);
+            return (int) Convert.ChangeType(value, Enum.GetUnderlyingType(typeof(V)));
+        }
+
+        #endregion
     }
 }

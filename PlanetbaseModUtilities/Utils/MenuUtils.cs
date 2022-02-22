@@ -8,6 +8,11 @@ namespace PlanetbaseModUtilities
 {   
     public static class MenuUtils
     {
+        public static GuiMenuSystem GetMenuSystem(this GameStateGame game)
+        {
+            return CoreUtils.GetMember<GameStateGame, GuiMenuSystem>("mMenuSystem", game);
+        }
+
         public static GuiMenu GetMenu(this GuiMenuSystem menuSystem, string menuName)
         {
             return CoreUtils.GetMember<GuiMenuSystem, GuiMenu>(menuName, menuSystem);
@@ -15,8 +20,10 @@ namespace PlanetbaseModUtilities
 
         public static void SetMenu(this GuiMenuSystem menuSystem, string menuName, GuiMenu menu)
         {
-            CoreUtils.SetMember<GuiMenuSystem, GuiMenu>(menuName, menuSystem, menu);
+            CoreUtils.SetMember(menuName, menuSystem, menu);
         }
+
+        #region Callbacks
 
         public static GuiDefinitions.Callback GetCallback(this GuiMenuItem menuItem)
         {
@@ -25,12 +32,9 @@ namespace PlanetbaseModUtilities
 
         public static void SetCallback(this GuiMenuItem menuItem, GuiDefinitions.Callback callback)
         {
-            CoreUtils.SetMember<GuiMenuItem, GuiDefinitions.Callback>("mCallback", menuItem, callback);
+            CoreUtils.SetMember("mCallback", menuItem, callback);
         }
 
-        public static GuiMenuSystem GetMenuSystem(this GameStateGame game)
-        {
-            return CoreUtils.GetMember<GameStateGame, GuiMenuSystem>("mMenuSystem", game);
-        }
+        #endregion
     }
 }
