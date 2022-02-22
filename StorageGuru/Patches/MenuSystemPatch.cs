@@ -15,7 +15,7 @@ namespace StorageGuru
 	{
 		public static void Postfix(ref GuiMenuSystem __instance)
 		{
-			if (Selection.getSelectedConstruction() is Module module && module.isBuilt())
+			if (Selection.getSelectedConstruction() is Module module && module.isBuilt() && module.GetCategory() == Module.Category.Storage)
 			{
 				__instance.GetMenu("mMenuAction").getItems().Insert(1, new GuiStorageMenuItem(module));
 			}
