@@ -19,7 +19,7 @@ namespace ImprovedManufacturingLimits
         public const int FlagRawResource = 256;
         private List<ResourceType> NewResourceLimits;
 
-        public override void OnInitialized()
+        public override void OnInitialized(ModEntry modEntry)
         { 
             RegisterStrings();
 
