@@ -46,8 +46,10 @@ namespace CameraOverhaul
                     var xmlDoc = new XmlDocument();
                     xmlDoc.Load(path);
 
-                    bool.TryParse(xmlDoc["configuration"]["screenedgescrollingenabled"].InnerText, out bool screenEdgeScrolling);
-                    ScreenEdgeScrollingEnabled = screenEdgeScrolling;
+                    if (bool.TryParse(xmlDoc["configuration"]["screenedgescrollingenabled"].InnerText, out bool screenEdgeScrolling))
+                    {
+                        ScreenEdgeScrollingEnabled = screenEdgeScrolling;
+                    }
                 }
             }
             catch(Exception)
