@@ -10,7 +10,7 @@ namespace QoLTweaks
 
         const int NewMedicalCabinetCapacity = 12;
 
-        public override void OnInitialized()
+        public override void OnInitialized(ModEntry modEntry)
         {
             // Change base behaviour of game elements
             SetDefaultMedicalCabinetCapacity();

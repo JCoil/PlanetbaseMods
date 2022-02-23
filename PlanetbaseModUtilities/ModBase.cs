@@ -6,7 +6,6 @@ using System.Text;
 using Planetbase;
 using static UnityModManagerNet.UnityModManager;
 using UnityEngine;
-using PlanetbaseModUtilities;
 
 namespace PlanetbaseModUtilities
 {
@@ -19,7 +18,7 @@ namespace PlanetbaseModUtilities
         /// <summary>
         /// Called once mod is initialised + registered with UnityModManager
         /// </summary>
-        public abstract void OnInitialized();
+        public abstract void OnInitialized(ModEntry modEntry);
 
         /// <summary>
         /// Called every timestep while game is running
@@ -54,12 +53,17 @@ namespace PlanetbaseModUtilities
             modEntry.OnUpdate = mod.OnUpdate;
             GameManagerPatch.OnGameStateChanged = mod.OnGameStateChanged;
 
-            mod.OnInitialized();
+            mod.OnInitialized(modEntry);
 
             var harmony = new Harmony(modName);
             harmony.PatchAll();
         }
 
         #endregion
+
+        protected virtual void LoadConfiguration()
+        {
+
+        }
     }
 }

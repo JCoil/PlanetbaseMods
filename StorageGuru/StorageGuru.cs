@@ -30,7 +30,7 @@ namespace StorageGuru
             set => storageController = value;
         }
 
-        public override void OnInitialized()
+        public override void OnInitialized(ModEntry modEntry)
         {
             ContentManager.Init();
             StorageController = new StorageManifestController();

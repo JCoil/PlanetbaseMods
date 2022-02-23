@@ -15,7 +15,7 @@ namespace CheatTools
 
         static bool KeysDown = false;
 
-        public override void OnInitialized()
+        public override void OnInitialized(ModEntry modEntry)
         {
             StringUtils.RegisterString("cheat_menu", "Cheat Tools");
         }

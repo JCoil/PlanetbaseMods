@@ -10,7 +10,7 @@ namespace ImprovedComponents
     {
         public static new void Init(ModEntry modEntry) => InitializeMod(new ImprovedComponentsMod(), modEntry, "ImprovedComponents");
 
-        public override void OnInitialized()
+        public override void OnInitialized(ModEntry modEntry)
         {
             RegisterStrings();
             RegisterNewTechs();
