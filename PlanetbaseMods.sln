@@ -17,9 +17,12 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PlanetbaseModUtilities", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QoLTweaks", "QoLTweaks\QoLTweaks.csproj", "{665BECC1-1EE0-4CC7-892C-3204C1B329FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraOverhaul", "..\..\Repos\joaofarias-planetbase-modding\CameraOverhaul\CameraOverhaul.csproj", "{26C96371-5788-498B-99EF-2CC556C9A7D9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{118dc179-2606-49aa-9f0f-4b7da646d554}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{26c96371-5788-498b-99ef-2cc556c9a7d9}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{2a2596f6-59d3-4f92-a33b-6e9bb2372bee}*SharedItemsImports = 13
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{4d5e385e-bb80-40c4-bb2b-0647fcaa20ad}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{665becc1-1ee0-4cc7-892c-3204c1b329fd}*SharedItemsImports = 4
@@ -50,7 +53,10 @@ Global
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

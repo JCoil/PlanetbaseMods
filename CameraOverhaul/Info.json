@@ -1,0 +1,6 @@
+﻿{
+  "Id": "CameraOverhaul",
+  "DisplayName": "Camera Overhaul",
+  "Version": "1.1.0",
+  "EntryMethod": "CameraOverhaul.CameraOverhaul.Init"
+}
