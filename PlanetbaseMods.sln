@@ -17,7 +17,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PlanetbaseModUtilities", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QoLTweaks", "QoLTweaks\QoLTweaks.csproj", "{665BECC1-1EE0-4CC7-892C-3204C1B329FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraOverhaul", "..\..\Repos\joaofarias-planetbase-modding\CameraOverhaul\CameraOverhaul.csproj", "{26C96371-5788-498B-99EF-2CC556C9A7D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraOverhaul", "CameraOverhaul\CameraOverhaul.csproj", "{26C96371-5788-498B-99EF-2CC556C9A7D9}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
