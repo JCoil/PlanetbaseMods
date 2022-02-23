@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\PlanetbaseModUtilities\ref\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -44,14 +48,21 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityModManager">
+      <HintPath>..\PlanetbaseModUtilities\ref\UnityModManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ModWrapper\ModBase.cs">
-      <Link>ModBase.cs</Link>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QoLTweaksMod.cs" />
+    <None Include="Info.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QoLTweaks.cs" />
+  </ItemGroup>
+  <Import Project="..\PlanetbaseModUtilities\PlanetbaseModUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Users\Jack\Documents\Planetbase\Mods\"

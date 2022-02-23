@@ -1,0 +1,6 @@
+﻿{
+  "Id": "QoLTweaks",
+  "DisplayName": "Quality of Life Tweaks",
+  "Version": "1.0.0",
+  "EntryMethod": "QoLTweaks.QoLTweaks.Init"
+}

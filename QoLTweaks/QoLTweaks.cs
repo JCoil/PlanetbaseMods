@@ -1,24 +1,22 @@
-﻿using ModWrapper;
-using Planetbase;
+﻿using Planetbase;
+using PlanetbaseModUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static UnityModManagerNet.UnityModManager;
 
 namespace QoLTweaks
 {
-    public class QoLTweaksMod : ModBase, IMod
+    public class QoLTweaks : ModBase
     {
+        public static new void Init(ModEntry modEntry) => InitializeMod(new QoLTweaks(), modEntry, "QoLTweaks");
+
         const int NewMedicalCabinetCapacity = 12;
 
-        public override void Init()
-        {
-            Debug.Log("[MOD] QoL Tweaks activated");
-        }
-
-        public override void OnGameStart()
+        public override void OnInitialized()
         {
             SetMedicalCabinetCapacity();
             MedicalCabinetsInLabs();
