@@ -1,11 +1,5 @@
 ﻿using Planetbase;
 using PlanetbaseModUtilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 using static UnityModManagerNet.UnityModManager;
 
 namespace QoLTweaks
@@ -18,45 +12,66 @@ namespace QoLTweaks
 
         public override void OnInitialized()
         {
-            SetMedicalCabinetCapacity();
-            MedicalCabinetsInLabs();
+            // Change base behaviour of game elements
+            SetDefaultMedicalCabinetCapacity();
+            AllowMedicalCabinetsInLabs();
         }
 
-        private void SetMedicalCabinetCapacity()
+        public override void OnGameStart(GameStateGame gameStateGame)
         {
-            // Update ResourceType definition
-            TypeList<ComponentType, ComponentTypeList>.find<MedicalCabinet>().mEmbeddedResourceCount = NewMedicalCabinetCapacity;
+            // Update exisiting elements to match new base behavious
+            UpdateExistingMedicalCabinets();
+            UpdateExistingLabsToAllowMedicalCabinets();
+        }
 
-            // Update all existing cabinets
-            foreach (var component in ConstructionComponent.mComponents)
+        #region OnInitialized
+
+        private void SetDefaultMedicalCabinetCapacity()
+        {
+            CoreUtils.SetMember("mEmbeddedResourceCount", ComponentTypeList.find<MedicalCabinet>(), NewMedicalCabinetCapacity);
+        }
+
+        private void AllowMedicalCabinetsInLabs()
+        {
+            // Add cabinet component to ModuleTypeLab 
+            // getCategory() will now return Module.Category.StorageComponentContaner for labs so they will be added to the master list on init
+            var labComponents = ModuleTypeList.find<ModuleTypeLab>().GetComponentTypes();
+            labComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<MedicalCabinet>());
+            ModuleTypeList.find<ModuleTypeLab>().SetComponentTypes(labComponents);
+        }
+
+        #endregion
+
+        #region OnGameStart
+
+        private static void UpdateExistingMedicalCabinets()
+        {
+            foreach (var component in BuildableUtils.GetAllComponents())
             {
-                if (component.getComponentType() is MedicalCabinet cabinet)
+                if (component.getComponentType() is MedicalCabinet && component.getResourceContainer() is ResourceContainer container)
                 {
-                    component.mResourceContainer.setCapacity(NewMedicalCabinetCapacity);
+                    container.setCapacity(NewMedicalCabinetCapacity);
                 }
             }
         }
 
-        private void MedicalCabinetsInLabs()
+        private void UpdateExistingLabsToAllowMedicalCabinets()
         {
-            // Add cabinet component to ModuleTypeLab
-            var labComponents = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeLab>().mComponentTypes.ToList();
-            labComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<MedicalCabinet>());
-            TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeLab>().mComponentTypes = labComponents.ToArray();
-
             // Update existing labs to be recognised as having storage components
-            foreach (var module in Module.mModules)
+            foreach (var module in BuildableUtils.GetAllModules())
             {
                 if (module.getModuleType() is ModuleTypeLab)
                 {
-                    Module.mModuleCategories[(int)Module.Category.StorageComponentContaner].Add(module);
+                    module.SetCategory(Module.Category.StorageComponentContaner); // Typo in Planetbase assembly
                 }
             }
         }
 
-        public override void Update(float timeStep)
+        #endregion
+
+        public override void OnUpdate(ModEntry modEntry, float timeStep)
         {
-            // Nothing required here
+            // Nothing required here for now
         }
     }
 }

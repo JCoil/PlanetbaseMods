@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QoLTweaks</RootNamespace>
     <AssemblyName>QoLTweaks</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,8 +66,9 @@
   <Import Project="..\PlanetbaseModUtilities\PlanetbaseModUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Users\Jack\Documents\Planetbase\Mods\"
-powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'
-		</PostBuildEvent>
+    <PostBuildEvent>xcopy /E /Y "D:\Users\Jack\Source\Visual Studio Projects\StorageGuru\PlanetbaseModUtilities\bin\Release\PlanetbaseModUtilities.dll" "$(TargetDir)"
+xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\QoLTweaks"
+
+powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'</PostBuildEvent>
   </PropertyGroup>
 </Project>

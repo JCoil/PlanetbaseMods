@@ -16,6 +16,11 @@ namespace PlanetbaseModUtilities
             return CoreUtils.GetMember<Construction, List<Construction>>("mConstructions");
         }
 
+        public static List<Module> GetAllModules()
+        {
+            return CoreUtils.GetMember<Module, List<Module>>("mModules");
+        }
+
         #region Modules
 
         public static T FindModuleType<T>() where T : ModuleType
@@ -26,6 +31,32 @@ namespace PlanetbaseModUtilities
         public static Module.Category GetCategory(this Module module) 
         {
             return CoreUtils.InvokeMethod<Module, Module.Category>("getCategory", module);
+        }
+
+        /// <summary>
+        /// Category is infered from other fields on module, but only determined at init time.
+        /// After that, Category is recovered by querying static mModuleCategories, so to change an existing module's category, we must update mModuleCategories
+        /// </summary>
+        public static void SetCategory(this Module module, Module.Category category)
+        {
+            var mModuleCategories = CoreUtils.GetMember<Module, List<Module>[]>("mModuleCategories");
+
+            // Find and remove old category entry
+            foreach(var categoryList in mModuleCategories)
+            {
+                if(categoryList.Contains(module))
+                {
+                    categoryList.Remove(module);
+                }
+            }
+
+            // Make sure the category list exists (This shouldn't ever come up - should be set early in the game lifecycle)
+            if (mModuleCategories[(int)category] == null)
+            {
+                mModuleCategories[(int)category] = new List<Module>();
+            }
+
+            mModuleCategories[(int)category].Add(module);
         }
 
         #endregion
