@@ -7,6 +7,8 @@ using PlanetbaseModUtilities;
 using static UnityModManagerNet.UnityModManager;
 using UnityEngine;
 using HarmonyLib;
+using System.Xml;
+using System.IO;
 
 namespace CameraOverhaul
 {
@@ -29,11 +31,29 @@ namespace CameraOverhaul
         public static int mModulesize = 0;
         public static bool mIsPlacingModule = false;
 
+        public static bool ScreenEdgeScrollingEnabled = true;
+
         public const int ModePlacingModule = 1; // GameStateGame.Mode.PlacingModule enum value
 
-        public override void OnInitialized()
+        public override void OnInitialized(ModEntry modEntry)
         {
-            // Nothing needed here
+            var path = modEntry.Path + "CameraOverhaul.config";
+
+            try
+            {
+                if (File.Exists(path))
+                {
+                    var xmlDoc = new XmlDocument();
+                    xmlDoc.Load(path);
+
+                    bool.TryParse(xmlDoc["configuration"]["screenedgescrollingenabled"].InnerText, out bool screenEdgeScrolling);
+                    ScreenEdgeScrollingEnabled = screenEdgeScrolling;
+                }
+            }
+            catch(Exception)
+            {
+                // Failed to load/read the config file
+            }
         }
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)

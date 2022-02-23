@@ -108,7 +108,7 @@ namespace CameraOverhaul
                     }
 
                     // Move with mouse on screen borders
-                    if (!Application.isEditor)
+                    if (CameraOverhaul.ScreenEdgeScrollingEnabled && !Application.isEditor)
                     {
                         float screenBorder = Screen.height * 0.01f;
                         if (Input.mousePosition.x < screenBorder)
