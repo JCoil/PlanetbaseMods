@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CameraOverhaul</RootNamespace>
-    <AssemblyName>CameraOverhaul</AssemblyName>
+    <AssemblyName>CameraOverhaulRehauled</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -63,7 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CameraOverhaul.config">
+    <None Include="CameraOverhaulRehauled.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Info.json">
@@ -73,11 +73,10 @@
   <Import Project="..\..\..\Visual Studio Projects\StorageGuru\PlanetbaseModUtilities\PlanetbaseModUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-      xcopy /E /Y "D:\Users\Jack\Source\Visual Studio Projects\StorageGuru\PlanetbaseModUtilities\bin\Release\PlanetbaseModUtilities.dll" "$(TargetDir)"
-      xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\CameraOverhaul"
+    <PostBuildEvent>xcopy /E /Y "D:\Users\Jack\Source\Visual Studio Projects\StorageGuru\PlanetbaseModUtilities\bin\Release\PlanetbaseModUtilities.dll" "$(TargetDir)"
+xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\CameraOverhaulRehauled"
 
-      powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'
-    </PostBuildEvent>
+powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
