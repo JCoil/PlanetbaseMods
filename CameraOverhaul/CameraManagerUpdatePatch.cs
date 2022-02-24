@@ -17,8 +17,7 @@ namespace CameraOverhaul
         {
             var cameraManager = __instance;
 
-
-            if (cameraManager.GetZoomAxis() != 0f)
+            if (cameraManager.GetZoomAxis() == 0f)
             {
                 cameraManager.SetZoomAxis(Input.GetAxis("Zoom"));
             }
@@ -48,12 +47,12 @@ namespace CameraOverhaul
                         if (absYAxis > 0.01f)
                         {
                             float speed = Mathf.Clamp(60f * timeStep, 0.01f, 100f);
-                            float newHeight = Mathf.Clamp(cameraManager.GetCurrentHeight() + yAxis * speed,CameraOverhaul.MIN_HEIGHT, CameraOverhaul.MAX_HEIGHT);
+                            float newHeight = Mathf.Clamp(cameraManager.GetCurrentHeight() + yAxis * speed, CameraOverhaul.MIN_HEIGHT, CameraOverhaul.MAX_HEIGHT);
 
                             if (transform.eulerAngles.x < 86f)
                             {
                                 zAxis += (cameraManager.GetCurrentHeight() - newHeight) / speed;
-                                absZAxis = Mathf.Abs(zAxis);
+                                absZAxis = Mathf.Abs(zAxis);                                
                             }
 
                             cameraManager.SetCurrentHeight(newHeight);
