@@ -46,12 +46,22 @@ namespace CameraOverhaul
                         // if zooming
                         if (absYAxis > 0.01f)
                         {
-                            float speed = Mathf.Clamp(60f * timeStep, 0.01f, 100f);
-                            float newHeight = Mathf.Clamp(cameraManager.GetCurrentHeight() + yAxis * speed, CameraOverhaul.MIN_HEIGHT, CameraOverhaul.MAX_HEIGHT);
+                            float currentHeight = cameraManager.GetCurrentHeight();
 
-                            if (transform.eulerAngles.x < 86f)
+                            // If enabled, scale speed by 0.5 times the currentHeight to minHeight ratio
+                            float speedEasingFactor = CameraOverhaul.ZoomSpeedEasingEnabled ?
+                                (float)Math.Sqrt(currentHeight / CameraOverhaul.MinHeight) : 1f;
+
+                            float speed = Mathf.Clamp(60f * timeStep, 0.01f, 100f) * speedEasingFactor * CameraOverhaul.ZoomSpeedMultiplier;
+                            float newHeight = Mathf.Clamp(currentHeight + yAxis * speed, CameraOverhaul.MinHeight, CameraOverhaul.MaxHeight);
+
+                            if (transform.eulerAngles.x < 86f) // If camera is not pointing close to vertical
                             {
-                                zAxis += (cameraManager.GetCurrentHeight() - newHeight) / speed;
+                                // If enabled, scale z movement on zoom by inverse of height
+                                float zMotionEasingfactor = CameraOverhaul.ZoomZMotionEasingEnabled ?
+                                    (2f * CameraOverhaul.MinHeight / (currentHeight + CameraOverhaul.MinHeight)) : 1f;
+
+                                zAxis += zMotionEasingfactor * (currentHeight - newHeight) / speed;
                                 absZAxis = Mathf.Abs(zAxis);                                
                             }
 
@@ -85,13 +95,13 @@ namespace CameraOverhaul
 
                         transform.eulerAngles = eulerAngles;
                     }
-                    else if (absYAxis > 0.01f)
+                    else if (absYAxis > 0.01f && Selection.getSelectedConstruction() is Construction construction)
                     {
                         float speed = Mathf.Clamp(60f * timeStep, 0.01f, 100f);
                         Vector3 movement = transform.forward * speed * -yAxis;
 
-                        Vector3 planePoint = Selection.getSelectedConstruction().getPosition();
-                        planePoint.y = yAxis < 0f ? 4f : Selection.getSelectedConstruction().getRadius() + 10f;
+                        Vector3 planePoint = construction.getPosition();
+                        planePoint.y = yAxis < 0f ? 4f : construction.getRadius() + 10f;
                         Plane plane = new Plane(Vector3.up, planePoint);
 
                         Ray ray = new Ray(transform.position, yAxis < 0f ? transform.forward : -transform.forward);

@@ -16,10 +16,6 @@ namespace CameraOverhaul
     {
         public static new void Init(ModEntry modEntry) => InitializeMod(new CameraOverhaul(), modEntry, "CameraOverhaul");
 
-        // These are not const so other mods can change them if they want
-        public static float MIN_HEIGHT = 12f;
-        public static float MAX_HEIGHT = 120f;
-
         public static float mVerticalRotationAcceleration = 0f;
         public static float mPreviousMouseY = 0f;
 
@@ -31,29 +27,67 @@ namespace CameraOverhaul
         public static int mModulesize = 0;
         public static bool mIsPlacingModule = false;
 
+        // User configurable settings
         public static bool ScreenEdgeScrollingEnabled = true;
+        public static float MinHeight = 12f;
+        public static float MaxHeight = 120f;
+        public static float ZoomSpeedMultiplier = 1f;
+        public static bool ZoomZMotionEasingEnabled = true;
+        public static bool ZoomSpeedEasingEnabled = true;
 
         public override void OnInitialized(ModEntry modEntry)
         {
-            var path = modEntry.Path + "CameraOverhaul.config";
+            LoadUserSettings(modEntry.Path + "CameraOverhaul.config");
+        }
+
+        private void LoadUserSettings(string path)
+        {
+            if(!File.Exists(path))
+            {
+                return;
+            }
 
             try
             {
-                if (File.Exists(path))
-                {
-                    var xmlDoc = new XmlDocument();
-                    xmlDoc.Load(path);
+                var xmlDoc = new XmlDocument();
+                xmlDoc.Load(path);
+                var rootNode = xmlDoc["configuration"];
 
-                    if (bool.TryParse(xmlDoc["configuration"]["screenedgescrollingenabled"].InnerText, out bool screenEdgeScrolling))
-                    {
-                        ScreenEdgeScrollingEnabled = screenEdgeScrolling;
-                    }
+                if (bool.TryParse(rootNode["screenedgescrollingenabled"].InnerText, out bool screenEdgeScrollingEnabled))
+                {
+                    ScreenEdgeScrollingEnabled = screenEdgeScrollingEnabled;
+                }
+
+                if (float.TryParse(rootNode["minheight"].InnerText, out float minHeight) && minHeight > 0)
+                {
+                    MinHeight = minHeight;
+                }
+
+                if (float.TryParse(rootNode["maxheight"].InnerText, out float maxHeight) && maxHeight > MinHeight)
+                {
+                    MaxHeight = maxHeight;
+                }
+
+                if (float.TryParse(rootNode["zoomspeedmultiplier"].InnerText, out float speedMultiplier) && speedMultiplier > 0)
+                {
+                    ZoomSpeedMultiplier = speedMultiplier;
+                }
+
+                if (bool.TryParse(rootNode["zoomzmotioneasingenabled"].InnerText, out bool zMotionEasing))
+                {
+                    ZoomZMotionEasingEnabled = zMotionEasing;
+                }
+
+                if (bool.TryParse(rootNode["zoomspeedeasingenabled"].InnerText, out bool speedEasing))
+                {
+                    ZoomSpeedEasingEnabled = speedEasing;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 // Failed to load/read the config file
             }
+
         }
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)
