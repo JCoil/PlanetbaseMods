@@ -37,7 +37,7 @@ namespace CameraOverhaul
 
         public override void OnInitialized(ModEntry modEntry)
         {
-            LoadUserSettings(modEntry.Path + "CameraOverhaul.config");
+            LoadUserSettings(modEntry.Path + "CameraOverhaulRehauled.config");
         }
 
         private void LoadUserSettings(string path)
