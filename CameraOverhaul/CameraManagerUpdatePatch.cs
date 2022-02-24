@@ -26,7 +26,7 @@ namespace CameraOverhaul
             {
                 if (!cameraManager.isCinematic())
                 {
-                    if (game.GetModeValue() == CameraOverhaul.ModePlacingModule && CameraOverhaul.mIsPlacingModule)
+                    if (game.IsMode(GameStateUtils.Mode.PlacingModule) && CameraOverhaul.mIsPlacingModule)
                     {
                         game.SetCurrentModuleSize(CameraOverhaul.mModulesize);
                     }

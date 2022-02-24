@@ -33,8 +33,6 @@ namespace CameraOverhaul
 
         public static bool ScreenEdgeScrollingEnabled = true;
 
-        public const int ModePlacingModule = 1; // GameStateGame.Mode.PlacingModule enum value
-
         public override void OnInitialized(ModEntry modEntry)
         {
             var path = modEntry.Path + "CameraOverhaul.config";
