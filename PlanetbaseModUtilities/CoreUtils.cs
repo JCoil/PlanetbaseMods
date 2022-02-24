@@ -90,14 +90,30 @@ namespace PlanetbaseModUtilities
         #region Type
 
         /// <summary>
-        ///  Get underlying value of an enum 
+        /// Get Type of enum
+        /// </summary>
+        /// <param name="enumQualifiedPath"></param>
+        /// <param name="containingAssembly"></param>
+        /// <returns></returns>
+        public static Type GetEnum(string enumQualifiedPath, Assembly containingAssembly)
+        {
+            return containingAssembly.GetType(enumQualifiedPath);
+        }
+
+        /// <summary>
+        /// Get value of an enum by reflection.
+        /// Note: containingInstance and enumContainingAssembly can be of different Types
         /// </summary>
         /// <typeparam name="U">Containing Type</typeparam>
         /// <typeparam name="V">Member Type</typeparam>
-        public static int GetEnumValue<V>(string memberName, Type containingType, V enumType) where V:Type
+        /// <param name="enumQualifiedPath">Fully qualified name of Type of enum</param>
+        /// <param name="enumContainingAssembly">Assembly containing the enum at enumQualifiedPath</param>
+        public static V GetEnumValue<U, V>(string memberName, U containingInstance, string enumQualifiedPath, Assembly enumContainingAssembly)
         {
-            var value = GetMember <V> (memberName, containingType);
-            return (int) Convert.ChangeType(value, Enum.GetUnderlyingType(typeof(V)));
+            var enumType = GetEnum(enumQualifiedPath, enumContainingAssembly);
+            var enumValue = GetMember<U, object>(memberName, containingInstance);
+
+            return (V)Enum.ToObject(enumType, enumValue);
         }
 
         #endregion

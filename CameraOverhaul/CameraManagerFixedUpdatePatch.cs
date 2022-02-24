@@ -42,7 +42,7 @@ namespace CameraOverhaul
                 {
                     KeyBindingManager keyBindingManager = KeyBindingManager.getInstance();
 
-                    if (game != null && game.GetModeValue() == CameraOverhaul.ModePlacingModule)
+                    if (game.IsMode(GameStateUtils.Mode.PlacingModule))
                     {
                         if (!CameraOverhaul.mIsPlacingModule)
                         {
@@ -85,8 +85,8 @@ namespace CameraOverhaul
 
                     if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))
                     {
-                        mAcceleration.y -= cameraManager.GetZoomAxis() * zoomAndRotationSpeed;
-                        mAcceleration.y -= keyBindingManager.getCompositeAxis(ActionType.CameraZoomOut, ActionType.CameraZoomIn) * zoomAndRotationSpeed;
+                        mAcceleration.y -= cameraManager.GetZoomAxis() * zoomAndRotationSpeed; // Zoom with scroll wheel
+                        mAcceleration.y -= keyBindingManager.getCompositeAxis(ActionType.CameraZoomOut, ActionType.CameraZoomIn) * zoomAndRotationSpeed; // Zomm with keys
                     }
 
                     CameraOverhaul.mAlternateRotationAcceleration -= keyBindingManager.getCompositeAxis(ActionType.CameraRotateLeft, ActionType.CameraRotateRight) * zoomAndRotationSpeed;
@@ -113,19 +113,19 @@ namespace CameraOverhaul
                         float screenBorder = Screen.height * 0.01f;
                         if (Input.mousePosition.x < screenBorder)
                         {
-                            mAcceleration.x = mAcceleration.x - lateralMoveSpeed;
+                            mAcceleration.x -= lateralMoveSpeed;
                         }
                         else if (Input.mousePosition.x > Screen.width - screenBorder)
                         {
-                            mAcceleration.x = mAcceleration.x + lateralMoveSpeed;
+                            mAcceleration.x += lateralMoveSpeed;
                         }
                         if (Input.mousePosition.y < screenBorder)
                         {
-                            mAcceleration.z = mAcceleration.z - lateralMoveSpeed;
+                            mAcceleration.z -= lateralMoveSpeed;
                         }
                         else if (Input.mousePosition.y > Screen.height - screenBorder)
                         {
-                            mAcceleration.z = mAcceleration.z + lateralMoveSpeed;
+                            mAcceleration.z += lateralMoveSpeed;
                         }
                     }
 

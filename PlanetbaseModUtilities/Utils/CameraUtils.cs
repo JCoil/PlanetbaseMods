@@ -8,7 +8,7 @@ namespace PlanetbaseModUtilities
 {
     public static class CameraUtils
     {
-                #region Getters
+        #region Getters
 
         public static float GetZoomAxis(this CameraManager cameraManager)
         {
@@ -74,7 +74,7 @@ namespace PlanetbaseModUtilities
         {
             return CoreUtils.GetMember<CameraManager, float>("mPreviousMouseX", cameraManager);
         }
-        
+
         #endregion
 
         #region Setters
