@@ -7,7 +7,6 @@ Mods currently available to download from Nexus:
 - [Improved Components](https://www.nexusmods.com/planetbase/mods/54)
 - [Improved Manufacturing Limits](https://www.nexusmods.com/planetbase/mods/56)
 - [Storage Guru](https://www.nexusmods.com/planetbase/mods/13)
-
 - [CameraOverhaul Rehauled](https://www.nexusmods.com/planetbase/mods/58)
 
 ## Branches
