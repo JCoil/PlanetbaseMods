@@ -10,6 +10,6 @@ Mods currently available to download from Nexus:
 - [CameraOverhaul Rehauled](https://www.nexusmods.com/planetbase/mods/58)
 
 ## Branches
-The master branch now contains versions of mods that are compatible with the newer Unity Mod Manager (UMM).
+The master branch now contains versions of mods that are compatible with [Unity Mod Manager](https://www.nexusmods.com/site/mods/21) (UMM).
 
 The main-redirector contains versions compatible with the older [Patcher](https://www.nexusmods.com/planetbase/mods/1)/[redirector](https://www.nexusmods.com/planetbase/mods/3) by jpfarias.
