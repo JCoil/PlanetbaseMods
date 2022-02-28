@@ -1,26 +1,36 @@
-﻿using System;
+﻿using Planetbase;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Planetbase;
 
 namespace PlanetbaseModUtilities
 {
     public static class GameStateUtils
     {
+        #region Getters
+
         public static int GetCurrentModuleSize(this GameStateGame game)
         {
             return CoreUtils.GetMember<GameStateGame, int>("mCurrentModuleSize", game);
-        }
-
-        public static void SetCurrentModuleSize(this GameStateGame game, int size)
-        {
-            CoreUtils.SetMember("mCurrentModuleSize", game, size);
         }
 
         public static ModuleType GetPlacedModuleType(this GameStateGame game)
         {
             return CoreUtils.GetMember<GameStateGame, ModuleType>("mPlacedModuleType", game);
         }
+
+        #endregion
+
+        #region Setters
+
+        public static void SetCurrentModuleSize(this GameStateGame game, int size)
+        {
+            CoreUtils.SetMember("mCurrentModuleSize", game, size);
+        }
+
+        #endregion
+
+        #region GameStateGame.Mode
 
         /// <summary>
         /// Get the current mMode from a gameStateGame.
@@ -57,5 +67,7 @@ namespace PlanetbaseModUtilities
             PlacingComponent = 3,
             CloseCamera = 4
         }
+
+        #endregion
     }
 }
