@@ -10,8 +10,19 @@ using PlanetbaseModUtilities;
 
 namespace PlanetbaseModUtilities
 {
+    /// <summary>
+    /// Common base class for Mod entry points
+    /// </summary>
     public abstract class ModBase
     {
+        /// <summary>
+        /// Mods inheriting from ModBase must implement this and call InitializeMod() to correctly register themelves with UMM and do any Harmony setup.
+        /// The Info.json file should note ModName.Init as its entry point
+        /// See SampleMod.cs for full example
+        /// </summary>
+        /// <param name="entry"></param>
+        public static void Init(ModEntry entry) { }
+
         public static GameStateGame GetGameStateGame() => GameManager.getInstance().getGameState() as GameStateGame;
 
         #region Class Contract
@@ -42,8 +53,6 @@ namespace PlanetbaseModUtilities
         #endregion
 
         #region Init Factory
-
-        public static void Init(ModEntry entry) { }
 
         public static ModBase Instance { get; private set; } 
 

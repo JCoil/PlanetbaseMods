@@ -1,12 +1,5 @@
-﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Reflection;
-using System.Text;
-using UnityEngine;
-using static UnityModManagerNet.UnityModManager;
-using ModData = UnityModManagerNet.UnityModManager.ModEntry;
 
 namespace PlanetbaseModUtilities
 {

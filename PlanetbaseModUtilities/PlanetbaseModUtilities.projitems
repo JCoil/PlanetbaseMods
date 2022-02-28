@@ -9,12 +9,14 @@
     <Import_RootNamespace>PlanetbaseModUtilities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)SampleMod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\BuildableUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CharacterUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MenuUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patches\GameManagerPatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingsUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\StringUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TypeListUtils.cs" />
   </ItemGroup>
