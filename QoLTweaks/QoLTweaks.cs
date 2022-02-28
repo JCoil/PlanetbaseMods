@@ -19,7 +19,7 @@ namespace QoLTweaks
 
         public override void OnGameStart(GameStateGame gameStateGame)
         {
-            // Update exisiting elements to match new base behavious
+            // Update existing elements to match new base behavious
             UpdateExistingMedicalCabinets();
             UpdateExistingLabsToAllowMedicalCabinets();
         }
