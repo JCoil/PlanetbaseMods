@@ -9,6 +9,7 @@
     <Import_RootNamespace>PlanetbaseModUtilities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)SampleMod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\BuildableUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CameraUtils.cs" />
