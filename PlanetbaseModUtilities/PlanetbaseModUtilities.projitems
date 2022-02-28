@@ -16,7 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MenuUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patches\GameManagerPatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingsUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\StringUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TypeListUtils.cs" />
   </ItemGroup>
