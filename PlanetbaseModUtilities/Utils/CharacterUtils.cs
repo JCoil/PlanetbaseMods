@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PlanetbaseModUtilities.Utils
+namespace PlanetbaseModUtilities
 {
     /// <summary>
     /// Helper methods and members for Characters, Colonist and Bots
