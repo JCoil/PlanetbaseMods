@@ -6,7 +6,7 @@ using static UnityModManagerNet.UnityModManager;
 
 namespace ImprovedComponents
 {
-    public class ImprovedComponentsMod : ModBase
+    public class ImprovedComponentsMod : ModBasez
     {
         public static new void Init(ModEntry modEntry) => InitializeMod(new ImprovedComponentsMod(), modEntry, "ImprovedComponents");
 

@@ -3,24 +3,23 @@ using Planetbase;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityModManagerNet.UnityModManager; 
 using System.Reflection;
-using PlanetbaseModUtilities;
+using PlanetbaseFramework;
 
 namespace CheatTools
 {
     public class CheatTools : ModBase
     {
-        public static new void Init(ModEntry modEntry) => InitializeMod(new CheatTools(), modEntry, "CheatTools");
+        public override string ModName => "CheatTools";
 
         static bool KeysDown = false;
 
-        public override void OnInitialized(ModEntry modEntry)
+        public override void Init()
         {
-            StringUtils.RegisterString("cheat_menu", "Cheat Tools");
+            PlanetbaseModUtilities.StringUtils.RegisterString("cheat_menu", "Cheat Tools");
         }
 
-        public override void OnUpdate(ModEntry modEntry, float timeStep)
+        public override void Update()
         {
             if (GameManager.getInstance().getGameState() is GameStateGame Game)
             {
@@ -66,7 +65,7 @@ namespace CheatTools
 
         private void OnForceStructures(object parameter)
         {
-            if (BuildableUtils.GetAllConstructions() is List<Construction> constructions)
+            if (PlanetbaseModUtilities.BuildableUtils.GetAllConstructions() is List<Construction> constructions)
             {
                 foreach (var construction in constructions)
                 {
@@ -82,7 +81,7 @@ namespace CheatTools
         {
             try
             {
-                if (BuildableUtils.GetAllComponents() is List<ConstructionComponent> components)
+                if (PlanetbaseModUtilities.BuildableUtils.GetAllComponents() is List<ConstructionComponent> components)
                 {
                     foreach (var construction in components)
                     {

@@ -10,7 +10,7 @@ using PlanetbaseModUtilities.Utils;
 
 namespace StorageGuru
 {
-    public class StorageGuruMod : ModBase
+    public class StorageGuruMod : ModBasez
     {
         private static StorageManifestController storageController;
 

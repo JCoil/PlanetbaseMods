@@ -40,10 +40,8 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Redirector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Documents\Planetbase\Mods\Redirector.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="PlanetbaseFramework">
+      <HintPath>..\PlanetbaseModUtilities\ref\PlanetbaseFramework.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\UnityEngine.dll</HintPath>
@@ -67,8 +65,7 @@
   <Import Project="..\PlanetbaseModUtilities\PlanetbaseModUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "D:\Users\Jack\Source\Visual Studio Projects\StorageGuru\PlanetbaseModUtilities\bin\Release\PlanetbaseModUtilities.dll" "$(TargetDir)"
-xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\CheatTools"
+    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Users\Jack\Documents\Planetbase\Mods"
 
 powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'</PostBuildEvent>
   </PropertyGroup>
