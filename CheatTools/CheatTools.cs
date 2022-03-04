@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using Planetbase;
+﻿using Planetbase;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace CheatTools
 
         public override void Init()
         {
-            PlanetbaseModUtilities.StringUtils.RegisterString("cheat_menu", "Cheat Tools");
+            //PlanetbaseModUtilities.StringUtils.RegisterString("cheat_menu", "Cheat Tools");
         }
 
         public override void Update()
