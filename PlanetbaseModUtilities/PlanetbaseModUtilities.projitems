@@ -9,6 +9,7 @@
     <Import_RootNamespace>PlanetbaseModUtilities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ModSettings\GameStateModSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patches\GameStateTitlePatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SampleMod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\BuildableUtils.cs" />
@@ -21,8 +22,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Patches\GameManagerPatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\StringUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TypeListUtils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)ModSettings\" />
   </ItemGroup>
 </Project>

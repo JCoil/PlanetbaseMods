@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Planetbase;
-using static UnityModManagerNet.UnityModManager;
+using UnityModManagerNet;
 using UnityEngine;
+using static UnityModManagerNet.UnityModManager;
 
 namespace PlanetbaseModUtilities
 {
@@ -20,7 +21,7 @@ namespace PlanetbaseModUtilities
         /// See SampleMod.cs for full example
         /// </summary>
         /// <param name="entry"></param>
-        public static void Init(ModEntry entry) { }
+        public static void Init(UnityModManager.ModEntry entry) { }
 
         public static GameStateGame GetGameStateGame() => GameManager.getInstance().getGameState() as GameStateGame;
 
@@ -57,7 +58,7 @@ namespace PlanetbaseModUtilities
 
         public static void InitializeMod(ModBase mod, ModEntry modEntry, string modName)
         {
-            Instance = mod;
+            Instance = mod;            
 
             modEntry.OnUpdate = mod.OnUpdate;
             GameManagerPatch.OnGameStateChanged = mod.OnGameStateChanged;
