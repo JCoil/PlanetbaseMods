@@ -37,16 +37,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Redirector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Documents\Planetbase\Mods\Redirector.dll</HintPath>
+      <HintPath>..\PlanetbaseModUtilities\ref\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Planetbase\Planetbase_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\PlanetbaseModUtilities\ref\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityModManager">
@@ -66,7 +61,7 @@
   <Import Project="..\PlanetbaseModUtilities\PlanetbaseModUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\Program Files (x86)\Steam\steamapps\common\Planetbase\Mods\QoLTweaks"
+    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\SteamLibrary\steamapps\common\Planetbase\Mods\QoLTweaks"
 
 powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'</PostBuildEvent>
   </PropertyGroup>
