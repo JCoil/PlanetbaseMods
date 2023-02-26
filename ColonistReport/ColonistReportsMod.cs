@@ -1,73 +1,51 @@
-﻿using ModWrapper;
+﻿using HarmonyLib;
 using Planetbase;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using static UnityModManagerNet.UnityModManager;
+using System.Reflection;
+using PlanetbaseModUtilities;
 
-namespace ColonistReport
+namespace ColonistReports
 {
-    public class ColonistReportsMod : ModBase, IMod
+    public class ColonistReportsMod : ModBase
     {
-        GuiReportsMenuItem ReportsMenuItem { get; set; } 
-        GuiReportsMenu ReportsMenu { get; set; }
+        public static new void Init(ModEntry modEntry) => InitializeMod(new ColonistReportsMod(), modEntry, "ColonistReports");
 
-        public override void Init()
+        public override void OnInitialized(ModEntry modEntry)
         {
             RegisterStrings();
 
             WorkloadManager.mInstance = new WorkloadManager();
-
-            ReportsMenuItem = new GuiReportsMenuItem(new GuiDefinitions.Callback(OnReportsMenuOpen));
-            ReportsMenu = new GuiReportsMenu();
 
             Debug.Log("[MOD] Colonist Reports activated");
         }
 
         private void RegisterStrings()
         {
-            StringList.mStrings.Add("reports", "Base Reports");
-            StringList.mStrings.Add("reports_workload", "Colonist Workload");
+            StringUtils.RegisterString("reports", "Base Reports");
+            StringUtils.RegisterString("reports_workload", "Colonist Workload");
 
-            StringList.mStrings.Add("reports_worker_workload", "Worker Workload");
+            StringUtils.RegisterString("reports_worker_workload", "Worker Workload");
         }
 
-        public override void Update(float timeStep)
+        public override void OnUpdate(ModEntry modEntry, float timeStep)
         {
-            WorkloadManager.getInstance().Update(timeStep);
 
-            if (Game.mGameGui.getWindow() is GuiReportsMenu menu)
-            {
-                menu.updateUi();
-            }
         }
 
-        public override void OnGameStart()
+        public override void OnGameStart(GameStateGame gameStateGame)
         {
-            if (MenuSystem.mMenuBaseManagement is GuiMenu menuBaseManagement)
-            {
-                if (!menuBaseManagement.mItems.Contains(ReportsMenuItem))
-                {
-                    var insertIndex = menuBaseManagement.mBackItem == null ?
-                        menuBaseManagement.getItemCount() - 1 :
-                        menuBaseManagement.mItems.IndexOf(menuBaseManagement.mBackItem);
+            var menuSystem = gameStateGame.GetMenuSystem();
 
-                    menuBaseManagement.mItems.Insert(insertIndex, ReportsMenuItem);
-                }
-            }
-        }
+            if (menuSystem.GetMenu("mMenuBaseManagement") is GuiMenu menuBaseManagement)
+            {
+                var callback = new GuiDefinitions.Callback((object parameter) => gameStateGame.toggleWindow<GuiReportsMenu>());
 
-        private void OnReportsMenuOpen(object parameter)
-        {
-            if (Game.mGameGui.getWindow() is GuiReportsMenu)
-            {
-                Game.mGameGui.setWindow(null);
-            }
-            else
-            {
-                Game.mGameGui.setWindow(ReportsMenu);
+                var reportsMenuItem = new GuiMenuItem(ResourceList.StaticIcons.Stats, StringList.get("reports"), callback);
+
+                menuBaseManagement.addItem(reportsMenuItem);
             }
         }
     }

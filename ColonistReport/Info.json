@@ -1,0 +1,6 @@
+﻿{
+  "Id": "ColonistReports",
+  "DisplayName": "ColonistReports",
+  "Version": "1.0",
+  "EntryMethod": "ColonistReports.ColonistReportsMod.Init"
+}

@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ColonistReport
+namespace ColonistReports
 {
 	public class GuiReportsMenu : GuiWindow
 	{
@@ -41,7 +40,7 @@ namespace ColonistReport
 			{
 				var workload = element.Key;
 				var guiIndicator = element.Value;
-				var indicator = guiIndicator.mIndicator as WorkloadIndicator;
+				var indicator = guiIndicator.getIndicator() as WorkloadIndicator;
 
 				if (workload.TotalCharacters > 0)
 				{

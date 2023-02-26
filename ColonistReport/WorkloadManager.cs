@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using PlanetbaseModUtilities;
 
-namespace ColonistReport
+namespace ColonistReports
 {
     public class WorkloadManager : Singleton<WorkloadManager>
     {
@@ -32,7 +32,7 @@ namespace ColonistReport
         {
             if(mRefreshPeriod < 0)
             {
-                mRefreshPeriod = StatsCollector.getInstance().mRefreshPeriod / RefreshesPerDay;
+                mRefreshPeriod = CoreUtils.GetMember<StatsCollector, float>("mrefreshPeriod", StatsCollector.getInstance());
             }
 
             foreach (var workload in AllWorkloads)

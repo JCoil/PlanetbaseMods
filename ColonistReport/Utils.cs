@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ColonistReport
+namespace ColonistReports
 {
     public static class Utils
     {
@@ -22,13 +21,13 @@ namespace ColonistReport
     {
         public static bool IsSleeping(this Character character)
         {
-            if (character.getInteractionComponent() is ConstructionComponent comp)
+            if (character.getInteractionComponent() is ConstructionComponent component)
             {
-                if (comp.mComponentType == TypeList<ComponentType, ComponentTypeList>.find<Bunk>())
+                if (component.getComponentType() == TypeList<ComponentType, ComponentTypeList>.find<Bunk>())
                 {
                     return true;
                 }
-                else if (comp.mComponentType == TypeList<ComponentType, ComponentTypeList>.find<Bed>())
+                else if (component.getComponentType() == TypeList<ComponentType, ComponentTypeList>.find<Bed>())
                 {
                     return true;
                 }
@@ -45,7 +44,7 @@ namespace ColonistReport
         {
             if (character is Bot && character.getInteractionComponent() is ConstructionComponent comp)
             {
-                if (comp.mComponentType == TypeList<ComponentType, ComponentTypeList>.find<BotAutoRepair>())
+                if (comp.getComponentType() == TypeList<ComponentType, ComponentTypeList>.find<BotAutoRepair>())
                 {
                     return true;
                 }

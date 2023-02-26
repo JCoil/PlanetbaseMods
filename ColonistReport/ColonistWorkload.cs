@@ -2,10 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ColonistReport
+namespace ColonistReports
 {
     public class ColonistsWorkload
     {
@@ -63,7 +62,7 @@ namespace ColonistReport
                     {
                         countIdle++;
                     }
-                    else if (character.isBeingRestored())
+                    else if (PlanetbaseModUtilities.CoreUtils.InvokeMethod<Character, bool>("isBeingRestored", character))
                     {
                         countEssentials++;
                     }

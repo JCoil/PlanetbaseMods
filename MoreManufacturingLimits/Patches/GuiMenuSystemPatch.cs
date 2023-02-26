@@ -21,7 +21,7 @@ namespace ImprovedManufacturingLimits
             {
 				// Unfortunately the menu items are all generic, so the best way to identify them is by matching required ModuleType
 				var moduleType = TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>();
-				if (menu.getItems().FirstOrDefault(x=> x.getRequiredModuleType() == moduleType) is GuiMenuItem manufacturLimitsMenuItem)
+				if (menu.getItems().FirstOrDefault(x=> x.getModuleType() == moduleType) is GuiMenuItem manufacturLimitsMenuItem)
 				{
 					manufacturLimitsMenuItem.SetCallback(new GuiDefinitions.Callback(gameStateGame.toggleWindow<GuiManufactureLimitsWindowImproved>));
                 }
