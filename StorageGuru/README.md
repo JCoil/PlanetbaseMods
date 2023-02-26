@@ -1,3 +1,9 @@
+**Changes in Version 2.1.1**
+
+Minor bug fixes:
+- Fixed the enable/disable textures not loading
+- Fixed the rare nullref bug which was caused by the internal maifest and game objects somehow becoming out of sync 
+
 **Changes in Version 2.1**
 
 Saving and loading of storage manifests now happens automatically with the game saving and loading. This is vastly better than before, but will have little impact on gameplay:
