@@ -26,6 +26,7 @@ Global
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{2a2596f6-59d3-4f92-a33b-6e9bb2372bee}*SharedItemsImports = 13
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{4d5e385e-bb80-40c4-bb2b-0647fcaa20ad}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{665becc1-1ee0-4cc7-892c-3204c1b329fd}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{c9e326de-6b1d-4ab6-8034-dc599f3005c2}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{f207875b-9308-4b84-861c-18aede338f29}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
