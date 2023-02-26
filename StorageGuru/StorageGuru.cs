@@ -31,7 +31,7 @@ namespace StorageGuru
 
         public override void OnInitialized(ModEntry modEntry)
         {
-            ContentManager.Init();
+            ContentManager.Init(modEntry.Path);
             StorageController = new StorageManifestController();
 
             Debug.Log("[MOD] Storage Guru activated");

@@ -11,8 +11,8 @@ namespace StorageGuru
 {
     internal static class ContentManager
     {
-        static string EnableIconFilePath = @"Mods\StorageGuruData\Textures\StorageEnable.png";
-        static string DisableIconFilePath = @"Mods\StorageGuruData\Textures\StorageDisable.png";
+        static string EnableIconFilePath = @"Textures\StorageEnable.png";
+        static string DisableIconFilePath = @"Textures\StorageDisable.png";
         public static Texture2D EnableAllIcon { get; private set; }
         public static Texture2D DisableAllIcon { get; private set; }
 
@@ -20,25 +20,20 @@ namespace StorageGuru
 
         public static Dictionary<string, Texture2D> GreyscaleTextures; 
 
-        public static void Init()
+        public static void Init(string modPath)
         {
             StringUtils.RegisterString("tooltip_manage_storage", "Manage Storage");
             GreyscaleTextures = new Dictionary<string, Texture2D>(); 
-            LoadContent();
+            LoadContent(modPath);
         }
 
-        internal static void LoadContent()
+        internal static void LoadContent(string modPath)
         {
-            EnableIconFilePath = Path.Combine(Util.getFilesFolder(), EnableIconFilePath);
-            DisableIconFilePath = Path.Combine(Util.getFilesFolder(), DisableIconFilePath);
+            EnableIconFilePath = Path.Combine(modPath, EnableIconFilePath);
+            DisableIconFilePath = Path.Combine(modPath, DisableIconFilePath);
 
             EnableAllIcon = LoadTexture(EnableIconFilePath);
             DisableAllIcon = LoadTexture(DisableIconFilePath);
-
-            if(EnableAllIcon == null || DisableAllIcon == null)
-            {
-                Debug.Log("[StorageGuru] Failed to load icons");
-            }
         }
 
         private static Texture2D LoadTexture(string filepath)
@@ -51,6 +46,7 @@ namespace StorageGuru
                 return Util.applyColor(tex);
             }
 
+            Debug.Log("[StorageGuru] Failed to load icon");
             return new Texture2D(1, 1);
         }
 
