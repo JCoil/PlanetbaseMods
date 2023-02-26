@@ -36,7 +36,7 @@ namespace StorageGuru
 				for (int i = 0; i < count; i++)
 				{
 					Module module = storageModules[i];
-					if (module.isOperational() && module.isSurvivable(character) && module.getEmptyStorageSlotCount() > module.getPotentialUserCount(character))
+					if (module.getGameObject() != null && module.isOperational() && module.isSurvivable(character) && module.getEmptyStorageSlotCount() > module.getPotentialUserCount(character))
 					{
 						float sqrMagnitude = (module.getPosition() - position).sqrMagnitude;
 						if (sqrMagnitude < smallestDistance)
