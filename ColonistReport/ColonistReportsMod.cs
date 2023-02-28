@@ -24,7 +24,7 @@ namespace ColonistReports
 
         private void RegisterStrings()
         {
-            StringUtils.RegisterString("reports", "Base Reports");
+            StringUtils.RegisterString("reports", "Colonist Reports");
             StringUtils.RegisterString("reports_workload", "Colonist Workload");
 
             StringUtils.RegisterString("reports_worker_workload", "Worker Workload");
@@ -32,21 +32,12 @@ namespace ColonistReports
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)
         {
-
+            WorkloadManager.mInstance.Update(timeStep);
         }
 
         public override void OnGameStart(GameStateGame gameStateGame)
         {
-            var menuSystem = gameStateGame.GetMenuSystem();
 
-            if (menuSystem.GetMenu("mMenuBaseManagement") is GuiMenu menuBaseManagement)
-            {
-                var callback = new GuiDefinitions.Callback((object parameter) => gameStateGame.toggleWindow<GuiReportsMenu>());
-
-                var reportsMenuItem = new GuiMenuItem(ResourceList.StaticIcons.Stats, StringList.get("reports"), callback);
-
-                menuBaseManagement.addItem(reportsMenuItem);
-            }
         }
     }
 }

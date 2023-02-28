@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using UnityEngine;
 
 namespace ColonistReports
@@ -20,7 +21,7 @@ namespace ColonistReports
 
         private float counter = 1f;
 
-        const float timeNeeds = 0.08f; // Time spent on basic needs
+        const float SmoothingFactor = 0.1f;
 
         public ColonistsWorkload(Specialization s)
         {
@@ -36,7 +37,8 @@ namespace ColonistReports
 
         public void Refresh()
         {
-            DisplayWorkload = Utils.Clamp(Workload / counter, 0, 1);
+            DisplayWorkload *= 1 - SmoothingFactor;
+            DisplayWorkload += SmoothingFactor * Utils.Clamp(Workload / counter, 0, 1);
 
             Workload = 0f;
             counter = 1f;
@@ -51,28 +53,9 @@ namespace ColonistReports
                 && specializationCharacters.Count > 0)
             {
                 TotalCharacters = specializationCharacters.Count;
+                float countIdle = specializationCharacters.Sum(x => x.getState() == Character.State.Idle ? 1 : 0);
 
-                float timeTotal = TotalCharacters;
-                float countIdle = 0f;
-                float countEssentials = 0f;
-
-                foreach (var character in specializationCharacters)
-                {
-                    if (character.getState() == Character.State.Idle)
-                    {
-                        countIdle++;
-                    }
-                    else if (PlanetbaseModUtilities.CoreUtils.InvokeMethod<Character, bool>("isBeingRestored", character))
-                    {
-                        countEssentials++;
-                    }
-                }
-
-                var timeAvailable = 1 - timeNeeds - (countEssentials / timeTotal); // Time available to work
-
-                var timeWorking = timeAvailable - (countIdle / timeTotal); // Fraction of available time spent working
-
-                return timeWorking / timeAvailable;
+                return 1 - (countIdle / TotalCharacters);
             }
 
             return 0;

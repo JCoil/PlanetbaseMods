@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PlanetbaseModUtilities;
+using UnityEngine;
+using System.Reflection;
 
 namespace ColonistReports
 {
@@ -13,7 +15,7 @@ namespace ColonistReports
         public static List<ColonistsWorkload> AllWorkloads { get; private set; } 
 
         private float mTime;
-        private float mRefreshPeriod = -1f;
+        private float mRefreshPeriod = 1f;
 
         public WorkloadManager()
         {
@@ -26,15 +28,12 @@ namespace ColonistReports
                     AllWorkloads.Add(new ColonistsWorkload(specialization));
                 }
             }
+
+            mTime = mRefreshPeriod;
         }
 
         public void Update(float timeStep)
         {
-            if(mRefreshPeriod < 0)
-            {
-                mRefreshPeriod = CoreUtils.GetMember<StatsCollector, float>("mrefreshPeriod", StatsCollector.getInstance());
-            }
-
             foreach (var workload in AllWorkloads)
             {
                 workload.Update();

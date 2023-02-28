@@ -7,11 +7,11 @@ using UnityEngine;
 
 namespace ColonistReports
 {
-	public class GuiReportsMenu : GuiWindow
+	public class GuiColonistReportsWindow : GuiWindow
 	{
 		public Dictionary<ColonistsWorkload, GuiIndicatorItem> WorkloadIndicators;
 
-		public GuiReportsMenu() : base(new GuiLabelItem(StringList.get("reports"), ResourceList.StaticIcons.Stats, null, 0, FontSize.Normal), null, null)
+		public GuiColonistReportsWindow() : base(new GuiLabelItem(StringList.get("reports"), ResourceList.StaticIcons.Stats, null, 0, FontSize.Normal), null, null)
 		{
 			// TODO add help entry
 			// this.mHelpId = "stats";
@@ -22,11 +22,13 @@ namespace ColonistReports
 			{
 				WorkloadIndicators.Add(workload, CreateWorkloadIndicator(workload.Name, workload.Icon));
 			}
+
+			updateUi();
 		}
 
 		public override void update()
 		{
-
+			updateUi();
 		}
 
 		public void updateUi()
@@ -64,14 +66,6 @@ namespace ColonistReports
 		public override float getWidth()
 		{
 			return (float)Screen.height * 0.7f;
-		}
-	}
-
-	public class GuiReportsMenuItem : GuiMenuItem
-	{
-		public GuiReportsMenuItem(GuiDefinitions.Callback callback) : base(ResourceList.StaticIcons.Stats, StringList.get("reports"), callback)
-		{
-
 		}
 	}
 }
