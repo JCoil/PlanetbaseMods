@@ -55,6 +55,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MedicalCabinetTweaks.cs" />
     <Compile Include="Patches\LargeNumbersDisplayPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QoLTweaks.cs" />
