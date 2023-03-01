@@ -78,6 +78,16 @@ namespace PlanetbaseModUtilities
             typeof(U).GetMethod(methodName, flags).Invoke(containingInstance, parameters);
         }
 
+        /// <summary>
+        /// Get Invoke method on Containing Type via reflection with no return with explicit parameter types
+        /// </summary>
+        /// <typeparam name="U">Containing Type</typeparam>
+        public static void InvokeMethod<U>(string methodName, U containingInstance, Type[] types, object[] parameters)
+        {
+            BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            typeof(U).GetMethod(methodName, flags, null, types, null).Invoke(containingInstance, parameters);
+        }
+
         #endregion
 
         #region Type

@@ -9,16 +9,16 @@ namespace ColonistReports
 {
 	public class GuiColonistReportsWindow : GuiWindow
 	{
-		public Dictionary<ColonistsWorkload, GuiIndicatorItem> WorkloadIndicators;
+		public Dictionary<SpecializationWorkload, GuiIndicatorItem> WorkloadIndicators;
 
 		public GuiColonistReportsWindow() : base(new GuiLabelItem(StringList.get("reports"), ResourceList.StaticIcons.Stats, null, 0, FontSize.Normal), null, null)
 		{
 			// TODO add help entry
 			// this.mHelpId = "stats";
 
-			WorkloadIndicators = new Dictionary<ColonistsWorkload, GuiIndicatorItem>();
+			WorkloadIndicators = new Dictionary<SpecializationWorkload, GuiIndicatorItem>();
 
-			foreach (var workload in WorkloadManager.AllWorkloads)
+			foreach (var workload in ColonistReportsMod.SpecializationWorkloads)
 			{
 				WorkloadIndicators.Add(workload, CreateWorkloadIndicator(workload.Name, workload.Icon));
 			}
@@ -38,20 +38,32 @@ namespace ColonistReports
 			mRootItem.clear();
 			mRootItem.addChild(sectionWorkload);
 
-			foreach (var element in WorkloadIndicators)
-			{
-				var workload = element.Key;
-				var guiIndicator = element.Value;
-				var indicator = guiIndicator.getIndicator() as WorkloadIndicator;
+			var mShowObjects = new Dictionary<string, RefBool>();
 
-				if (workload.TotalCharacters > 0)
-				{
-					guiIndicator.setVisible(true);
-					indicator.setValue(workload.DisplayWorkload);
-					indicator.setName(workload.Name);
-					sectionWorkload.addChild(guiIndicator);
-				}
+			if (!mShowObjects.ContainsKey("WorkerWorkload"))
+			{
+				mShowObjects.Add("WorkerWorkload", new RefBool(true));
+				mShowObjects.Add("BiologistWorkload", new RefBool(true));
+				mShowObjects.Add("EngineerWorkload", new RefBool(true));
+				mShowObjects.Add("MedicWorkload", new RefBool(true));
 			}
+
+			mRootItem.addChild(new GuiChartItem(Singleton<StatsCollector>.getInstance().getData(), mShowObjects));
+
+			//foreach (var element in WorkloadIndicators)
+			//{
+			//	var workload = element.Key;
+			//	var guiIndicator = element.Value;
+			//	var indicator = guiIndicator.getIndicator() as WorkloadIndicator;
+
+			//	if (workload.CharacterCount > 0)
+			//	{
+			//		guiIndicator.setVisible(true);
+			//		//indicator.setValue(workload.DisplayWorkload);
+			//		indicator.setName(workload.Name);
+			//		sectionWorkload.addChild(guiIndicator);
+			//	}
+			//}
 		}
 
 		private GuiIndicatorItem CreateWorkloadIndicator(string key, Texture2D icon)

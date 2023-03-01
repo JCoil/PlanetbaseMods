@@ -13,11 +13,13 @@ namespace ColonistReports
     {
         public static new void Init(ModEntry modEntry) => InitializeMod(new ColonistReportsMod(), modEntry, "ColonistReports");
 
+        public static List<SpecializationWorkload> SpecializationWorkloads { get; private set; }
+
         public override void OnInitialized(ModEntry modEntry)
         {
             RegisterStrings();
 
-            WorkloadManager.mInstance = new WorkloadManager();
+            SpecializationWorkloads = new List<SpecializationWorkload>();
 
             Debug.Log("[MOD] Colonist Reports activated");
         }
@@ -32,12 +34,20 @@ namespace ColonistReports
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)
         {
-            WorkloadManager.mInstance.Update(timeStep);
+            foreach (var workload in SpecializationWorkloads)
+            {
+                workload.Update();
+            }
         }
 
         public override void OnGameStart(GameStateGame gameStateGame)
         {
-
+            //if (Singleton<StatsCollector>.mInstance is StatsCollector statsCollector)
+            //{
+            //    CoreUtils.InvokeMethod("addStat", statsCollector, "WorkerWorkload");
+            //    CoreUtils.InvokeMethod("addStat", statsCollector, "MedicWorkload");
+            //    CoreUtils.InvokeMethod("addStat", statsCollector, "BiologistWorkload");
+            //}
         }
     }
 }
