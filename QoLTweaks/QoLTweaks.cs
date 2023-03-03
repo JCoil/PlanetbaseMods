@@ -10,9 +10,18 @@ namespace QoLTweaks
 
         public override void OnInitialized(ModEntry modEntry)
         {
+            RegisterStrings();
+
             // Change base behaviour of game elements
             MedicalCabinetTweaks.UpdateMedicalCabinetCapacity();
             MedicalCabinetTweaks.AllowMedicalCabinetsInLabs();
+            
+            DormTweaks.DecreaseBunkWallSeparation();
+        }
+
+        private static void RegisterStrings()
+        {
+            StringUtils.RegisterString("fill_with_bunks", "Fill With Bunks");
         }
 
         public override void OnGameStart(GameStateGame gameStateGame)

@@ -23,6 +23,21 @@ namespace PlanetbaseModUtilities
             CoreUtils.SetMember(menuName, menuSystem, menu);
         }
 
+        public static void AddItemBeforeBackItem(this GuiMenu menu, GuiMenuItem item)
+        {
+            try
+            {
+                var mItems = CoreUtils.GetMember<GuiMenu, List<GuiMenuItem>>("mItems", menu);
+
+                var backIndex = mItems.FindIndex(x => x == menu.getBackItem());
+                mItems.Insert(backIndex, item);
+            }
+            catch (ArgumentNullException)
+            {
+                // Menu doesn't have back button?
+            }
+        }
+
         #region Callbacks
 
         public static GuiDefinitions.Callback GetCallback(this GuiMenuItem menuItem)
