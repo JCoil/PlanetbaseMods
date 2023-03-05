@@ -96,4 +96,51 @@ namespace StorageGuru
             }
 		}
 	}
+
+	[HarmonyPatch(typeof(Module), "createIndicators")]
+	public class ModuleCreateIndicatorsPatch
+	{
+		/// <summary>
+		/// Add check for storage manifest an serialize if exists
+		/// </summary>
+		public static void Postfix(ref Indicator ___mResourceStorageIndicator)
+		{
+			if (___mResourceStorageIndicator != null)
+			{
+				CoreUtils.SetMember("mType", ___mResourceStorageIndicator, IndicatorType.Normal);
+			}
+		}
+	}
+
+	[HarmonyPatch(typeof(Module), "tick")]
+	public class ModuleTickPatch
+	{
+		/// <summary>
+		/// Add check for storage manifest an serialize if exists
+		/// </summary>
+		public static void Postfix(ref ResourceStorage ___mResourceStorage, ref Indicator ___mResourceStorageIndicator)
+		{
+			// Original code at end of tick
+			//if (this.mResourceStorage! = null)
+			//{
+			//	this.mResourceStorageIndicator.setValue(this.mResourceStorage.getSpaceRatio());
+			//}
+
+			if(___mResourceStorage != null)
+            {
+				float resourceVolume = 0f;
+				float totalVolume = 0f;
+
+				foreach (StorageSlot storageSlot in ___mResourceStorage.GetSlots())
+				{
+					float maxHeight = storageSlot.getMaxHeight();
+					resourceVolume += Mathf.Min(storageSlot.getHeight() - 0.2f, maxHeight);
+					totalVolume += maxHeight;
+				}
+
+				___mResourceStorageIndicator.setMax(totalVolume);
+				___mResourceStorageIndicator.setValue(resourceVolume);
+            }
+		}
+	}
 }
