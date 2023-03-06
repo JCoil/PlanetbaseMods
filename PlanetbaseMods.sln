@@ -19,11 +19,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QoLTweaks", "QoLTweaks\QoLT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraOverhaul", "CameraOverhaul\CameraOverhaul.csproj", "{26C96371-5788-498B-99EF-2CC556C9A7D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingAlignerRealigned", "BuildingAlignerRealigned\BuildingAlignerRealigned.csproj", "{3A48EF8E-71DE-4241-8AC0-6224880381F6}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{118dc179-2606-49aa-9f0f-4b7da646d554}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{26c96371-5788-498b-99ef-2cc556c9a7d9}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{2a2596f6-59d3-4f92-a33b-6e9bb2372bee}*SharedItemsImports = 13
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{3a48ef8e-71de-4241-8ac0-6224880381f6}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{4d5e385e-bb80-40c4-bb2b-0647fcaa20ad}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{665becc1-1ee0-4cc7-892c-3204c1b329fd}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{c9e326de-6b1d-4ab6-8034-dc599f3005c2}*SharedItemsImports = 4
@@ -37,15 +40,12 @@ Global
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F207875B-9308-4B84-861C-18AEDE338F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F207875B-9308-4B84-861C-18AEDE338F29}.Release|Any CPU.Build.0 = Release|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{118DC179-2606-49AA-9F0F-4B7DA646D554}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9E326DE-6B1D-4AB6-8034-DC599F3005C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,15 +53,16 @@ Global
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A48EF8E-71DE-4241-8AC0-6224880381F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A48EF8E-71DE-4241-8AC0-6224880381F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A48EF8E-71DE-4241-8AC0-6224880381F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A48EF8E-71DE-4241-8AC0-6224880381F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
