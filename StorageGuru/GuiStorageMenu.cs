@@ -65,10 +65,11 @@ namespace StorageGuru
         {
             if (NeedsRefresh)
             {
-                StorageGuruMod.StorageController.ConsolidateManifest();
+                //StorageGuruMod.StorageController.ConsolidateManifest();
 
-                if (StorageGuruMod.StorageController.GetManifestEntry(ActiveStorageModule) is ManifestEntry entry)
+                if (ActiveStorageModule.GetResourceStorageObject() is ImprovedResourceStorage improvedResourceStorage)
                 {
+                    var entry = improvedResourceStorage.StorageManifest;
                     EnableAll = entry.Count != StorageGuruMod.MasterResourceDefinitions.Count && (entry.Count == 0 || EnableAll);
 
                     clear();
@@ -102,23 +103,29 @@ namespace StorageGuru
 
         private void OnResourceToggled(object parameter)
         {
-            if(parameter is ResourceType resourceType)
+            if(parameter is ResourceType resourceType && ActiveStorageModule.GetResourceStorageObject() is ImprovedResourceStorage improvedResourceStorage)
             {
-                StorageGuruMod.StorageController.ToggleDefinitions(ActiveStorageModule, resourceType);
+                improvedResourceStorage.ToggleDefinition(resourceType);
                 NeedsRefresh = true;
             }
         }
 
         private void OnEnableAllToggled(object parameter)
         {
-            StorageGuruMod.StorageController.AddAllDefinitionsToManifestEntry(ActiveStorageModule);
-            NeedsRefresh = true;
+            if (ActiveStorageModule.GetResourceStorageObject() is ImprovedResourceStorage improvedResourceStorage)
+            {
+                improvedResourceStorage.AddAllDefinitions();
+                NeedsRefresh = true;
+            }
         }
 
         private void OnDisableAllToggled(object parameter)
         {
-            StorageGuruMod.StorageController.RemoveAllDefinitionsFromManifestEntry(ActiveStorageModule);
-            NeedsRefresh = true;
+            if (ActiveStorageModule.GetResourceStorageObject() is ImprovedResourceStorage improvedResourceStorage)
+            {
+                improvedResourceStorage.RemoveAllDefinitions();
+                NeedsRefresh = true;
+            }
         }
     }
 }

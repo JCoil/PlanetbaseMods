@@ -34,13 +34,13 @@
   <ItemGroup>
     <Compile Include="ContentManager.cs" />
     <Compile Include="GuiStorageMenu.cs" />
+    <Compile Include="ImprovedResourceStorage.cs" />
     <Compile Include="ManifestEntry.cs" />
     <Compile Include="Patches\ModulePatches.cs" />
     <Compile Include="Patches\ResourceStoragePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceTypeComparer.cs" />
     <Compile Include="StorageGuru.cs" />
-    <Compile Include="StorageManifestController.cs" />
     <Compile Include="Patches\MenuSystemPatch.cs" />
   </ItemGroup>
   <ItemGroup>

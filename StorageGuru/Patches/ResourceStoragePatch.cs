@@ -10,41 +10,47 @@ using UnityEngine;
 
 namespace StorageGuru
 {
-	[HarmonyPatch(typeof(ResourceStorage), MethodType.Constructor, new Type[] {typeof(Vector3), typeof(float)})]
+    [HarmonyPatch(typeof(ResourceStorage))]
 	public static class ResourceStoragePatch
 	{
+        public static bool UseImprovedSlotLayout { get; set; } = true;
+
+        [HarmonyPatch(MethodType.Constructor, new Type[] { typeof(Vector3), typeof(float) })]
 		public static void Postfix(Vector3 modulePosition, float radius, ref List<StorageSlot> ___mSlots)
-		{
-			if(___mSlots == null)
+        {
+            if (UseImprovedSlotLayout)
             {
-				___mSlots = new List<StorageSlot>();
+                ___mSlots.Clear();
+                GenerateSlots_Spherical(___mSlots, modulePosition, radius);
             }
+        }
 
-			___mSlots.Clear();
+        private static void GenerateSlots_Spherical(List<StorageSlot> slots, Vector3 modulePosition, float radius)
+        {
+            radius -= 2f; // Old useable radius was calculated as radius * 0.6
 
-			radius -= 2f;
+            var increment = 1.15f; // Size of resources (1) + gap (0.15)
 
-			for (float z = -radius; z <= radius; z += 1.15f)
-			{
-				var currentRSquared = radius * radius - z * z;
-				var currentR = Math.Sqrt(currentRSquared);
+            for (float z = increment / 2f; z <= radius; z += increment) // z varies from 0 to R
+            {
+                var width_squared = radius * radius - z * z;
+                var width = Math.Sqrt(width_squared); // Width of circle in x-direction at z
 
-				for (float x = -radius; x <= radius; x += 1.15f)
-				{
-					Vector3 slotPosition = new Vector3(x, 0f, z);
+                for (float x = increment / 2f; x <= width; x += increment) // Only need to check for x between 0 and width
+                {
+                    var height_squared = width_squared - x * x;
+                    var height = (int)(Math.Round(Math.Sqrt(height_squared) * 2) / 2); // Round to the nearest 0.5 for half-sized resources
 
-					float distanceFromCenter = slotPosition.magnitude;
-					var height = currentR * Math.Sqrt(1 - (x * x / currentRSquared));
+                    // Add slot for each quadrant
+                    slots.Add(new StorageSlot(modulePosition + new Vector3(x, 0f, z), height));
+                    slots.Add(new StorageSlot(modulePosition + new Vector3(-x, 0f, z), height));
+                    slots.Add(new StorageSlot(modulePosition + new Vector3(x, 0f, -z), height));
+                    slots.Add(new StorageSlot(modulePosition + new Vector3(-x, 0f, -z), height));
+                }
+            }
+        }
 
-					if (distanceFromCenter < radius)
-					{
-						___mSlots.Add(new StorageSlot(modulePosition + slotPosition, (float)height));
-					}
-				}
-			}
-		}
-
-		public static void ResourceStorage(Vector3 modulePosition, float radius, List<StorageSlot> ___mSlots)
+        public static void ResourceStorage(Vector3 modulePosition, float radius, List<StorageSlot> ___mSlots)
 		{
 			// Creates list (2D grid) of square columns ("slots") that fit within a circle
 			// Heights determining how many resources can be stacked, using linear interpolation, giving us a "cone" shaped storage space (with a 0.5 cyclinder at the base
