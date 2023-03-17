@@ -68,7 +68,7 @@ namespace StorageGuru
 		}
 
 		/// <summary>
-		/// Add check for storage manifest an serialize if exists
+		/// Add check for storage manifest on serialize if exists
 		/// </summary>
 		[HarmonyPostfix]
 		[HarmonyPatch(typeof(Module), nameof(Module.serialize))]
@@ -90,33 +90,37 @@ namespace StorageGuru
 		[HarmonyPatch(typeof(Module), nameof(Module.deserialize))]
 		public static void DeserializePostfix(ref Module __instance, XmlNode node, ref ResourceStorage ___mResourceStorage)
 		{
-			if (node["storageguru-manifest"] is XmlNode manifestNode)
+			if (___mResourceStorage != null)
 			{
-				var resourceTypes = new List<ResourceType>();
-				var hasImprovedSlotLayout = false;
+				var resourceStorage = new ImprovedResourceStorage();
+				resourceStorage.CopyFrom(___mResourceStorage);
 
-				if (manifestNode["has-improved-slot-layout"] is XmlNode)
+				if (node["storageguru-manifest"] is XmlNode manifestNode)
 				{
-					Serialization.deserializeBool(manifestNode["has-improved-slot-layout"]);
-				}
+					var resourceTypes = new List<ResourceType>();
+					var hasImprovedSlotLayout = Serialization.deserializeBool(manifestNode["has-improved-slot-layout"]);
 
-				if (Serialization.deserializeList<string>(manifestNode["resource-types"]) is List<string> resources)
-				{
-					foreach (var resourceName in resources)
+					if (Serialization.deserializeList<string>(manifestNode["resource-types"]) is List<string> resources)
 					{
-						if (TypeList<ResourceType, ResourceTypeList>.find(resourceName) is ResourceType resourceType)
+						foreach (var resourceName in resources)
 						{
-							resourceTypes.Add(resourceType);
+							if (TypeList<ResourceType, ResourceTypeList>.find(resourceName) is ResourceType resourceType)
+							{
+								resourceTypes.Add(resourceType);
+							}
 						}
 					}
+
+					resourceStorage.SetManifest(resourceTypes);
+					resourceStorage.HasImprovedSlotLayout = hasImprovedSlotLayout;
 				}
 
-				___mResourceStorage = new ImprovedResourceStorage(___mResourceStorage, resourceTypes, hasImprovedSlotLayout); // Convert ResourceStorage to ImprovedResourceStorage
+				___mResourceStorage = resourceStorage;
 			}
 		}
 
 		/// <summary>
-		/// If a storage is 
+		/// If a storage is empty, we can update to the improved layout
 		/// </summary>
 		/// <param name="__instance"></param>
 		/// <param name="___mResourceStorage"></param>
@@ -131,27 +135,15 @@ namespace StorageGuru
 				improvedResourceStorage.UpdateSlotLayout(__instance.getFloorPosition(), __instance.getRadius());
 			}
 		}
+
+		[HarmonyPostfix]
+		[HarmonyPatch(typeof(Module), nameof(Module.getName))]
+		public static void GetNamePostfix(ref ResourceStorage ___mResourceStorage, ref string __result)
+		{
+			if (___mResourceStorage is ImprovedResourceStorage improvedResourceStorage && improvedResourceStorage.HasImprovedSlotLayout)
+			{
+				__result = "Improved Storage";
+			}
+		}
 	}
-
-	//[HarmonyPatch(typeof(Module))]
-	//public class StorageModuleIndicatorPatches
-	//{
-	//	/// <summary>
-	//	/// Modify ResourceStorageIndicator
-	//	/// </summary>
-	//	[HarmonyPostfix]
-	//	[HarmonyPatch(typeof(Module), "tick")]
-	//	public static void TickPostfix(ref ResourceStorage ___mResourceStorage, ref Indicator ___mResourceStorageIndicator)
-	//	{
-	//		if (___mResourceStorage is ImprovedResourceStorage improvedResourceStorage && improvedResourceStorage.HasImprovedSlotLayout)
-	//		{
-	//			CoreUtils.SetMember("mType", ___mResourceStorageIndicator, IndicatorType.Normal);
-
-	//			var current = improvedResourceStorage.GetTotalResourceCount();
-
-	//			___mResourceStorageIndicator.setMax(max);
-	//			___mResourceStorageIndicator.setValue(Math.Min(current, max));
-	//		}
-	//	}
-	//}
 }

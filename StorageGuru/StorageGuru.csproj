@@ -37,7 +37,6 @@
     <Compile Include="ImprovedResourceStorage.cs" />
     <Compile Include="ManifestEntry.cs" />
     <Compile Include="Patches\ModulePatches.cs" />
-    <Compile Include="Patches\ResourceStoragePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceTypeComparer.cs" />
     <Compile Include="StorageGuru.cs" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using PlanetbaseModUtilities;
+using System.Xml;
 
 namespace StorageGuru
 {
@@ -17,21 +18,34 @@ namespace StorageGuru
         public List<StorageSlot> Slots
         {
             get => BuildableUtils.GetSlots(this);
-            set => BuildableUtils.SetSlots(this, value);
+            private set => BuildableUtils.SetSlots(this, value);
         }
 
+        /// <summary>
+        /// We're creating for a new storage module 
+        /// </summary> 
         public ImprovedResourceStorage(Vector3 modulePosition, float radius)
         {
-            UpdateSlotLayout(modulePosition, radius);
-
             StorageManifest = new ManifestEntry(new List<ResourceType>());
+            UpdateSlotLayout(modulePosition, radius);
             AddAllDefinitions(); // If it's a new build, we'll allow all resource types
         }
 
-        public ImprovedResourceStorage(ResourceStorage resourceStorage, List<ResourceType> resourceTypes, bool hasImprovedSlotLayout) 
+        /// <summary>
+        /// We're creating an empty instance to fill from deserialization
+        /// </summary>
+        public ImprovedResourceStorage() 
+        {
+            StorageManifest = new ManifestEntry(new List<ResourceType>());
+        }
+
+        /// <summary>
+        /// We're creating for an existing storage module 
+        /// </summary>
+        public ImprovedResourceStorage(List<StorageSlot> slots, List<ResourceType> resourceTypes, bool hasImprovedSlotLayout) 
         {
             Slots.Clear();
-            Slots.AddRange(resourceStorage.GetSlots());
+            Slots.AddRange(slots);
 
             HasImprovedSlotLayout = hasImprovedSlotLayout;
 
@@ -55,6 +69,11 @@ namespace StorageGuru
                 && improvedResourceStorage.StorageManifest.ContainsResource(resourceType)).ToList();
         }
 
+        public void CopyFrom(ResourceStorage resourceStorage)
+        {
+            Slots = resourceStorage.GetSlots();
+        }
+
         #region Manifest Management
 
         public void ToggleDefinition(ResourceType resource)
@@ -68,6 +87,12 @@ namespace StorageGuru
                 StorageManifest.AddResourceDefinitions(resource);
             }
 
+            RefreshStorage();
+        }
+
+        public void SetManifest(List<ResourceType> resourceTypes)
+        {
+            StorageManifest = new ManifestEntry(resourceTypes);
             RefreshStorage();
         }
 
