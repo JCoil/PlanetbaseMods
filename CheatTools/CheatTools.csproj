@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CheatTools.cs" />
     <Compile Include="CheatToolsStrings.cs" />
+    <Compile Include="Patches\ModulePatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

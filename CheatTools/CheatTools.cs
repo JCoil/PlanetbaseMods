@@ -6,6 +6,8 @@ using UnityEngine;
 using static UnityModManagerNet.UnityModManager; 
 using System.Reflection;
 using PlanetbaseModUtilities;
+using CheatTools.Patches;
+using PlanetbaseModUtilities.Utils;
 
 namespace CheatTools
 {
@@ -14,6 +16,8 @@ namespace CheatTools
         public static new void Init(ModEntry modEntry) => InitializeMod(new CheatTools(), modEntry, "CheatTools");
 
         static bool KeysDown = false;
+
+        public static bool ModuleAnarchyOn { get; set; } = false;
 
         public override void OnInitialized(ModEntry modEntry)
         {
@@ -44,9 +48,11 @@ namespace CheatTools
     {
         Construction SelectedConstruction { get; set; }
 
+        GuiButtonItem moduleAnarchyButton;
+
         public GuiCheatMenu() : base(new GuiLabelItem(StringList.get("cheat_menu"), null, CheatToolsStrings.cheat_menu_tooltip, 0, FontSize.Normal), null, null)
         {
-            if(Selection.getSelectedConstruction() is Construction construction && construction.getComponentCount() > 0)
+            if (Selection.getSelectedConstruction() is Construction construction && construction.getComponentCount() > 0)
             {
                 SelectedConstruction = construction;
             }
@@ -55,13 +61,16 @@ namespace CheatTools
             AddButton(CheatToolsStrings.force_components, new GuiDefinitions.Callback(OnForceComponents), true);
             AddButton(CheatToolsStrings.unlock_tech, new GuiDefinitions.Callback(OnUnlockTech), true);
             AddButton(CheatToolsStrings.clear_components, new GuiDefinitions.Callback(OnClearComponents), SelectedConstruction != null);
+
+            moduleAnarchyButton = AddButton(CheatToolsStrings.GetModuleAnarchyText, new GuiDefinitions.Callback(OnModuleAnarchy), true);
         }
 
-        public void AddButton(string name, GuiDefinitions.Callback callback, bool enabled)
+        public GuiButtonItem AddButton(string name, GuiDefinitions.Callback callback, bool enabled)
         {
-            GuiButtonItem guiButtonItem = new GuiButtonItem(name, callback, FontType.Normal);
+            var guiButtonItem = new GuiButtonItem(name, callback, FontType.Normal);
             guiButtonItem.setEnabled(enabled);
             mRootItem.addChild(guiButtonItem);
+            return guiButtonItem;
         }
 
         private void OnForceStructures(object parameter)
@@ -126,6 +135,12 @@ namespace CheatTools
                     component.destroy();
                 }
             }
+        }
+
+        private void OnModuleAnarchy(object parameter)
+        {
+            CheatTools.ModuleAnarchyOn = !CheatTools.ModuleAnarchyOn;
+            moduleAnarchyButton.SetText(CheatToolsStrings.GetModuleAnarchyText);
         }
     }
 }
