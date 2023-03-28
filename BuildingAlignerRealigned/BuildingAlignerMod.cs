@@ -6,6 +6,8 @@ using UnityEngine;
 using static UnityModManagerNet.UnityModManager;
 using System.Reflection;
 using PlanetbaseModUtilities;
+using PlanetbaseModUtilities.Utils;
+using BuildingAligner.Patches;
 
 namespace BuildingAligner
 {
@@ -20,19 +22,17 @@ namespace BuildingAligner
 
         public void Init()
         {
-            //DebugRenderer.addGroup("Connections");
-            //Redirector.PerformRedirections();
-            //Debug.Log("[MOD] BuildingAligner activated");
+            DebugRendererUtils.AddGroup("Connections");
+            Debug.Log("[MOD] BuildingAligner activated");
         }
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)
         {
-            //GameStateGame gameState = GameManager.getInstance().getGameState() as GameStateGame;
-            //if (gameState != null && gameState.mMode != GameStateGame.Mode.PlacingModule)
-            //{
-            //    rendering = false;
-            //    //DebugRenderer.clearGroup("Connections");
-            //}
+            if (GetGameStateGame() is GameStateGame gameStateGame && !gameStateGame.IsMode(GameStateUtils.Mode.PlacingModule))
+            {
+                TryPlaceModulePatch.IsRendering = false;
+                DebugRendererUtils.ClearGroup("Connections");
+            }
         }
     }
 }
