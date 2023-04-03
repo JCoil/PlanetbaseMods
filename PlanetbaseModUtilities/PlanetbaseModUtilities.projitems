@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CoreUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CameraUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CharacterUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\DebugRendererUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GameStateUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GuiUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MenuUtils.cs" />
