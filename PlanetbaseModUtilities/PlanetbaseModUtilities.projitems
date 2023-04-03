@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CameraUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CharacterUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GameStateUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\GuiUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MenuUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patches\GameManagerPatch.cs" />
