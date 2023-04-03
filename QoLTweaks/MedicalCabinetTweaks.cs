@@ -47,7 +47,7 @@ namespace QoLTweaks
             // Update existing labs to be recognised as having storage components
             foreach (var module in BuildableUtils.GetAllModules())
             {
-                if (module.getModuleType() is ModuleTypeLab)
+                if (module.getModuleType() is ModuleTypeLab || module.getModuleType() is ModuleTypeStorage)
                 {
                     module.SetCategory(Module.Category.StorageComponentContaner); // Typo in Planetbase assembly
                 }

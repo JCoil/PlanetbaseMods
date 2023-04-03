@@ -15,13 +15,15 @@ namespace QoLTweaks
             // Change base behaviour of game elements
             MedicalCabinetTweaks.UpdateMedicalCabinetCapacity();
             MedicalCabinetTweaks.AllowMedicalCabinetsInLabs();
+
+            BenchTweaks.AllowBenchesInBiodomes();
             
             DormTweaks.DecreaseBunkWallSeparation();
         }
 
         private static void RegisterStrings()
         {
-            StringUtils.RegisterString("fill_with_bunks", "Fill With Bunks");
+            //StringUtils.RegisterString("fill_with_bunks", "Fill With Bunks");
         }
 
         public override void OnGameStart(GameStateGame gameStateGame)

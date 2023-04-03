@@ -55,6 +55,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BenchTweaks.cs" />
     <Compile Include="DormTweaks.cs" />
     <Compile Include="MedicalCabinetTweaks.cs" />
     <Compile Include="Patches\DormMenuPatch.cs" />
