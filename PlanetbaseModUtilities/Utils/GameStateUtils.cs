@@ -54,10 +54,18 @@ namespace PlanetbaseModUtilities
             return game.GetMode() == mode;
         }
 
+        public static void SetMode(this GameStateGame game, Mode mode)
+        {
+            var memberName = "mMode";
+            var enumName = $"{game.GetType().FullName}+Mode";
+
+            CoreUtils.SetEnumValue(memberName, game, mode, enumName, typeof(GameStateGame).Assembly);
+        }
+
         /// <summary>
-        /// Mirror for private enum GameStateGame.Mode
-        /// Be careful using this - it is NOT the same as the actual GameStateGame.Mode, even though the mappings match
-        /// Recommend only using this for the helper methods GetMode and IsMode
+        /// Mirror for private enum GameStateGame.Mode.
+        /// Be careful using this - it is NOT the same as the actual GameStateGame.Mode, even though the mappings match.
+        /// Recommend only using this for the helper methods GetMode and IsMode.
         /// </summary>
         public enum Mode
         {
