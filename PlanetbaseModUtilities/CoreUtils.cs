@@ -110,16 +110,9 @@ namespace PlanetbaseModUtilities
             return (V)Enum.ToObject(enumType, enumValue);
         }
 
-        public static void SetEnumValue<U, V>(string memberName, U containingInstance, V value, string enumQualifiedPath, Assembly enumContainingAssembly)
+        public static void SetEnumValue<U, V>(string memberName, U containingInstance, V value)
         {
-            var enumType = GetEnum(enumQualifiedPath, enumContainingAssembly);
-
-            if (!Enum.IsDefined(enumType, value.ToString()))
-            {
-                throw new ArgumentException($"Value {value} is not a valid value for Enum {enumQualifiedPath}");
-            }
-
-            SetMember(memberName, containingInstance, Enum.Parse(enumType, value.ToString()));
+            SetMember(memberName, containingInstance, Enum.Parse(typeof(V), value.ToString()));
         }
 
         #endregion
