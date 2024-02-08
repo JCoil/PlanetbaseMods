@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using UnityEngine;
 
 namespace PlanetbaseModUtilities
 {
@@ -107,6 +108,18 @@ namespace PlanetbaseModUtilities
             var enumValue = GetMember<U, object>(memberName, containingInstance);
 
             return (V)Enum.ToObject(enumType, enumValue);
+        }
+
+        public static void SetEnumValue<U, V>(string memberName, U containingInstance, V value, string enumQualifiedPath, Assembly enumContainingAssembly)
+        {
+            var enumType = GetEnum(enumQualifiedPath, enumContainingAssembly);
+
+            if (!Enum.IsDefined(enumType, value.ToString()))
+            {
+                throw new ArgumentException($"Value {value} is not a valid value for Enum {enumQualifiedPath}");
+            }
+
+            SetMember(memberName, containingInstance, Enum.Parse(enumType, value.ToString()));
         }
 
         #endregion
