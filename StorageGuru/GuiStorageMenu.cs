@@ -20,23 +20,6 @@ namespace StorageGuru
             }
         }
 
-        public static void OnStorageMenuItemPressed(object parameter)
-        {
-            if (parameter is Module module)
-            {
-                var gameStateGame = (GameStateGame)GameManager.getInstance().getGameState();
-
-                CoreUtils.SetMember("mActiveModule", gameStateGame, module);
-
-                StorageMenu = new GuiStorageMenu(module);
-
-                CameraManager.getInstance().focusOnPosition(module.getPosition(), module.getRadius() + 10f);
-                module.setRenderTop(false);
-
-                gameStateGame.GetMenuSystem().SetMenu("mCurrentMenu", StorageMenu);
-            }
-        }
-
         internal static void OnBackButtonPressed(object parameter)
         {
             StorageMenu = null;
@@ -59,6 +42,7 @@ namespace StorageGuru
         public GuiStorageMenu(Module module) : base("Storage")
         {
             ActiveStorageModule = module;
+            MenuController.StorageMenu = this;
         }
 
         public void Update()
