@@ -33,7 +33,7 @@ namespace PlanetbaseModUtilities
         #region GameStateGame.Mode
 
         /// <summary>
-        /// Get the current mMode from a gameStateGame.
+        /// Get the current mMode from a GameStateGame.
         /// Unless the actually mode value is needed, recommend using IsMode for comparisons
         /// </summary>
         public static Mode GetMode(this GameStateGame game)
@@ -54,12 +54,16 @@ namespace PlanetbaseModUtilities
             return game.GetMode() == mode;
         }
 
+        /// <summary>
+        /// Set the value of mMode on a GameStateGame.
+        /// Be careful using this - it is NOT the same as the actual GameStateGame.Mode, even though the mappings match. 
+        /// </summary>
         public static void SetMode(this GameStateGame game, Mode mode)
         {
-            var memberName = "mMode";
             var enumName = $"{game.GetType().FullName}+Mode";
+            var enumType = CoreUtils.GetEnum(enumName, typeof(GameStateGame).Assembly);
 
-            CoreUtils.SetEnumValue(memberName, game, mode, enumName, typeof(GameStateGame).Assembly);
+            CoreUtils.SetEnumValue("mMode", game, Enum.Parse(enumType, mode.ToString()));
         }
 
         /// <summary>
