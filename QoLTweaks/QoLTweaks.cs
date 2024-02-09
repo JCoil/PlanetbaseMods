@@ -12,7 +12,7 @@ namespace QoLTweaks
         {
             RegisterStrings();
 
-            // Change base behaviour of game elements
+            // One-off changes to base behaviour of game elements
             MedicalCabinetTweaks.UpdateMedicalCabinetCapacity();
             MedicalCabinetTweaks.AllowMedicalCabinetsInLabs();
 
