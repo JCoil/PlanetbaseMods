@@ -9,10 +9,9 @@ namespace QoLTweaks
 {
     public static class BenchTweaks
     {
-        public static void AllowBenchesInBiodomes()
+        public static void AllowBenchesInBioDomes()
         {
-            // Add cabinet component to ModuleTypeLab 
-            // getCategory() will now return Module.Category.StorageComponentContaner for labs so they will be added to the master list on init
+            // Add bench component to ModuleTypeBioDome 
             var bioDomeComponents = ModuleTypeList.find<ModuleTypeBioDome>().GetComponentTypes();
             bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<Bench>());
             ModuleTypeList.find<ModuleTypeBioDome>().SetComponentTypes(bioDomeComponents);

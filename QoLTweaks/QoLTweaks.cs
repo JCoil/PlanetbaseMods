@@ -16,7 +16,7 @@ namespace QoLTweaks
             MedicalCabinetTweaks.UpdateMedicalCabinetCapacity();
             MedicalCabinetTweaks.AllowMedicalCabinetsInLabs();
 
-            BenchTweaks.AllowBenchesInBiodomes();
+            BenchTweaks.AllowBenchesInBioDomes();
             
             DormTweaks.DecreaseBunkWallSeparation();
         }
