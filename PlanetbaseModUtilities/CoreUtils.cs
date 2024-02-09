@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using UnityEngine;
 
 namespace PlanetbaseModUtilities
 {
@@ -107,6 +108,11 @@ namespace PlanetbaseModUtilities
             var enumValue = GetMember<U, object>(memberName, containingInstance);
 
             return (V)Enum.ToObject(enumType, enumValue);
+        }
+
+        public static void SetEnumValue<U, V>(string memberName, U containingInstance, V value)
+        {
+            SetMember(memberName, containingInstance, Enum.Parse(typeof(V), value.ToString()));
         }
 
         #endregion

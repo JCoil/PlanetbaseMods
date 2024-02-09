@@ -1,6 +1,6 @@
 ﻿{
   "Id": "StorageGuru",
   "DisplayName": "Storage Guru",
-  "Version": "2.1.1",
+  "Version": "2.1.2",
   "EntryMethod": "StorageGuru.StorageGuruMod.Init"
 }
