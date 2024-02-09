@@ -92,6 +92,11 @@ namespace PlanetbaseModUtilities
             return CoreUtils.GetMember<ResourceStorage, List<StorageSlot>>("mSlots", storage);
         }
 
+        public static void SetSlots(this ResourceStorage storage, List<StorageSlot> slots)
+        {
+            CoreUtils.SetMember("mSlots", storage, slots);
+        }
+
         public static List<Resource> GetResources(this StorageSlot slot)
         {
             return CoreUtils.GetMember<StorageSlot, List<Resource>>("mResources", slot);

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F207875B-9308-4B84-861C-18AEDE338F29}</ProjectGuid>
+    <ProjectGuid>{3A48EF8E-71DE-4241-8AC0-6224880381F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StorageGuru</RootNamespace>
-    <AssemblyName>StorageGuru</AssemblyName>
+    <RootNamespace>BuildingAligner</RootNamespace>
+    <AssemblyName>BuildingAlignerRealigned</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,17 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="ContentManager.cs" />
-    <Compile Include="GuiStorageMenu.cs" />
-    <Compile Include="ImprovedResourceStorage.cs" />
-    <Compile Include="ManifestEntry.cs" />
-    <Compile Include="Patches\ModulePatches.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceTypeComparer.cs" />
-    <Compile Include="StorageGuru.cs" />
-    <Compile Include="Patches\MenuSystemPatch.cs" />
-  </ItemGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\PlanetbaseModUtilities\ref\0Harmony.dll</HintPath>
@@ -49,14 +41,6 @@
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\PlanetbaseModUtilities\ref\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>ref\System.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>ref\System.Xml.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
@@ -69,12 +53,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Textures\StorageDisable.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\StorageEnable.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Compile Include="BuildingAlignerMod.cs" />
+    <Compile Include="Patches\GameStateGamePatch.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.json">
@@ -84,7 +65,7 @@
   <Import Project="..\PlanetbaseModUtilities\PlanetbaseModUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\SteamLibrary\steamapps\common\Planetbase\Mods\StorageGuru"
+    <PostBuildEvent>xcopy /E /Y "$(TargetDir)" "D:\SteamLibrary\steamapps\common\Planetbase\Mods\BuildingAlignerRealigned"
 
 powershell Compress-Archive -Path '$(TargetDir)*' -Update -DestinationPath '$(ProjectDir)output\$(TargetName).zip'</PostBuildEvent>
   </PropertyGroup>

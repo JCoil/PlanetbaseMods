@@ -16,5 +16,9 @@ namespace CheatTools
         public const string force_components = "Force Components";
         public const string unlock_tech = "Unlock all Tech";
         public const string clear_components = "Clear Components";
+
+        public const string module_anarchy = "Module Anarchy";
+
+        public static string GetModuleAnarchyText => module_anarchy + " - " + (CheatTools.ModuleAnarchyOn ? "On" : "Off");
     }
 }

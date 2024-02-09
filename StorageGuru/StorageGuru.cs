@@ -11,28 +11,14 @@ namespace StorageGuru
 {
     public class StorageGuruMod : ModBase
     {
-        private static StorageManifestController storageController;
-
         public static new void Init(ModEntry modEntry) => InitializeMod(new StorageGuruMod(), modEntry, "StorageGuru");
 
+        public const bool UseImprovedSlotLayout = true;
         public static List<ResourceType> MasterResourceDefinitions { get; private set; }
-        public static StorageManifestController StorageController
-        {
-            get
-            {
-                if (storageController == null)
-                {
-                    storageController = new StorageManifestController();
-                }
-                return storageController;
-            }
-            set => storageController = value;
-        }
 
         public override void OnInitialized(ModEntry modEntry)
         {
             ContentManager.Init(modEntry.Path);
-            StorageController = new StorageManifestController();
 
             Debug.Log("[MOD] Storage Guru activated");
         }
@@ -45,7 +31,6 @@ namespace StorageGuru
         public override void OnGameStart(GameStateGame gameStateGame)
         {
             RefreshResourceDefinitions();
-            StorageController.ConsolidateManifest();
             ContentManager.CreateAlternativeIcons(MasterResourceDefinitions);
         }
 
