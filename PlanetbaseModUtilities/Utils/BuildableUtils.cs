@@ -78,6 +78,16 @@ namespace PlanetbaseModUtilities
             CoreUtils.SetMember("mComponentTypes", moduleType, componentTypes.ToArray());
         }
 
+        public static ComponentType[][] GetComponentTypesSizes(this ModuleType moduleType)
+        {
+            return CoreUtils.GetMember<ModuleType, ComponentType[][]>("mComponentTypesSizes", moduleType);
+        }
+
+        public static void SetComponentTypesSizes(this ModuleType moduleType, ComponentType[][] componentTypesSizes)
+        {
+            CoreUtils.SetMember("mComponentTypesSizes", moduleType, componentTypesSizes);
+        }
+
         #endregion
 
         #region Storage
