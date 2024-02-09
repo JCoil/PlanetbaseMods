@@ -1,3 +1,7 @@
+**Changes in Version 2.1.2**
+Bug fix:
+- Fixed the bug where clicking out of a storage module while editing it would cause the camera to get stuck for a time
+
 **Changes in Version 2.1.1**
 
 Minor bug fixes:
