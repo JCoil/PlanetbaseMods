@@ -11,6 +11,9 @@ namespace QoLTweaks
     {
         const int NewMedicalCabinetCapacity = 12;
 
+        /// <summary>
+        /// This changes the factory definition for the medical cabinet, so newly built ones will have the new capacity
+        /// </summary>
         public static void UpdateMedicalCabinetCapacity()
         {
             CoreUtils.SetMember("mEmbeddedResourceCount", ComponentTypeList.find<MedicalCabinet>(), NewMedicalCabinetCapacity);
