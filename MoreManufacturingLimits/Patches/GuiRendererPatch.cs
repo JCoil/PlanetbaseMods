@@ -8,14 +8,16 @@ using UnityEngine;
 
 namespace ImprovedManufacturingLimits
 {
-	[HarmonyPatch(typeof(GuiRenderer), "renderAmountSelector")]
+	[HarmonyPatch(typeof(GuiRenderer))]
 	public class GuiRendererPatch
 	{
 		/// <summary>
 		/// New renderer to display icon amount selector if set
 		/// </summary>
-		public static bool Prefix(ref GuiRenderer __instance, GuiWindow window, GuiAmountSelector selector, float x, float y)
-        {
+		[HarmonyPrefix]
+		[HarmonyPatch("renderAmountSelector")]
+		public static bool Prefix1(ref GuiRenderer __instance, GuiWindow window, GuiAmountSelector selector, float x, float y)
+		{
 			GUI.enabled = selector.isEnabled();
 			float height = selector.getHeight();
 			float num = height * 0.25f;
@@ -31,15 +33,19 @@ namespace ImprovedManufacturingLimits
 				x += height + num / 2f;
 			}
 
-			if (__instance.renderButton(new Rect(x, y, height, height), new GUIContent("-", "Click to decrease" + tooltip), null))
+			var minusButton = selector.isEnabled() ?
+				new GUIContent("-", "Click to decrease" + tooltip) :
+				new GUIContent("-", selector.getTooltip());
+
+			if (__instance.renderButton(new Rect(x, y, height, height), minusButton, null))
 			{
-				SelectorHelper.OnMinusImproved(selector);		
+				SelectorHelper.OnMinusImproved(selector);
 			}
 
-			x += height + num/2f;
+			x += height + num / 2f;
 
 			GUI.Label(new Rect(x, y, height * 1.75f, height), new GUIContent(selector.getText(), selector.getTooltip()), __instance.getLabelStyle(FontSize.Normal, FontStyle.Bold, TextAnchor.MiddleLeft, FontType.Normal));
-			
+
 			x += height + labelExtraWidth;
 
 			if (selector.hasFlag(1)) // Extra small for percent
@@ -47,7 +53,11 @@ namespace ImprovedManufacturingLimits
 				x += height * 0.5f;
 			}
 
-			if (__instance.renderButton(new Rect(x, y, height, height), new GUIContent("+", "Click to increase" + tooltip), null))
+			var plusButton = selector.isEnabled() ?
+				new GUIContent("+", "Click to increase" + tooltip) :
+				new GUIContent("+", selector.getTooltip());
+
+			if (__instance.renderButton(new Rect(x, y, height, height), plusButton, null))
 			{
 				SelectorHelper.OnPlusImproved(selector);
 			}
