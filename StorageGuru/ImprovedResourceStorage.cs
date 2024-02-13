@@ -64,9 +64,17 @@ namespace StorageGuru
 
         public static List<Module> GetValidModules(List<Module> modules, ResourceType resourceType)
         {
-            return modules.Where(
-                x => x.GetResourceStorageObject() is ImprovedResourceStorage improvedResourceStorage
-                && improvedResourceStorage.StorageManifest.ContainsResource(resourceType)).ToList();
+            try
+            {
+                return modules.Where(
+                    x => x.GetResourceStorageObject() is ImprovedResourceStorage improvedResourceStorage
+                    && improvedResourceStorage.StorageManifest.ContainsResource(resourceType)).ToList();
+            }
+            catch(ArgumentNullException Ex)
+            {
+                Debug.Log("ArgumentNullException in ImprovedResourceStorage.GetValidModules. " + Ex.Message);
+                return null;
+            }
         }
 
         public void CopyFrom(ResourceStorage resourceStorage)
