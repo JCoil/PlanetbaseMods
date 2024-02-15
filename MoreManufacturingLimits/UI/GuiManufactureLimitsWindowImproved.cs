@@ -34,7 +34,7 @@ namespace ImprovedManufacturingLimits
 				// Alternate between adding to first column in new row and adding to second column in previous row
 				if (resourceType.hasFlag(ImprovedManufacturingLimitsMod.FlagRawResource))
 				{
-					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.RawMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
+					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.Settings.RawMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
 
 					if (prevRawRow == null)
 					{
@@ -52,7 +52,7 @@ namespace ImprovedManufacturingLimits
 				}
 				else if (resourceType.hasFlag(ResourceType.FlagManufactured))
 				{
-					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.ManufacturedMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
+					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.Settings.ManufacturedMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
 
 					if (!isFactoryBuilt)
 					{
@@ -86,7 +86,7 @@ namespace ImprovedManufacturingLimits
 
 				var guiLabelItem = new GuiLabelItem(specialization.getNamePlural(), specialization.getIcon(), tooltip, 0, FontSize.Normal);
 
-				var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.BotsMaxValue, limit, null, 14, null, tooltip);
+				var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.Settings.BotsMaxValue, limit, null, 14, null, tooltip);
 
 				GuiRowItem guiRowItem = new GuiRowItem(2);
 				guiRowItem.addChild(guiLabelItem);
