@@ -1,0 +1,6 @@
+﻿{
+  "Id": "PowerMonitor",
+  "DisplayName": "Power Monitor",
+  "Version": "1.0.0",
+  "EntryMethod": "PowerMonitor.PowerMonitor.Init"
+}
