@@ -12,6 +12,10 @@ namespace ImprovedManufacturingLimits
 		public GuiAmountSelectorImproved(int min, int max, RefInt value, GuiDefinitions.Callback changeCallback, int flags, Texture2D icon, string tooltip)
 			: base(min, max, 1, value, changeCallback, flags)
 		{
+			if(value.get() > max)
+            {
+				value.set(max);
+            }
 			mIcon = icon;
 			setTooltip(tooltip);
 		}

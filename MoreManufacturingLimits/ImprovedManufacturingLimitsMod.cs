@@ -5,22 +5,42 @@ using System.IO;
 using UnityEngine;
 using PlanetbaseModUtilities;
 using static UnityModManagerNet.UnityModManager;
+using UnityModManagerNet;
 
 namespace ImprovedManufacturingLimits
 {
+    public class ImprovedManufacturingLimitsSettings : ModSettings, IDrawable
+    {
+        [Draw("Raw Resources maximum value")] public int RawMaxValue = 10000;
+        [Draw("Manufactured Resources maximum value")] public int ManufacturedMaxValue = 1000;
+        [Draw("Bots maximum value")] public int BotsMaxValue = 100;
+
+        public override void Save(ModEntry modEntry)
+        {
+            Save(this, modEntry);
+        }
+
+        void IDrawable.OnChange()
+        {
+        }
+    }
+
     public class ImprovedManufacturingLimitsMod : ModBase
     {
-        public static new void Init(ModEntry modEntry) => InitializeMod(new ImprovedManufacturingLimitsMod(), modEntry, "ImprovedManufacturingLimits");
+        public static ImprovedManufacturingLimitsSettings Settings;
 
-        public static int RawMaxValue = 10000;
-        public static int ManufacturedMaxValue = 1000;
-        public static int BotsMaxValue = 100;
+        public static new void Init(ModEntry modEntry) => InitializeMod(new ImprovedManufacturingLimitsMod(), modEntry, "ImprovedManufacturingLimits");        
 
         public const int FlagRawResource = 256;
         private List<ResourceType> NewResourceLimits;
 
         public override void OnInitialized(ModEntry modEntry)
-        { 
+        {
+            Settings = ModSettings.Load<ImprovedManufacturingLimitsSettings>(modEntry);
+
+            modEntry.OnGUI = (ModEntry entry) => Settings.Draw(modEntry);
+            modEntry.OnSaveGUI = (ModEntry entry) => Settings.Save(modEntry);
+
             RegisterStrings();
 
             AddFlagsToNewResources();
@@ -67,23 +87,7 @@ namespace ImprovedManufacturingLimits
 
         public override void OnGameStart(GameStateGame gameStateGame)
         {
-            // Replace default limits window with our improved one
-            //if (CoreUtils.GetMember<GameStateGame, GuiMenuSystem>("mMenuSystem", gameStateGame) is GuiMenuSystem menuSystem)
-            //{
-            //    Debug.Log("MENU ITEMS: " + CoreUtils.GetMember<GuiMenuSystem, List<GuiMenu>>("mItems", menuSystem).Count);
-
-            //    if (menuSystem.GetMenu("mMenuBaseManagement") is GuiMenu menuBaseManagement)
-            //    {
-            //        Debug.Log("FOUND BASEMANG");
-            //        foreach (var menuItem in menuBaseManagement.getItems())
-            //        {
-            //            if (menuItem.getRequiredModuleType() == TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>())
-            //            {
-            //                menuItem.SetCallback(new GuiDefinitions.Callback(gameStateGame.toggleWindow<GuiManufactureLimitsWindowImproved>));
-            //            }
-            //        }
-            //    }
-            //}
+            // Nothing required here
         }
 
         const string HelpText = @"The <b><color=""#44FF73"">Manufacturing Limits</color></b> panel allows you to specify the maximum number of units for the various raw resources, manufactured goods and bots. After you hit the limit, no more of that item will be produced.
