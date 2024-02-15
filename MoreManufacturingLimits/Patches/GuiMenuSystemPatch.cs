@@ -24,6 +24,7 @@ namespace ImprovedManufacturingLimits
 				if (menu.getItems().FirstOrDefault(x=> x.getRequiredModuleType() == moduleType) is GuiMenuItem manufacturLimitsMenuItem)
 				{
 					manufacturLimitsMenuItem.SetCallback(new GuiDefinitions.Callback(gameStateGame.toggleWindow<GuiManufactureLimitsWindowImproved>));
+					manufacturLimitsMenuItem.setRequiredModuleType(null);
                 }
             }
 		}

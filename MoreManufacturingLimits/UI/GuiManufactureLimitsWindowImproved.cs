@@ -13,6 +13,8 @@ namespace ImprovedManufacturingLimits
 		{
 			CoreUtils.SetMember("mHelpId", this, "manufacture_limits");
 
+			var isFactoryBuilt = Module.isModuleTypeBuilt(TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>());
+
 			var sectionRawResources = new GuiSectionItem(StringList.get("manufacture_limits_raw"));
 			var sectionManufacturedResources = new GuiSectionItem(StringList.get("manufacture_limits_manufactured"));
 			var sectionBots = new GuiSectionItem(StringList.get("manufacture_limits_bots"));
@@ -51,6 +53,13 @@ namespace ImprovedManufacturingLimits
 				else if (resourceType.hasFlag(ResourceType.FlagManufactured))
 				{
 					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.Settings.ManufacturedMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
+
+					if (!isFactoryBuilt)
+					{
+						guiAmountSelector.setEnabled(false);
+						guiAmountSelector.setCurrent(int.MaxValue); // Set to infinity
+						guiAmountSelector.setTooltip(StringList.get("tooltip_requires", TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>().getName()));
+					}
 
 					if (prevManufactureRow == null)
 					{
