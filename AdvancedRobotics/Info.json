@@ -1,0 +1,6 @@
+﻿{
+  "Id": "AdvancedRobotics",
+  "DisplayName": "Advanced Robotics",
+  "Version": "1.0.0",
+  "EntryMethod": "AdvancedRobotics.AdvancedRobotics.Init"
+}

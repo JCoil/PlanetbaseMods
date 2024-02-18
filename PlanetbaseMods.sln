@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraOverhaul", "CameraOve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingAlignerRealigned", "BuildingAlignerRealigned\BuildingAlignerRealigned.csproj", "{3A48EF8E-71DE-4241-8AC0-6224880381F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedRobotics", "AdvancedRobotics\AdvancedRobotics.csproj", "{E3CB8C5E-530B-49B6-A486-841E558FC677}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{118dc179-2606-49aa-9f0f-4b7da646d554}*SharedItemsImports = 4
@@ -30,6 +32,7 @@ Global
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{4d5e385e-bb80-40c4-bb2b-0647fcaa20ad}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{665becc1-1ee0-4cc7-892c-3204c1b329fd}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{c9e326de-6b1d-4ab6-8034-dc599f3005c2}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{e3cb8c5e-530b-49b6-a486-841e558fc677}*SharedItemsImports = 4
 		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{f207875b-9308-4b84-861c-18aede338f29}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,15 +51,17 @@ Global
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EC08DF2-1D53-4EF0-B987-1EC9112CF42E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D5E385E-BB80-40C4-BB2B-0647FCAA20AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{665BECC1-1EE0-4CC7-892C-3204C1B329FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26C96371-5788-498B-99EF-2CC556C9A7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A48EF8E-71DE-4241-8AC0-6224880381F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A48EF8E-71DE-4241-8AC0-6224880381F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3CB8C5E-530B-49B6-A486-841E558FC677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3CB8C5E-530B-49B6-A486-841E558FC677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3CB8C5E-530B-49B6-A486-841E558FC677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3CB8C5E-530B-49B6-A486-841E558FC677}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
