@@ -17,6 +17,16 @@ namespace QoLTweaks
             {
                 bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<Bench>());
             }
+        
+            if (QoLTweaks.Settings.DrinkingFountainsInBioDomes)
+            {
+                bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<DrinkingFountain>());
+            }
+
+            if (QoLTweaks.Settings.DecorativePlantsInBioDomes)
+            {
+                bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<DecorativePlant>());
+            }
 
             ModuleTypeList.find<ModuleTypeBioDome>().SetComponentTypes(bioDomeComponents);
         }

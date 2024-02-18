@@ -10,6 +10,8 @@ namespace QoLTweaks
         [Draw("Improved number formatting")] public bool ImprovedNumberFormatting = true; // Vanilla = false, Default = true 
 
         [Draw("Allow Benches in Bio-Domes")] public bool BenchesInBioDomes = true; // Vanilla = false, Default = true 
+        [Draw("Allow Drinking Fountains in Bio-Domes")] public bool DrinkingFountainsInBioDomes = true; // Vanilla = false, Default = true 
+        [Draw("Allow Plants in Bio-Domes")] public bool DecorativePlantsInBioDomes = true; // Vanilla = false, Default = true 
 
         [Draw("Decrease Bunk wall separation")] public bool DecreaseBunkWallSeparation = true; // Vanilla = false, Default = true 
 
