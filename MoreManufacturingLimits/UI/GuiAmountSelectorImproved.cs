@@ -14,7 +14,7 @@ namespace ImprovedManufacturingLimits
 		{
 			if(value.get() > max)
             {
-				value.set(max);
+				value.set(int.MaxValue);
             }
 			mIcon = icon;
 			setTooltip(tooltip);
@@ -53,7 +53,7 @@ namespace ImprovedManufacturingLimits
 					changeCallback(selector);
 				}
 			}			
-			else if (current.get() == 2147483647 && selector.hasFlag(GuiAmountSelector.FlagLoop))  
+			else if (current.get() == int.MaxValue && selector.hasFlag(GuiAmountSelector.FlagLoop))  
 			{
 				current.set(min);
 			}
@@ -76,7 +76,7 @@ namespace ImprovedManufacturingLimits
 			var min = CoreUtils.GetMember<GuiAmountSelector, int>("mMin", selector);
 			var step = CoreUtils.GetMember<GuiAmountSelector, int>("mStep", selector);
 
-			if (current.get() == 2147483647)
+			if (current.get() == int.MaxValue)
 			{
 				current.set(max);
 				if (changeCallback != null)

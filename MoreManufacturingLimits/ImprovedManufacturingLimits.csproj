@@ -43,7 +43,7 @@
       <HintPath>..\PlanetbaseModUtilities\ref\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="UnityEngine">
       <HintPath>..\PlanetbaseModUtilities\ref\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -57,6 +57,7 @@
     <Compile Include="Patches\GuiMenuSystemPatch.cs" />
     <Compile Include="Patches\ManufactureLimitsHelper.cs" />
     <Compile Include="Patches\ConstructionComponentPatch.cs" />
+    <Compile Include="Patches\ManufactureLimitsPatch.cs" />
     <Compile Include="UI\GuiManufactureLimitsWindowImproved.cs" />
     <Compile Include="UI\GuiAmountSelectorImproved.cs" />
     <Compile Include="Patches\GuiRendererPatch.cs" />

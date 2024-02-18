@@ -31,11 +31,11 @@ namespace ImprovedManufacturingLimits
 
 				var tooltip = StringList.get("tooltip_manufacture_limit", element.Key.getNamePlural());
 
-				// Alternate between adding to first column in new row and adding to second column in previous row
 				if (resourceType.hasFlag(ImprovedManufacturingLimitsMod.FlagRawResource))
 				{
 					var guiAmountSelector = new GuiAmountSelectorImproved(0, ImprovedManufacturingLimitsMod.Settings.RawMaxValue, limit, null, 14, resourceType.getIcon(), tooltip);
 
+					// Alternate between adding to first column in new row and adding to second column in previous row
 					if (prevRawRow == null)
 					{
 						var newRowItem = new GuiRowItem(2);
@@ -49,6 +49,8 @@ namespace ImprovedManufacturingLimits
 						prevRawRow.addChild(guiAmountSelector);
 						prevRawRow = null;
 					}
+
+					Debug.Log(resourceType.getNamePlural() + ": " + limit.get().ToString());
 				}
 				else if (resourceType.hasFlag(ResourceType.FlagManufactured))
 				{
@@ -61,6 +63,7 @@ namespace ImprovedManufacturingLimits
 						guiAmountSelector.setTooltip(StringList.get("tooltip_requires", TypeList<ModuleType, ModuleTypeList>.find<ModuleTypeFactory>().getName()));
 					}
 
+					// Alternate between adding to first column in new row and adding to second column in previous row
 					if (prevManufactureRow == null)
 					{
 						var newRowItem = new GuiRowItem(2);
@@ -100,7 +103,6 @@ namespace ImprovedManufacturingLimits
 			rootItem.addChild(sectionRawResources);
 			rootItem.addChild(sectionManufacturedResources);
 			rootItem.addChild(sectionBots);
-			Debug.Log("END");
 		}
 
 		public override float getWidth()
