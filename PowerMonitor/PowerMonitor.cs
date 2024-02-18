@@ -15,7 +15,7 @@ namespace PowerMonitor
 
         private static void RegisterStrings()
         {
-            //StringUtils.RegisterString("fill_with_bunks", "Fill With Bunks");
+            StringUtils.RegisterString("tooltip_power_monitor", "Power Overview");
         }
 
         public override void OnGameStart(GameStateGame gameStateGame)

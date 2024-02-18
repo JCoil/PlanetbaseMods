@@ -55,6 +55,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patches\GuiRendererPatch.cs" />
     <Compile Include="PowerMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
