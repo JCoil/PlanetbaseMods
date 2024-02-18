@@ -9,14 +9,12 @@ namespace QoLTweaks
 {
     public static class MedicalCabinetTweaks
     {
-        const int NewMedicalCabinetCapacity = 12;
-
         /// <summary>
         /// This changes the factory definition for the medical cabinet, so newly built ones will have the new capacity
         /// </summary>
         public static void UpdateMedicalCabinetCapacity()
         {
-            CoreUtils.SetMember("mEmbeddedResourceCount", ComponentTypeList.find<MedicalCabinet>(), NewMedicalCabinetCapacity);
+            CoreUtils.SetMember("mEmbeddedResourceCount", ComponentTypeList.find<MedicalCabinet>(), QoLTweaks.Settings.MedicalCabinetCapacity);
         }
 
         /// <summary>
@@ -28,18 +26,21 @@ namespace QoLTweaks
             {
                 if (component.getComponentType() is MedicalCabinet && component.getResourceContainer() is ResourceContainer container)
                 {
-                    container.setCapacity(NewMedicalCabinetCapacity);
+                    container.setCapacity(QoLTweaks.Settings.MedicalCabinetCapacity);
                 }
             }
         }
 
         public static void AllowMedicalCabinetsInLabs()
         {
-            // Add cabinet component to ModuleTypeLab 
-            // getCategory() will now return Module.Category.StorageComponentContaner for labs so they will be added to the master list on init
-            var labComponents = ModuleTypeList.find<ModuleTypeLab>().GetComponentTypes();
-            labComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<MedicalCabinet>());
-            ModuleTypeList.find<ModuleTypeLab>().SetComponentTypes(labComponents);
+            if (QoLTweaks.Settings.MedicalCabinetsInLabs)
+            {
+                // Add cabinet component to ModuleTypeLab 
+                // getCategory() will now return Module.Category.StorageComponentContaner for labs so they will be added to the master list on init
+                var labComponents = ModuleTypeList.find<ModuleTypeLab>().GetComponentTypes();
+                labComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<MedicalCabinet>());
+                ModuleTypeList.find<ModuleTypeLab>().SetComponentTypes(labComponents);
+            }
         }
 
         /// <summary>
@@ -47,12 +48,15 @@ namespace QoLTweaks
         /// </summary>
         public static void UpdateExistingAllowMedicalCabinetsInLabs()
         {
-            // Update existing labs to be recognised as having storage components
-            foreach (var module in BuildableUtils.GetAllModules())
+            if (QoLTweaks.Settings.MedicalCabinetsInLabs)
             {
-                if (module.getModuleType() is ModuleTypeLab || module.getModuleType() is ModuleTypeStorage)
+                // Update existing labs to be recognised as having storage components
+                foreach (var module in BuildableUtils.GetAllModules())
                 {
-                    module.SetCategory(Module.Category.StorageComponentContaner); // Typo in Planetbase assembly
+                    if (module.getModuleType() is ModuleTypeLab || module.getModuleType() is ModuleTypeStorage)
+                    {
+                        module.SetCategory(Module.Category.StorageComponentContaner); // Typo in Planetbase assembly
+                    }
                 }
             }
         }

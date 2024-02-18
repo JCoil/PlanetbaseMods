@@ -24,7 +24,10 @@ namespace QoLTweaks
             //}
             //this.mContent.image = resourceType.getIcon();
 
-            ___mContent.text = KiloFormat(amount);
+            if (QoLTweaks.Settings.ImprovedNumberFormatting)
+            {
+                ___mContent.text = KiloFormat(amount);
+            }
         }
 
         public static string KiloFormat(int num)

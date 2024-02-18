@@ -7,13 +7,17 @@ using Planetbase;
 
 namespace QoLTweaks
 {
-    public static class BenchTweaks
+    public static class BioDomeTweaks
     {
-        public static void AllowBenchesInBioDomes()
+        public static void AllowComponentsInBioDomes()
         {
-            // Add bench component to ModuleTypeBioDome 
             var bioDomeComponents = ModuleTypeList.find<ModuleTypeBioDome>().GetComponentTypes();
-            bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<Bench>());
+
+            if (QoLTweaks.Settings.BenchesInBioDomes)
+            {
+                bioDomeComponents.Add(TypeList<ComponentType, ComponentTypeList>.find<Bench>());
+            }
+
             ModuleTypeList.find<ModuleTypeBioDome>().SetComponentTypes(bioDomeComponents);
         }
     }
