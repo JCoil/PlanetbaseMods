@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Planetbase;
+﻿using Planetbase;
 using PlanetbaseModUtilities;
-using static UnityModManagerNet.UnityModManager;
 using UnityEngine;
 using HarmonyLib;
 
@@ -108,7 +103,7 @@ namespace CameraOverhaul
                     }
 
                     // Move with mouse on screen borders
-                    if (CameraOverhaul.ScreenEdgeScrollingEnabled && !Application.isEditor)
+                    if (CameraOverhaul.settings.ScreenEdgeScrollingEnabled && !Application.isEditor && Application.isFocused)
                     {
                         float screenBorder = Screen.height * 0.01f;
                         if (Input.mousePosition.x < screenBorder)

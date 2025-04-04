@@ -9,12 +9,58 @@ using UnityEngine;
 using HarmonyLib;
 using System.Xml;
 using System.IO;
+using UnityModManagerNet;
+using System.Reflection;
 
 namespace CameraOverhaul
 {
+    public class Settings : UnityModManager.ModSettings, IDrawable
+    {
+        [Draw("Enable edge scrolling?(changing camera position if the cursor is on the edge of the screen) Enabled by default.")] public bool ScreenEdgeScrollingEnabled = true;
+        [Draw("Minimum camera zoom (values lower than 12 may result in graphical glitches")] public float MinHeight = 12f;
+        [Draw("Maximum camera zoom (values lower than 120 may result in graphical glitches")] public float MaxHeight = 120f;
+        [Draw("Zoom speed multiplier. 1 by default.")] public float ZoomSpeedMultiplier = 1f;
+        [Draw("Camera moves forward more as height decreases. Enabled by default.")] public bool ZoomZMotionEasingEnabled = true;
+        [Draw("Camera zooms faster when it's higher. Enabled by default.")] public bool ZoomSpeedEasingEnabled = true;
+        public override void Save(UnityModManager.ModEntry modEntry)
+        {
+            Save(this, modEntry);
+        }
+
+        void IDrawable.OnChange()
+        {
+        }
+    }
     public class CameraOverhaul : ModBase
     {
-        public static new void Init(ModEntry modEntry) => InitializeMod(new CameraOverhaul(), modEntry, "CameraOverhaul");
+        public static bool enabled;
+        public static Settings settings;
+        public static new void Init(ModEntry modEntry)
+        {
+            settings = Settings.Load<Settings>(modEntry);
+            modEntry.OnGUI = OnGUI;
+            modEntry.OnSaveGUI = OnSaveGUI;
+            modEntry.OnToggle = OnToggle;
+            InitializeMod(new CameraOverhaul(), modEntry, "CameraOverhaul");
+            Harmony harmony = new Harmony(modEntry.Info.Id);
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
+        }
+
+        static void OnGUI(UnityModManager.ModEntry modEntry)
+        {
+            settings.Draw(modEntry);
+        }
+
+        static void OnSaveGUI(UnityModManager.ModEntry modEntry)
+        {
+            settings.Save(modEntry);
+        }
+        static bool OnToggle(UnityModManager.ModEntry modEntry, bool value)
+        {
+            enabled = value;
+
+            return true;
+        }
 
         public static float mVerticalRotationAcceleration = 0f;
         public static float mPreviousMouseY = 0f;
@@ -27,67 +73,9 @@ namespace CameraOverhaul
         public static int mModulesize = 0;
         public static bool mIsPlacingModule = false;
 
-        // User configurable settings
-        public static bool ScreenEdgeScrollingEnabled = true;
-        public static float MinHeight = 12f;
-        public static float MaxHeight = 120f;
-        public static float ZoomSpeedMultiplier = 1f;
-        public static bool ZoomZMotionEasingEnabled = true;
-        public static bool ZoomSpeedEasingEnabled = true;
-
         public override void OnInitialized(ModEntry modEntry)
         {
-            LoadUserSettings(modEntry.Path + "CameraOverhaulRehauled.config");
-        }
-
-        private void LoadUserSettings(string path)
-        {
-            if(!File.Exists(path))
-            {
-                return;
-            }
-
-            try
-            {
-                var xmlDoc = new XmlDocument();
-                xmlDoc.Load(path);
-                var rootNode = xmlDoc["configuration"];
-
-                if (bool.TryParse(rootNode["screenedgescrollingenabled"].InnerText, out bool screenEdgeScrollingEnabled))
-                {
-                    ScreenEdgeScrollingEnabled = screenEdgeScrollingEnabled;
-                }
-
-                if (float.TryParse(rootNode["minheight"].InnerText, out float minHeight) && minHeight > 0)
-                {
-                    MinHeight = minHeight;
-                }
-
-                if (float.TryParse(rootNode["maxheight"].InnerText, out float maxHeight) && maxHeight > MinHeight)
-                {
-                    MaxHeight = maxHeight;
-                }
-
-                if (float.TryParse(rootNode["zoomspeedmultiplier"].InnerText, out float speedMultiplier) && speedMultiplier > 0)
-                {
-                    ZoomSpeedMultiplier = speedMultiplier;
-                }
-
-                if (bool.TryParse(rootNode["zoomzmotioneasingenabled"].InnerText, out bool zMotionEasing))
-                {
-                    ZoomZMotionEasingEnabled = zMotionEasing;
-                }
-
-                if (bool.TryParse(rootNode["zoomspeedeasingenabled"].InnerText, out bool speedEasing))
-                {
-                    ZoomSpeedEasingEnabled = speedEasing;
-                }
-            }
-            catch (Exception)
-            {
-                // Failed to load/read the config file
-            }
-
+            //Nothing needed here
         }
 
         public override void OnUpdate(ModEntry modEntry, float timeStep)

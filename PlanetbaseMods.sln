@@ -22,16 +22,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingAlignerRealigned", "BuildingAlignerRealigned\BuildingAlignerRealigned.csproj", "{3A48EF8E-71DE-4241-8AC0-6224880381F6}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{118dc179-2606-49aa-9f0f-4b7da646d554}*SharedItemsImports = 4
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{26c96371-5788-498b-99ef-2cc556c9a7d9}*SharedItemsImports = 4
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{2a2596f6-59d3-4f92-a33b-6e9bb2372bee}*SharedItemsImports = 13
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{3a48ef8e-71de-4241-8ac0-6224880381f6}*SharedItemsImports = 4
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{4d5e385e-bb80-40c4-bb2b-0647fcaa20ad}*SharedItemsImports = 4
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{665becc1-1ee0-4cc7-892c-3204c1b329fd}*SharedItemsImports = 4
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{c9e326de-6b1d-4ab6-8034-dc599f3005c2}*SharedItemsImports = 4
-		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{f207875b-9308-4b84-861c-18aede338f29}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -63,5 +53,15 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {948ED42E-2F8C-418E-9002-0B67ED758A4B}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{118dc179-2606-49aa-9f0f-4b7da646d554}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{26c96371-5788-498b-99ef-2cc556c9a7d9}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{2a2596f6-59d3-4f92-a33b-6e9bb2372bee}*SharedItemsImports = 13
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{3a48ef8e-71de-4241-8ac0-6224880381f6}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{4d5e385e-bb80-40c4-bb2b-0647fcaa20ad}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{665becc1-1ee0-4cc7-892c-3204c1b329fd}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{c9e326de-6b1d-4ab6-8034-dc599f3005c2}*SharedItemsImports = 4
+		PlanetbaseModUtilities\PlanetbaseModUtilities.projitems*{f207875b-9308-4b84-861c-18aede338f29}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

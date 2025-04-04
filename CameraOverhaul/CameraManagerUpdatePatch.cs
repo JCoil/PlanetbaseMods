@@ -49,17 +49,17 @@ namespace CameraOverhaul
                             float currentHeight = cameraManager.GetCurrentHeight();
 
                             // If enabled, scale speed by 0.5 times the currentHeight to minHeight ratio
-                            float speedEasingFactor = CameraOverhaul.ZoomSpeedEasingEnabled ?
-                                (float)Math.Sqrt(currentHeight / CameraOverhaul.MinHeight) : 1f;
+                            float speedEasingFactor = CameraOverhaul.settings.ZoomSpeedEasingEnabled ?
+                                (float)Math.Sqrt(currentHeight / CameraOverhaul.settings.MinHeight) : 1f;
 
-                            float speed = Mathf.Clamp(60f * timeStep, 0.01f, 100f) * speedEasingFactor * CameraOverhaul.ZoomSpeedMultiplier;
-                            float newHeight = Mathf.Clamp(currentHeight + yAxis * speed, CameraOverhaul.MinHeight, CameraOverhaul.MaxHeight);
+                            float speed = Mathf.Clamp(60f * timeStep, 0.01f, 100f) * speedEasingFactor * CameraOverhaul.settings.ZoomSpeedMultiplier;
+                            float newHeight = Mathf.Clamp(currentHeight + yAxis * speed, CameraOverhaul.settings.MinHeight, CameraOverhaul.settings.MaxHeight);
 
                             if (transform.eulerAngles.x < 86f) // If camera is not pointing close to vertical
                             {
                                 // If enabled, scale z movement on zoom by inverse of height
-                                float zMotionEasingfactor = CameraOverhaul.ZoomZMotionEasingEnabled ?
-                                    (2f * CameraOverhaul.MinHeight / (currentHeight + CameraOverhaul.MinHeight)) : 1f;
+                                float zMotionEasingfactor = CameraOverhaul.settings.ZoomZMotionEasingEnabled ?
+                                    (2f * CameraOverhaul.settings.MinHeight / (currentHeight + CameraOverhaul.settings.MinHeight)) : 1f;
 
                                 zAxis += zMotionEasingfactor * (currentHeight - newHeight) / speed;
                                 absZAxis = Mathf.Abs(zAxis);                                
