@@ -42,7 +42,7 @@ namespace StorageGuru
             {
                 byte[] iconBytes = File.ReadAllBytes(filepath);
                 Texture2D tex = new Texture2D(0, 0);
-                tex.LoadImage(iconBytes);
+                ImageConversion.LoadImage(tex, iconBytes);
                 return Util.applyColor(tex);
             }
 
