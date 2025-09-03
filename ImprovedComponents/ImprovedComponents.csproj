@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImprovedComponents</RootNamespace>
     <AssemblyName>ImprovedComponents</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile>
@@ -49,6 +49,18 @@
     <Reference Include="UnityEngine">
       <HintPath>..\PlanetbaseModUtilities\ref\UnityEngine.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\PlanetbaseModUtilities\ref\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\PlanetbaseModUtilities\ref\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\PlanetbaseModUtilities\ref\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\PlanetbaseModUtilities\ref\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityModManager">
       <HintPath>..\PlanetbaseModUtilities\ref\UnityModManager.dll</HintPath>
